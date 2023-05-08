@@ -91,6 +91,7 @@ class ContainerLayout extends StatelessWidget {
         child: _buildPadding(
           padding: margin,
           child: _buildClipRect(
+            shadow: boxShadow,
             cornerRadius: cornerRadius,
             child: _buildBoxDecorator(
               backgroundColor: backgroundColor,
@@ -126,10 +127,29 @@ class ContainerLayout extends StatelessWidget {
       (width == null && height == null)
           ? child
           : SizedBox(
-              height: height,
-              width: width,
-              child: child,
-            );
+        height: height,
+        width: width,
+        child: child,
+      );
+
+  Widget _buildClipRect({
+    required double? cornerRadius,
+    required List<BoxShadow>? shadow,
+    required Widget child,
+  }) =>
+      cornerRadius != null
+          ? Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
+            boxShadow: shadow,
+          ),
+          child: ClipRRect(
+            clipBehavior: Clip.hardEdge,
+            borderRadius:
+            BorderRadius.all(Radius.circular(cornerRadius ?? 0.0)),
+            child: child,
+          ))
+          : child;
 
   Widget _buildBoxDecorator({
     required Color? backgroundColor,
@@ -141,37 +161,25 @@ class ContainerLayout extends StatelessWidget {
     required Widget child,
   }) =>
       decoration != null ||
-              (backgroundColor != null ||
-                  cornerRadius != null ||
-                  strokeThickness != null ||
-                  strokeColor != null ||
-                  shadow != null)
+          (backgroundColor != null ||
+              cornerRadius != null ||
+              strokeThickness != null ||
+              strokeColor != null ||
+              shadow != null)
           ? DecoratedBox(
-              decoration: decoration ??
-                  BoxDecoration(
-                    color: backgroundColor,
-                    border: Border.all(
-                      strokeAlign: BorderSide.strokeAlignInside,
-                      color: strokeColor ?? Colors.transparent,
-                      width: strokeThickness ?? 0.0,
-                    ),
-                    borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
-                    boxShadow: shadow,
-                  ),
-              child: child,
-            )
-          : child;
-
-  Widget _buildClipRect({
-    required double? cornerRadius,
-    required Widget child,
-  }) =>
-      cornerRadius != null
-          ? ClipRRect(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(cornerRadius ?? 0.0)),
-              child: child,
-            )
+        decoration: decoration ??
+            BoxDecoration(
+              color: backgroundColor,
+              border: Border.all(
+                strokeAlign: BorderSide.strokeAlignInside,
+                color: strokeColor ?? Colors.transparent,
+                width: strokeThickness ?? 0.0,
+              ),
+              borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
+              boxShadow: cornerRadius == null ? shadow : null,
+            ),
+        child: child,
+      )
           : child;
 
   Widget _buildIntrinsic({
@@ -199,9 +207,9 @@ class ContainerLayout extends StatelessWidget {
   Widget _buildPadding({required EdgeInsets? padding, required child}) =>
       (padding != null)
           ? Padding(
-              padding: padding,
-              child: child,
-            )
+        padding: padding,
+        child: child,
+      )
           : child;
 
   List<Widget> _addSpaceWidgetList(List<Widget> list) {
