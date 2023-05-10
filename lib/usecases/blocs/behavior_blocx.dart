@@ -21,7 +21,6 @@ abstract class BehaviorBlocX<E, Event extends BlocEvent<E>, State>
 
   Future<void> onListenEvent(BlocEvent<E> event);
 
-
   void addInitEvent<T>(E event, {T? data}) {
     add(InitEvent(event, data: data) as Event);
   }
@@ -38,7 +37,7 @@ abstract class BehaviorBlocX<E, Event extends BlocEvent<E>, State>
     add(TypingEvent(event, data: data) as Event);
   }
 
-  void setState<T>(T newValue) {
+  void setStateWithoutEmit<T>(T newValue) {
     _state = newValue as State;
   }
 
@@ -48,10 +47,10 @@ abstract class BehaviorBlocX<E, Event extends BlocEvent<E>, State>
   }
 
   @override
-  void emitState(State newValue) {
+  void emitState(State newState) {
     if (_subject.isClosed) return;
-    _subject.add(newValue);
-    setState(newValue);
+    _subject.add(newState);
+    setStateWithoutEmit(newState);
   }
 
   @override
@@ -59,6 +58,6 @@ abstract class BehaviorBlocX<E, Event extends BlocEvent<E>, State>
     if (_subject.isClosed) return;
     final newState = BlocState.success(data: newValue) as State;
     _subject.add(newState);
-    setState(newState);
+    setStateWithoutEmit(newState);
   }
 }
