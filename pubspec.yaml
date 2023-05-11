@@ -43,13 +43,15 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
 
   #======= Analytic ========#
-  sentry_flutter: ^7.5.1
+  sentry_flutter: ^7.5.2
 
   #======= Utils ========#
   #  catcher: any #conflict with device_info_plus and conflict with dio
   catcher:
     git:
       url: https://github.com/THE-EXISTING/catcher.git
+      ref: master
+
   intl: ^0.17.0
   sim_data: ^0.0.2
   go_router: ^6.5.8
@@ -63,13 +65,13 @@ dependencies:
   tap_debouncer: ^2.0.2
   permission_handler: ^10.2.0
   equatable: ^2.0.5
-  url_launcher: ^6.1.10
+  url_launcher: ^6.1.11
   cached_network_image: ^3.2.3
   image_network: ^2.5.2
   http_parser: ^4.0.2
-  path_provider: ^2.0.14
+  path_provider: ^2.0.15
   uni_links: ^0.5.1
-  flutter_multi_formatter: ^2.10.4
+  flutter_multi_formatter: ^2.11.0
   qr_flutter: ^4.0.0
   timer_count_down: ^2.2.2
   version: ^3.0.2
@@ -78,7 +80,7 @@ dependencies:
   flutter_libphonenumber: ^2.1.2
   open_file: ^3.3.1
   universal_html: ^2.2.1
-  android_intent_plus: ^3.1.9
+  android_intent_plus: ^4.0.0
 
 dev_dependencies:
   flutter_test:
