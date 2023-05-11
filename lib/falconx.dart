@@ -15,7 +15,7 @@ export 'package:provider/provider.dart';
 export 'package:flutter_cache_manager/flutter_cache_manager.dart';
 export 'package:universal_io/io.dart' hide SocketException;
 
-export 'package:webview_flutter/webview_flutter.dart' hide ProgressCallback;
+export 'package:webview_flutter/webview_flutter.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:shimmer_animation/shimmer_animation.dart';
 export 'package:badges/badges.dart';
