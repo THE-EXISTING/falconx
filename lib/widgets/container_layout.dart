@@ -22,6 +22,8 @@ class ContainerLayout extends StatelessWidget {
     this.decoration,
     this.child,
     this.children,
+    this.onPress,
+    this.onLongPress,
     this.builder,
   }) : super(key: key);
 
@@ -44,6 +46,8 @@ class ContainerLayout extends StatelessWidget {
   final Widget? child;
   final List<Widget>? children;
   final bool crossAxisIntrinsic;
+  final GestureTapCallback? onPress;
+  final GestureLongPressCallback? onLongPress;
   final Function(BuildContext context, Widget child)? builder;
 
   @override
@@ -90,21 +94,27 @@ class ContainerLayout extends StatelessWidget {
         expanded: mainAxisExpanded,
         child: _buildPadding(
           padding: margin,
-          child: _buildClipRect(
-            shadow: boxShadow,
+          child: _buildInkWell(
+            context,
             cornerRadius: cornerRadius,
-            child: _buildBoxDecorator(
-              backgroundColor: backgroundColor,
-              strokeThickness: strokeThickness,
-              strokeColor: strokeColor,
-              cornerRadius: cornerRadius,
-              decoration: decoration,
+            onPress: onPress,
+            onLongPress: onLongPress,
+            child: _buildClipRect(
               shadow: boxShadow,
-              child: _buildPadding(
-                padding: padding,
-                child: _customBuilder(
-                  context,
-                  layout,
+              cornerRadius: cornerRadius,
+              child: _buildBoxDecorator(
+                backgroundColor: backgroundColor,
+                strokeThickness: strokeThickness,
+                strokeColor: strokeColor,
+                cornerRadius: cornerRadius,
+                decoration: decoration,
+                shadow: boxShadow,
+                child: _buildPadding(
+                  padding: padding,
+                  child: _customBuilder(
+                    context,
+                    layout,
+                  ),
                 ),
               ),
             ),
@@ -119,6 +129,31 @@ class ContainerLayout extends StatelessWidget {
     return builder?.call(context, child) ?? child;
   }
 
+  Widget _buildInkWell(
+    BuildContext context, {
+    double? cornerRadius,
+    GestureTapCallback? onPress,
+    GestureLongPressCallback? onLongPress,
+    required Widget child,
+  }) {
+    if (onPress == null && onLongPress == null) return child;
+
+    Brightness currentBrightness = Theme.of(context).brightness;
+    final baseColor =
+        currentBrightness == Brightness.dark ? Colors.white : Colors.black;
+    final focusColor = baseColor.withOpacity(0.01);
+    final splashColor = baseColor.withOpacity(0.01);
+    final highlightColor = baseColor.withOpacity(0.04);
+    return InkWell(
+      radius: cornerRadius,
+      focusColor: focusColor,
+      splashColor: splashColor,
+      highlightColor: highlightColor,
+      onTap: onPress,
+      onLongPress: onLongPress,
+    );
+  }
+
   Widget _buildSizeBox({
     double? width,
     double? height,
@@ -127,10 +162,10 @@ class ContainerLayout extends StatelessWidget {
       (width == null && height == null)
           ? child
           : SizedBox(
-        height: height,
-        width: width,
-        child: child,
-      );
+              height: height,
+              width: width,
+              child: child,
+            );
 
   Widget _buildClipRect({
     required double? cornerRadius,
@@ -139,16 +174,16 @@ class ContainerLayout extends StatelessWidget {
   }) =>
       cornerRadius != null
           ? Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
-            boxShadow: shadow,
-          ),
-          child: ClipRRect(
-            clipBehavior: Clip.hardEdge,
-            borderRadius:
-            BorderRadius.all(Radius.circular(cornerRadius ?? 0.0)),
-            child: child,
-          ))
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
+                boxShadow: shadow,
+              ),
+              child: ClipRRect(
+                clipBehavior: Clip.hardEdge,
+                borderRadius:
+                    BorderRadius.all(Radius.circular(cornerRadius ?? 0.0)),
+                child: child,
+              ))
           : child;
 
   Widget _buildBoxDecorator({
@@ -161,25 +196,25 @@ class ContainerLayout extends StatelessWidget {
     required Widget child,
   }) =>
       decoration != null ||
-          (backgroundColor != null ||
-              cornerRadius != null ||
-              strokeThickness != null ||
-              strokeColor != null ||
-              shadow != null)
+              (backgroundColor != null ||
+                  cornerRadius != null ||
+                  strokeThickness != null ||
+                  strokeColor != null ||
+                  shadow != null)
           ? DecoratedBox(
-        decoration: decoration ??
-            BoxDecoration(
-              color: backgroundColor,
-              border: Border.all(
-                strokeAlign: BorderSide.strokeAlignInside,
-                color: strokeColor ?? Colors.transparent,
-                width: strokeThickness ?? 0.0,
-              ),
-              borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
-              boxShadow: cornerRadius == null ? shadow : null,
-            ),
-        child: child,
-      )
+              decoration: decoration ??
+                  BoxDecoration(
+                    color: backgroundColor,
+                    border: Border.all(
+                      strokeAlign: BorderSide.strokeAlignInside,
+                      color: strokeColor ?? Colors.transparent,
+                      width: strokeThickness ?? 0.0,
+                    ),
+                    borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
+                    boxShadow: cornerRadius == null ? shadow : null,
+                  ),
+              child: child,
+            )
           : child;
 
   Widget _buildIntrinsic({
@@ -207,9 +242,9 @@ class ContainerLayout extends StatelessWidget {
   Widget _buildPadding({required EdgeInsets? padding, required child}) =>
       (padding != null)
           ? Padding(
-        padding: padding,
-        child: child,
-      )
+              padding: padding,
+              child: child,
+            )
           : child;
 
   List<Widget> _addSpaceWidgetList(List<Widget> list) {

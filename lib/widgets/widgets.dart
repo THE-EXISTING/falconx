@@ -7,3 +7,4 @@ export 'package:falconx/widgets/device_info_dialog.dart';
 export 'package:falconx/widgets/padding.dart';
 export 'package:falconx/widgets/restart_widget.dart';
 export 'package:falconx/widgets/container_layout.dart';
+export 'package:falconx/widgets/shape_style.dart';
