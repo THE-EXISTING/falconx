@@ -4,7 +4,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class ImageCompressX {
-  static Future<File?> compressImageFile({required File file}) async {
+  static Future<XFile?> compressImageFile({required File file}) async {
     final saveTargetPath = await _getSaveTempTargetPath();
     return _compressAndGetFile(file, saveTargetPath);
   }
@@ -17,7 +17,7 @@ class ImageCompressX {
     return dir.absolute.path + '/' + timeStamp + '.jpg';
   }
 
-  static Future<File?> _compressAndGetFile(File file, String targetPath) async {
+  static Future<XFile?> _compressAndGetFile(File file, String targetPath) async {
     return FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
       targetPath,
