@@ -3,9 +3,9 @@ import 'package:falconx/falconx.dart';
 abstract class WidgetStateX<T extends StatefulWidgetX> extends StateX<T> {
   WidgetStateX({WidgetDisplayState? viewState})
       : _stateNotifier =
-  WidgetShowStateNotifier(state: viewState ?? WidgetDisplayState.normal);
+  WidgetDisplayStateNotifier(state: viewState ?? WidgetDisplayState.normal);
 
-  final WidgetShowStateNotifier _stateNotifier;
+  final WidgetDisplayStateNotifier _stateNotifier;
 
   WidgetDisplayState get viewState => _stateNotifier.value;
 
@@ -13,9 +13,9 @@ abstract class WidgetStateX<T extends StatefulWidgetX> extends StateX<T> {
   @override
   @Deprecated('Please use [buildDefault] instead')
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<WidgetShowStateNotifier>(
+    return ChangeNotifierProvider<WidgetDisplayStateNotifier>(
         create: (context) => _stateNotifier,
-        child: Consumer<WidgetShowStateNotifier>( //
+        child: Consumer<WidgetDisplayStateNotifier>( //
             builder: (context, viewState, child) {
               switch (viewState.value) {
                 case WidgetDisplayState.normal:
@@ -66,7 +66,4 @@ abstract class WidgetStateX<T extends StatefulWidgetX> extends StateX<T> {
     _stateNotifier.value = state;
   }
 
-  void updateState() {
-    setState(() { });
-  }
 }

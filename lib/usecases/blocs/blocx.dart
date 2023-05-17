@@ -6,7 +6,7 @@ abstract class BlocX<State> extends Bloc<Object, State> {
         super(initialState);
 
   final FetcherList _fetcher;
-  final screenEventCubit = ScreenEventCubit();
+  final navigationEventCubit = NavigationEventCubit();
   final StreamController<State> _controller =
       StreamController<State>.broadcast();
 
@@ -31,7 +31,7 @@ abstract class BlocX<State> extends Bloc<Object, State> {
   @override
   Future<void> close() {
     _fetcher.close();
-    screenEventCubit.close();
+    navigationEventCubit.close();
     return super.close();
   }
 
@@ -42,10 +42,10 @@ abstract class BlocX<State> extends Bloc<Object, State> {
       _controller.add(BlocState.success(data: newValue) as State);
 
   void emitPopScreen<T>([T? result]) {
-    screenEventCubit.emitPopScreen(result);
+    navigationEventCubit.emitPopScreen(result);
   }
 
   void emitEvent<T>(T event, {Object? data}) {
-    screenEventCubit.emit(BlocEvent<T>(event, data: data));
+    navigationEventCubit.emit(BlocEvent<T>(event, data: data));
   }
 }

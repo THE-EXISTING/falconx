@@ -6,12 +6,12 @@ class _PageLoadingIndicatorNotifier extends ValueNotifier<bool> {
 
 abstract class ScreenScaffoldStateX<T extends StatefulWidgetX>
     extends StateX<T> {
-  final WidgetShowStateNotifier _screenState =
-      WidgetShowStateNotifier(state: WidgetDisplayState.normal);
+  final WidgetDisplayStateNotifier _screenState =
+      WidgetDisplayStateNotifier(state: WidgetDisplayState.normal);
 
   WidgetDisplayState get state => _screenState.value;
 
-  WidgetShowStateNotifier get screenState => _screenState;
+  WidgetDisplayStateNotifier get screenState => _screenState;
 
   final _PageLoadingIndicatorNotifier _showPageLoadingIndicator =
       _PageLoadingIndicatorNotifier();

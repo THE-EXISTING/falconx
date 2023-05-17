@@ -21,5 +21,5 @@ export 'package:falconx/usecases/blocs/cubits/bool_cubit.dart';
 export 'package:falconx/usecases/blocs/cubits/bool_cubiter.dart';
 export 'package:falconx/usecases/blocs/cubits/string_cubit.dart';
 export 'package:falconx/usecases/blocs/cubits/string_cubiter.dart';
-export 'package:falconx/usecases/blocs/cubits/screen_event_cubit.dart';
+export 'package:falconx/usecases/blocs/cubits/navigation_event_cubit.dart';
 

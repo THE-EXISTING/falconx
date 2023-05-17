@@ -16,7 +16,8 @@ class ContainerLayout extends StatelessWidget {
     this.mainAxisExpanded = false,
     this.margin,
     this.padding,
-    this.cornerRadius,
+    this.radius,
+    this.borderRadius,
     this.strokeThickness,
     this.strokeColor,
     this.decoration,
@@ -39,7 +40,8 @@ class ContainerLayout extends StatelessWidget {
   final bool mainAxisExpanded;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
-  final double? cornerRadius;
+  final double? radius;
+  final BorderRadius? borderRadius;
   final double? strokeThickness;
   final Color? strokeColor;
   final Decoration? decoration;
@@ -96,17 +98,20 @@ class ContainerLayout extends StatelessWidget {
           padding: margin,
           child: _buildInkWell(
             context,
-            cornerRadius: cornerRadius,
+            radius: radius,
+            borderRadius: borderRadius,
             onPress: onPress,
             onLongPress: onLongPress,
             child: _buildClipRect(
               shadow: boxShadow,
-              cornerRadius: cornerRadius,
+              radius: radius,
+              borderRadius: borderRadius,
               child: _buildBoxDecorator(
                 backgroundColor: backgroundColor,
                 strokeThickness: strokeThickness,
                 strokeColor: strokeColor,
-                cornerRadius: cornerRadius,
+                radius: radius,
+                borderRadius: borderRadius,
                 decoration: decoration,
                 shadow: boxShadow,
                 child: _buildPadding(
@@ -131,9 +136,10 @@ class ContainerLayout extends StatelessWidget {
 
   Widget _buildInkWell(
     BuildContext context, {
-    double? cornerRadius,
-    GestureTapCallback? onPress,
-    GestureLongPressCallback? onLongPress,
+    required double? radius,
+    required GestureTapCallback? onPress,
+    required GestureLongPressCallback? onLongPress,
+    required BorderRadius? borderRadius,
     required Widget child,
   }) {
     if (onPress == null && onLongPress == null) return child;
@@ -145,7 +151,8 @@ class ContainerLayout extends StatelessWidget {
     final splashColor = baseColor.withOpacity(0.01);
     final highlightColor = baseColor.withOpacity(0.04);
     return InkWell(
-      radius: cornerRadius,
+      radius: radius,
+      borderRadius: borderRadius,
       focusColor: focusColor,
       splashColor: splashColor,
       highlightColor: highlightColor,
@@ -168,27 +175,30 @@ class ContainerLayout extends StatelessWidget {
             );
 
   Widget _buildClipRect({
-    required double? cornerRadius,
+    required double? radius,
+    required BorderRadius? borderRadius,
     required List<BoxShadow>? shadow,
     required Widget child,
   }) =>
-      cornerRadius != null
+      radius != null
           ? Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
+                borderRadius:
+                    borderRadius ?? BorderRadius.circular(radius ?? 0.0),
                 boxShadow: shadow,
               ),
               child: ClipRRect(
                 clipBehavior: Clip.hardEdge,
-                borderRadius:
-                    BorderRadius.all(Radius.circular(cornerRadius ?? 0.0)),
+                borderRadius: borderRadius ??
+                    BorderRadius.all(Radius.circular(radius ?? 0.0)),
                 child: child,
               ))
           : child;
 
   Widget _buildBoxDecorator({
     required Color? backgroundColor,
-    required double? cornerRadius,
+    required double? radius,
+    required BorderRadius? borderRadius,
     required double? strokeThickness,
     required Color? strokeColor,
     required List<BoxShadow>? shadow,
@@ -197,7 +207,8 @@ class ContainerLayout extends StatelessWidget {
   }) =>
       decoration != null ||
               (backgroundColor != null ||
-                  cornerRadius != null ||
+                  radius != null ||
+                  borderRadius != null ||
                   strokeThickness != null ||
                   strokeColor != null ||
                   shadow != null)
@@ -210,8 +221,10 @@ class ContainerLayout extends StatelessWidget {
                       color: strokeColor ?? Colors.transparent,
                       width: strokeThickness ?? 0.0,
                     ),
-                    borderRadius: BorderRadius.circular(cornerRadius ?? 0.0),
-                    boxShadow: cornerRadius == null ? shadow : null,
+                    borderRadius:
+                        borderRadius ?? BorderRadius.circular(radius ?? 0.0),
+                    boxShadow:
+                        radius == null && borderRadius == null ? shadow : null,
                   ),
               child: child,
             )

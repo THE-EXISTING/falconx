@@ -8,8 +8,8 @@ enum WidgetDisplayState {
   error,
 }
 
-class WidgetShowStateNotifier extends ValueNotifier<WidgetDisplayState> {
-  WidgetShowStateNotifier({
+class WidgetDisplayStateNotifier extends ValueNotifier<WidgetDisplayState> {
+  WidgetDisplayStateNotifier({
     required WidgetDisplayState state,
   }) : super(state);
 

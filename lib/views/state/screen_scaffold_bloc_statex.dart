@@ -8,7 +8,7 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
     B extends BlocBase<S>, S> extends StateX<T> {
   B get bloc => context.read<B>();
 
-  ScreenEventCubit? _screenEventCubit;
+  NavigationEventCubit? _navigationEventCubit;
 
   FocusNode? get screenFocusNode => FocusManager.instance.primaryFocus;
 
@@ -19,7 +19,7 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
   void initState() {
     super.initState();
     if (bloc is BlocX) {
-      _screenEventCubit = (bloc as BlocX).screenEventCubit;
+      _navigationEventCubit = (bloc as BlocX).navigationEventCubit;
     } else {
       Log.w('No use Blocx');
     }
@@ -41,10 +41,10 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
   }
 
   Widget _buildBloc(BuildContext context) {
-    return BlocListener<ScreenEventCubit, BlocEvent?>(
-      bloc: _screenEventCubit,
+    return BlocListener<NavigationEventCubit, BlocEvent?>(
+      bloc: _navigationEventCubit,
       listener: (context, BlocEvent? blocEvent) {
-        if (blocEvent?.name == ScreenEvent.pop) {
+        if (blocEvent?.name == NavigationEvent.pop) {
           Navigator.pop(context, blocEvent?.data);
         } else if (blocEvent != null) {
           onListenEvent(context, blocEvent.name, blocEvent.data);
