@@ -67,6 +67,7 @@ export 'package:wakelock/wakelock.dart';
 export 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 export 'package:open_file/open_file.dart';
 export 'package:android_intent_plus/android_intent.dart';
+export 'package:enum_to_string/enum_to_string.dart';
 
 export 'networks/internet_connection_bloc.dart';
 export 'config/build_config.dart';
