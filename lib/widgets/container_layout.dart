@@ -55,7 +55,7 @@ class ContainerLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget layout;
-    if (child == null) {
+    if (children != null) {
       List<Widget> modifyWidgetList = _addSpaceWidgetList(children!);
       switch (direction) {
         case Axis.horizontal:
@@ -86,7 +86,7 @@ class ContainerLayout extends StatelessWidget {
           break;
       }
     } else {
-      layout = child!;
+      layout = child ?? Container();
     }
 
     return _buildSizeBox(
