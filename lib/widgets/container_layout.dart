@@ -19,6 +19,7 @@ class ContainerLayout extends StatelessWidget {
     this.radius,
     this.borderRadius,
     this.strokeThickness,
+    this.borderStroke,
     this.strokeColor,
     this.decoration,
     this.child,
@@ -42,6 +43,7 @@ class ContainerLayout extends StatelessWidget {
   final EdgeInsets? padding;
   final double? radius;
   final BorderRadius? borderRadius;
+  final BoxBorder? borderStroke;
   final double? strokeThickness;
   final Color? strokeColor;
   final Decoration? decoration;
@@ -102,18 +104,18 @@ class ContainerLayout extends StatelessWidget {
             borderRadius: borderRadius,
             onPress: onPress,
             onLongPress: onLongPress,
-            child: _buildClipRect(
-              shadow: boxShadow,
+            child: _buildBoxDecorator(
+              backgroundColor: backgroundColor,
+              strokeThickness: strokeThickness,
+              strokeColor: strokeColor,
               radius: radius,
               borderRadius: borderRadius,
-              child: _buildBoxDecorator(
-                backgroundColor: backgroundColor,
-                strokeThickness: strokeThickness,
-                strokeColor: strokeColor,
+              borderStroke: borderStroke,
+              decoration: decoration,
+              shadow: boxShadow,
+              child: _buildClipRect(
                 radius: radius,
                 borderRadius: borderRadius,
-                decoration: decoration,
-                shadow: boxShadow,
                 child: _buildPadding(
                   padding: padding,
                   child: _customBuilder(
@@ -177,28 +179,21 @@ class ContainerLayout extends StatelessWidget {
   Widget _buildClipRect({
     required double? radius,
     required BorderRadius? borderRadius,
-    required List<BoxShadow>? shadow,
     required Widget child,
   }) =>
       radius != null
-          ? Container(
-              decoration: BoxDecoration(
-                borderRadius:
-                    borderRadius ?? BorderRadius.circular(radius ?? 0.0),
-                boxShadow: shadow,
-              ),
-              child: ClipRRect(
-                clipBehavior: Clip.hardEdge,
-                borderRadius: borderRadius ??
-                    BorderRadius.all(Radius.circular(radius ?? 0.0)),
-                child: child,
-              ))
+          ? ClipRRect(
+              clipBehavior: Clip.hardEdge,
+              borderRadius: borderRadius ?? BorderRadius.circular(radius),
+              child: child,
+            )
           : child;
 
   Widget _buildBoxDecorator({
     required Color? backgroundColor,
     required double? radius,
     required BorderRadius? borderRadius,
+    required BoxBorder? borderStroke,
     required double? strokeThickness,
     required Color? strokeColor,
     required List<BoxShadow>? shadow,
@@ -209,6 +204,7 @@ class ContainerLayout extends StatelessWidget {
               (backgroundColor != null ||
                   radius != null ||
                   borderRadius != null ||
+                  borderStroke != null ||
                   strokeThickness != null ||
                   strokeColor != null ||
                   shadow != null)
@@ -216,13 +212,14 @@ class ContainerLayout extends StatelessWidget {
               decoration: decoration ??
                   BoxDecoration(
                     color: backgroundColor,
-                    border: Border.all(
-                      strokeAlign: BorderSide.strokeAlignInside,
-                      color: strokeColor ?? Colors.transparent,
-                      width: strokeThickness ?? 0.0,
-                    ),
-                    borderRadius:
-                        borderRadius ?? BorderRadius.circular(radius ?? 0.0),
+                    border: borderStroke ??
+                        Border.all(
+                          strokeAlign: BorderSide.strokeAlignInside,
+                          color: strokeColor ?? Colors.transparent,
+                          width: strokeThickness ?? 0.0,
+                        ),
+                    borderRadius: borderRadius ??
+                        (radius != null ? BorderRadius.circular(radius) : null),
                     boxShadow:
                         radius == null && borderRadius == null ? shadow : null,
                   ),
