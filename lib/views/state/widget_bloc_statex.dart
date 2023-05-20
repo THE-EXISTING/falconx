@@ -2,16 +2,16 @@ import 'package:falconx/falconx.dart';
 
 abstract class WidgetBlocStateX<T extends StatefulWidgetX,
     B extends BlocBase<S>, S> extends StateX<T> {
-  WidgetBlocStateX({WidgetDisplayState? viewState})
-      : _stateNotifier = WidgetDisplayStateNotifier(
-            state: viewState ?? WidgetDisplayState.normal);
+  WidgetBlocStateX({WidgetState? viewState})
+      : _stateNotifier =
+            WidgetStateNotifier(state: viewState ?? WidgetState.normal);
 
-  final WidgetDisplayStateNotifier _stateNotifier;
+  final WidgetStateNotifier _stateNotifier;
   NavigationEventCubit? _navigationEventCubit;
 
   B get bloc => context.read<B>();
 
-  WidgetDisplayState get viewState => _stateNotifier.value;
+  WidgetState get viewState => _stateNotifier.value;
 
   @override
   void initState() {
@@ -41,34 +41,49 @@ abstract class WidgetBlocStateX<T extends StatefulWidgetX,
         exception: onExceptionBloc,
         buildWhen: buildWhen,
         listenWhen: listenWhen,
-        builder: (context, state) {
-          return ChangeNotifierProvider<WidgetDisplayStateNotifier>(
+        builder: (context, blocState) {
+          return ChangeNotifierProvider<WidgetStateNotifier>(
               create: (context) => _stateNotifier,
-              child: Consumer<WidgetDisplayStateNotifier>(//
+              child: Consumer<WidgetStateNotifier>(//
                   builder: (context, viewState, child) {
                 switch (viewState.value) {
-                  case WidgetDisplayState.normal:
-                    if (viewState.value == WidgetDisplayState.loading) {
-                      return buildLoading(context, state);
+                  case WidgetState.normal:
+                    if (viewState.value == WidgetState.loading) {
+                      return buildLoading(context,blocState, viewState.value);
                     }
-                    if (viewState.value == WidgetDisplayState.empty) {
-                      return buildEmpty(context, state);
+                    if (viewState.value == WidgetState.empty) {
+                      return buildEmpty(context,blocState, viewState.value);
                     }
-                    if (viewState.value == WidgetDisplayState.disabled) {
-                      return buildDisabled(context, state);
+                    if (viewState.value == WidgetState.disabled) {
+                      return buildDisabled(context,blocState, viewState.value);
                     }
-                    if (viewState.value == WidgetDisplayState.error) {
-                      return buildError(context, state);
+                    if (viewState.value == WidgetState.error) {
+                      return buildError(context,blocState, viewState.value);
                     }
-                    return buildDefault(context, state);
-                  case WidgetDisplayState.loading:
-                    return buildLoading(context, state);
-                  case WidgetDisplayState.empty:
-                    return buildEmpty(context, state);
-                  case WidgetDisplayState.disabled:
-                    return buildDisabled(context, state);
-                  case WidgetDisplayState.error:
-                    return buildError(context, state);
+                    if (viewState.value == WidgetState.hovered) {
+                      return buildHovered(context,blocState, viewState.value);
+                    }
+                    if (viewState.value == WidgetState.focused) {
+                      return buildFocused(context,blocState, viewState.value);
+                    }
+                    if (viewState.value == WidgetState.pressed) {
+                      return buildPressed(context,blocState, viewState.value);
+                    }
+                    return buildDefault(context,blocState, viewState.value);
+                  case WidgetState.loading:
+                    return buildLoading(context,blocState, viewState.value);
+                  case WidgetState.empty:
+                    return buildEmpty(context,blocState, viewState.value);
+                  case WidgetState.disabled:
+                    return buildDisabled(context,blocState, viewState.value);
+                  case WidgetState.error:
+                    return buildError(context,blocState, viewState.value);
+                  case WidgetState.hovered:
+                    return buildHovered(context,blocState, viewState.value);
+                  case WidgetState.focused:
+                    return buildFocused(context,blocState, viewState.value);
+                  case WidgetState.pressed:
+                    return buildPressed(context,blocState, viewState.value);
                 }
               }));
         },
@@ -90,25 +105,37 @@ abstract class WidgetBlocStateX<T extends StatefulWidgetX,
     return true;
   }
 
-  Widget buildDefault(BuildContext context, S state);
+  Widget buildDefault(BuildContext context, S blocState, WidgetState viewState);
 
-  Widget buildLoading(BuildContext context, S state) {
-    return buildDefault(context, state);
+  Widget buildLoading(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
   }
 
-  Widget buildEmpty(BuildContext context, S state) {
-    return buildDefault(context, state);
+  Widget buildEmpty(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
   }
 
-  Widget buildDisabled(BuildContext context, S state) {
-    return buildDefault(context, state);
+  Widget buildDisabled(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
   }
 
-  Widget buildError(BuildContext context, S state) {
-    return buildDefault(context, state);
+  Widget buildError(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
   }
 
-  void changeState(WidgetDisplayState state) {
+  Widget buildHovered(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
+  }
+
+  Widget buildFocused(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
+  }
+
+  Widget buildPressed(BuildContext context, S blocState, WidgetState viewState) {
+    return buildDefault(context, blocState, viewState);
+  }
+
+  void changeState(WidgetState state) {
     _stateNotifier.value = state;
   }
 

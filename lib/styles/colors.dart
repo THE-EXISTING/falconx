@@ -2,7 +2,7 @@ import 'package:falconx/falconx.dart';
 
 abstract class PaletteColor {
   PaletteColor() {
-    tran = TransparentPalette(c600);
+    transparent = TransparentPalette(c600);
   }
 
   Color get c25;
@@ -27,7 +27,7 @@ abstract class PaletteColor {
 
   Color get c900;
 
-  late final TransparentPalette tran;
+  late final TransparentPalette transparent;
 }
 
 class TransparentPalette {
@@ -35,33 +35,33 @@ class TransparentPalette {
 
   final Color color;
 
-  Color get tran2 => color.withOpacity(0.02);
+  Color get p2 => color.withOpacity(0.02);
 
-  Color get tran4 => color.withOpacity(0.04);
+  Color get p4 => color.withOpacity(0.04);
 
-  Color get tran6 => color.withOpacity(0.06);
+  Color get p6 => color.withOpacity(0.06);
 
-  Color get tran8 => color.withOpacity(0.08);
+  Color get p8 => color.withOpacity(0.08);
 
-  Color get tran12 => color.withOpacity(0.12);
+  Color get p12 => color.withOpacity(0.12);
 
-  Color get tran16 => color.withOpacity(0.16);
+  Color get p16 => color.withOpacity(0.16);
 
-  Color get tran20 => color.withOpacity(0.20);
+  Color get p20 => color.withOpacity(0.20);
 
-  Color get tran30 => color.withOpacity(0.30);
+  Color get p30 => color.withOpacity(0.30);
 
-  Color get tran40 => color.withOpacity(0.40);
+  Color get p40 => color.withOpacity(0.40);
 
-  Color get tran50 => color.withOpacity(0.50);
+  Color get p50 => color.withOpacity(0.50);
 
-  Color get tran60 => color.withOpacity(0.60);
+  Color get p60 => color.withOpacity(0.60);
 
-  Color get tran70 => color.withOpacity(0.70);
+  Color get p70 => color.withOpacity(0.70);
 
-  Color get tran80 => color.withOpacity(0.80);
+  Color get p80 => color.withOpacity(0.80);
 
-  Color get tran90 => color.withOpacity(0.90);
+  Color get p90 => color.withOpacity(0.90);
 
-  Color get tran96 => color.withOpacity(0.96);
+  Color get p96 => color.withOpacity(0.96);
 }

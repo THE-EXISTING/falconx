@@ -3,27 +3,27 @@ import 'package:falconx/falconx.dart';
 abstract class StatelessWidgetX extends StatelessWidget {
   String get tag => runtimeType.toString();
 
-  final WidgetDisplayState displayState;
+  final WidgetState state;
 
   const StatelessWidgetX({
     Key? key,
-    WidgetDisplayState? state,
-  })  : displayState = state ?? WidgetDisplayState.normal,
+    WidgetState? state,
+  })  : state = state ?? WidgetState.normal,
         super(key: key);
 
-  bool get isNormal => displayState == WidgetDisplayState.normal;
+  bool get isNormal => state == WidgetState.normal;
 
   bool get isNotNormal => !isNormal;
 
-  bool get isLoading => displayState == WidgetDisplayState.loading;
+  bool get isLoading => state == WidgetState.loading;
 
   bool get isNotLoading => !isLoading;
 
-  bool get isEmpty => displayState == WidgetDisplayState.empty;
+  bool get isEmpty => state == WidgetState.empty;
 
   bool get isNotEmpty => !isEmpty;
 
-  bool get isError => displayState == WidgetDisplayState.error;
+  bool get isError => state == WidgetState.error;
 
   bool get isNotError => !isError;
 
@@ -31,17 +31,23 @@ abstract class StatelessWidgetX extends StatelessWidget {
   @override
   @Deprecated('Please use [buildDefault] instead')
   Widget build(BuildContext context) {
-    switch (displayState) {
-      case WidgetDisplayState.normal:
+    switch (state) {
+      case WidgetState.normal:
         return buildDefault(context);
-      case WidgetDisplayState.loading:
+      case WidgetState.loading:
         return buildLoading(context);
-      case WidgetDisplayState.empty:
+      case WidgetState.empty:
         return buildEmpty(context);
-      case WidgetDisplayState.disabled:
+      case WidgetState.disabled:
         return buildDisabled(context);
-      case WidgetDisplayState.error:
+      case WidgetState.error:
         return buildError(context);
+      case WidgetState.hovered:
+        return buildHovered(context);
+      case WidgetState.focused:
+        return buildFocused(context);
+      case WidgetState.pressed:
+        return buildPressed(context);
     }
   }
 
@@ -60,6 +66,18 @@ abstract class StatelessWidgetX extends StatelessWidget {
   }
 
   Widget buildError(BuildContext context) {
+    return buildDefault(context);
+  }
+
+  Widget buildHovered(BuildContext context) {
+    return buildDefault(context);
+  }
+
+  Widget buildFocused(BuildContext context) {
+    return buildDefault(context);
+  }
+
+  Widget buildPressed(BuildContext context) {
     return buildDefault(context);
   }
 

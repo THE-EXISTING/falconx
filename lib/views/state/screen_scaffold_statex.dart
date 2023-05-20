@@ -6,12 +6,12 @@ class _PageLoadingIndicatorNotifier extends ValueNotifier<bool> {
 
 abstract class ScreenScaffoldStateX<T extends StatefulWidgetX>
     extends StateX<T> {
-  final WidgetDisplayStateNotifier _screenState =
-      WidgetDisplayStateNotifier(state: WidgetDisplayState.normal);
+  final WidgetStateNotifier _screenState =
+      WidgetStateNotifier(state: WidgetState.normal);
 
-  WidgetDisplayState get state => _screenState.value;
+  WidgetState get state => _screenState.value;
 
-  WidgetDisplayStateNotifier get screenState => _screenState;
+  WidgetStateNotifier get screenState => _screenState;
 
   final _PageLoadingIndicatorNotifier _showPageLoadingIndicator =
       _PageLoadingIndicatorNotifier();
@@ -34,7 +34,7 @@ abstract class ScreenScaffoldStateX<T extends StatefulWidgetX>
               drawer: buildDrawer(context),
               appBar: buildAppBar(context),
               bottomNavigationBar: buildBottomNavigation(context),
-              body: ValueListenableBuilder<WidgetDisplayState>(
+              body: ValueListenableBuilder<WidgetState>(
                   valueListenable: screenState,
                   builder: (context, viewState, child) {
                     return Stack(
@@ -65,18 +65,27 @@ abstract class ScreenScaffoldStateX<T extends StatefulWidgetX>
     return parent;
   }
 
-  Widget buildMainContent(BuildContext context, WidgetDisplayState viewState) {
+  Widget buildMainContent(BuildContext context, WidgetState viewState) {
     switch (viewState) {
-      case WidgetDisplayState.normal:
+      case WidgetState.normal:
         return buildBody(context);
-      case WidgetDisplayState.loading:
+      case WidgetState.loading:
         return buildBodyLoading(context);
-      case WidgetDisplayState.empty:
+      case WidgetState.empty:
         return buildBodyEmpty(context);
-      case WidgetDisplayState.disabled:
+      case WidgetState.disabled:
         return buildBodyDisabled(context);
-      case WidgetDisplayState.error:
+      case WidgetState.error:
         return buildBodyError(context);
+      case WidgetState.hovered:
+         Log.w('Screen is not have hovered state.');
+         return buildBody(context);
+      case WidgetState.focused:
+        Log.w('Screen is not have focused state.');
+        return buildBody(context);
+      case WidgetState.pressed:
+        Log.w('Screen is not have pressed state.');
+        return buildBody(context);
     }
   }
 
@@ -106,7 +115,7 @@ abstract class ScreenScaffoldStateX<T extends StatefulWidgetX>
     return Space.boxZero;
   }
 
-  void emitChangeScreenState(WidgetDisplayState state) {
+  void emitChangeScreenState(WidgetState state) {
     _screenState.value = state;
   }
 

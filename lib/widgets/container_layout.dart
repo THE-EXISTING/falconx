@@ -39,8 +39,8 @@ class ContainerLayout extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final bool mainAxisExpanded;
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   final double? radius;
   final BorderRadius? borderRadius;
   final BoxBorder? borderStroke;
@@ -249,7 +249,7 @@ class ContainerLayout extends StatelessWidget {
   Widget _buildExpanded({required bool expanded, required Widget child}) =>
       (expanded == true) ? Expanded(child: child) : child;
 
-  Widget _buildPadding({required EdgeInsets? padding, required child}) =>
+  Widget _buildPadding({required EdgeInsetsGeometry? padding, required child}) =>
       (padding != null)
           ? Padding(
               padding: padding,
