@@ -201,7 +201,7 @@ abstract class StateX<T extends StatefulWidgetX> extends State<T>
 
   @override
   void setState(VoidCallback fn) {
-    if(mounted){
+    if (mounted) {
       super.setState(fn);
     }
   }
@@ -218,7 +218,9 @@ abstract class StateX<T extends StatefulWidgetX> extends State<T>
     String path, {
     Object? extra,
   }) {
-    return context.go(path, extra: extra);
+    if (context.mounted) {
+      return context.go(path, extra: extra);
+    }
   }
 
   void goToScreenNamed(
@@ -227,12 +229,14 @@ abstract class StateX<T extends StatefulWidgetX> extends State<T>
     Map<String, dynamic>? queryParams,
     Object? extra,
   }) {
-    return context.goNamed(
-      screenName,
-      params: params ?? const <String, String>{},
-      queryParams: queryParams ?? const <String, dynamic>{},
-      extra: extra,
-    );
+    if (context.mounted) {
+      return context.goNamed(
+        screenName,
+        params: params ?? const <String, String>{},
+        queryParams: queryParams ?? const <String, dynamic>{},
+        extra: extra,
+      );
+    }
   }
 
   Future<Object?> pushScreenNamed(
@@ -252,14 +256,22 @@ abstract class StateX<T extends StatefulWidgetX> extends State<T>
     Map<String, String>? params,
     Map<String, dynamic>? queryParams,
   }) {
-    return context.replaceNamed(
-      screenName,
-      params: params ?? const <String, String>{},
-      queryParams: queryParams ?? const <String, dynamic>{},
-    );
+    if (context.mounted) {
+      return context.replaceNamed(
+        screenName,
+        params: params ?? const <String, String>{},
+        queryParams: queryParams ?? const <String, dynamic>{},
+      );
+    }
   }
 
   void popScreen() {
-    return context.pop();
+    if (context.mounted) {
+      if (context.canPop()) {
+        return context.pop();
+      } else {
+        SystemNavigator.pop();
+      }
+    }
   }
 }

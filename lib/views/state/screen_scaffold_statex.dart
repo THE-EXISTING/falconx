@@ -133,6 +133,7 @@ abstract class ScreenScaffoldStateX<T extends StatefulWidgetX>
 
   Future<bool> onWillPop(BuildContext context) {
     clearFocus();
+    if (!context.canPop()) SystemNavigator.pop();
     return Future.value(true);
   }
 }

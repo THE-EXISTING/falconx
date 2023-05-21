@@ -1,17 +1,28 @@
 import 'package:falconx/falconx.dart';
 
+extension BlocStateExtension<T> on BlocState<T> {
+  void emit(BlocX bloc) {
+    bloc.emitState(this);
+  }
+}
+
 abstract class BlocX<State> extends Bloc<Object, State> {
   BlocX(State initialState)
-      : _fetcher = FetcherList(),
+      : _state = initialState,
+        _fetcher = FetcherList(),
         super(initialState);
 
+  State _state;
   final FetcherList _fetcher;
   final navigationEventCubit = NavigationEventCubit();
-  final StreamController<State> _controller =
+  final StreamController<State> controller =
       StreamController<State>.broadcast();
 
   @override
-  Stream<State> get stream => _controller.stream;
+  State get state => _state;
+
+  @override
+  Stream<State> get stream => controller.stream;
 
   void fetch<T extends BlocState>({
     required Object key,
@@ -35,11 +46,35 @@ abstract class BlocX<State> extends Bloc<Object, State> {
     return super.close();
   }
 
+  void setStateWithoutEmit<T>(T newValue) {
+    _state = newValue as State;
+  }
 
-  void emitState(State newValue) => _controller.add(newValue);
+  void emitCurrentState() {
+    if (controller.isClosed) return;
+    controller.add(_state);
+  }
 
-  void emitSuccessState<T>(T newValue) =>
-      _controller.add(BlocState.success(data: newValue) as State);
+  void emitState(State newValue) {
+    if (controller.isClosed) return;
+    controller.add(newValue);
+  }
+
+  void emitLoadingState<T>([T? newValue]) {
+    if (controller.isClosed) return;
+    controller.add(BlocState.loading(data: newValue) as State);
+  }
+
+  void emitErrorState(Object? error, StackTrace? stacktrace) {
+    if (controller.isClosed) return;
+    controller.add(
+        BlocState.exception(error: error, stackTrace: stacktrace) as State);
+  }
+
+  void emitSuccessState<T>(T newValue) {
+    if (controller.isClosed) return;
+    controller.add(BlocState.success(data: newValue) as State);
+  }
 
   void emitPopScreen<T>([T? result]) {
     navigationEventCubit.emitPopScreen(result);

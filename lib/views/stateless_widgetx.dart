@@ -86,7 +86,9 @@ abstract class StatelessWidgetX extends StatelessWidget {
     String path, {
     Object? extra,
   }) {
-    return context.go(path, extra: extra);
+    if (context.mounted) {
+      return context.go(path, extra: extra);
+    }
   }
 
   void goToScreenNamed(
@@ -95,14 +97,22 @@ abstract class StatelessWidgetX extends StatelessWidget {
     Map<String, String>? params,
     Map<String, dynamic>? queryParams,
   }) {
-    return context.goNamed(
-      screenName,
-      params: params ?? const <String, String>{},
-      queryParams: queryParams ?? const <String, dynamic>{},
-    );
+    if (context.mounted) {
+      return context.goNamed(
+        screenName,
+        params: params ?? const <String, String>{},
+        queryParams: queryParams ?? const <String, dynamic>{},
+      );
+    }
   }
 
   void popScreen(BuildContext context) {
-    return context.pop();
+    if (context.mounted) {
+      if (context.canPop()) {
+        return context.pop();
+      } else {
+        SystemNavigator.pop();
+      }
+    }
   }
 }

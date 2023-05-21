@@ -59,7 +59,7 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
           return GestureDetector(
             onTap: clearFocus,
             child: WillPopScope(
-              onWillPop: () => onWillPop(state),
+              onWillPop: () => onWillPop(context, state),
               child: Scaffold(
                 resizeToAvoidBottomInset: false,
                 drawer: buildDrawer(context, state),
@@ -103,9 +103,9 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
           postBuild(context, state);
           return buildWidget;
         case BlocStatus.loading:
-          if(state.hasData()){
+          if (state.hasData()) {
             buildWidget = buildBodyLoading(context, state);
-          }else{
+          } else {
             buildWidget = buildBodyLoadingWithNoData(context, state);
           }
           postBuild(context, state);
@@ -167,11 +167,9 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
     return null;
   }
 
-  Future<bool> onWillPop(S state) {
+  Future<bool> onWillPop(BuildContext context, S state) {
     clearFocus();
-    if (state is BlocState && state.status == BlocStatus.loading) {
-      return Future.value(false);
-    }
+    if (!context.canPop()) SystemNavigator.pop();
     return Future.value(true);
   }
 
