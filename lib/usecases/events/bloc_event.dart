@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class BlocEvent<Event> extends Equatable {
+class BlocEvent<Event> {
   final Event name;
   final Object? data;
 
@@ -10,8 +10,7 @@ class BlocEvent<Event> extends Equatable {
   });
 
   @override
-  List<Object?> get props => [name, data];
-
-  @override
-  bool? get stringify => true;
+  String toString() {
+    return 'BlocEvent{name: $name, data: $data}';
+  }
 }

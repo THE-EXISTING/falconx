@@ -7,7 +7,7 @@ abstract class WidgetBlocStateX<T extends StatefulWidgetX,
             WidgetStateNotifier(state: viewState ?? WidgetState.normal);
 
   final WidgetStateNotifier _stateNotifier;
-  NavigationEventCubit? _navigationEventCubit;
+  WidgetEventCubit? _widgetEventCubit;
 
   B get bloc => context.read<B>();
 
@@ -17,7 +17,7 @@ abstract class WidgetBlocStateX<T extends StatefulWidgetX,
   void initState() {
     super.initState();
     if (bloc is BlocX) {
-      _navigationEventCubit = (bloc as BlocX).navigationEventCubit;
+      _widgetEventCubit = (bloc as BlocX).widgetEventCubit;
     } else {
       Log.w('No use Blocx');
     }
@@ -27,8 +27,8 @@ abstract class WidgetBlocStateX<T extends StatefulWidgetX,
   @override
   @Deprecated('Please use [buildDefault] instead')
   Widget build(BuildContext context) {
-    return BlocListener<NavigationEventCubit, BlocEvent?>(
-      bloc: _navigationEventCubit,
+    return BlocListener<WidgetEventCubit, BlocEvent?>(
+      bloc: _widgetEventCubit,
       listener: (context, BlocEvent? blocEvent) {
         if (blocEvent?.name == NavigationEvent.pop) {
           Navigator.pop(context, blocEvent?.data);

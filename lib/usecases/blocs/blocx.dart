@@ -1,8 +1,8 @@
 import 'package:falconx/falconx.dart';
 
-extension BlocStateExtension<T> on BlocState<T> {
-  void emit(BlocX bloc) {
-    bloc.emitState(this);
+extension BlocStateExtension on BlocState {
+  void emit<S>(BlocX<S> bloc) {
+    bloc.emitState(this as S);
   }
 }
 
@@ -14,7 +14,7 @@ abstract class BlocX<State> extends Bloc<Object, State> {
 
   State _state;
   final FetcherList _fetcher;
-  final navigationEventCubit = NavigationEventCubit();
+  final widgetEventCubit = WidgetEventCubit();
   final StreamController<State> controller =
       StreamController<State>.broadcast();
 
@@ -42,7 +42,7 @@ abstract class BlocX<State> extends Bloc<Object, State> {
   @override
   Future<void> close() {
     _fetcher.close();
-    navigationEventCubit.close();
+    widgetEventCubit.close();
     return super.close();
   }
 
@@ -53,34 +53,42 @@ abstract class BlocX<State> extends Bloc<Object, State> {
   void emitCurrentState() {
     if (controller.isClosed) return;
     controller.add(_state);
+    setStateWithoutEmit(_state);
   }
 
   void emitState(State newValue) {
     if (controller.isClosed) return;
     controller.add(newValue);
+    setStateWithoutEmit(newValue);
   }
 
   void emitLoadingState<T>([T? newValue]) {
     if (controller.isClosed) return;
-    controller.add(BlocState.loading(data: newValue) as State);
+    final state = BlocState.loading(data: newValue) as State;
+    controller.add(state);
+    setStateWithoutEmit(state);
   }
 
   void emitErrorState(Object? error, StackTrace? stacktrace) {
     if (controller.isClosed) return;
-    controller.add(
-        BlocState.exception(error: error, stackTrace: stacktrace) as State);
+    final state =
+        BlocState.exception(error: error, stackTrace: stacktrace) as State;
+    controller.add(state);
+    setStateWithoutEmit(state);
   }
 
   void emitSuccessState<T>(T newValue) {
     if (controller.isClosed) return;
-    controller.add(BlocState.success(data: newValue) as State);
+    final state = BlocState.success(data: newValue) as State;
+    controller.add(state);
+    setStateWithoutEmit(state);
   }
 
   void emitPopScreen<T>([T? result]) {
-    navigationEventCubit.emitPopScreen(result);
+    widgetEventCubit.emitPopScreen(result);
   }
 
   void emitEvent<T>(T event, {Object? data}) {
-    navigationEventCubit.emit(BlocEvent<T>(event, data: data));
+    widgetEventCubit.emit(BlocEvent<T>(event, data: data));
   }
 }

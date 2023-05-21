@@ -2,8 +2,8 @@ import 'package:falconx/falconx.dart';
 
 enum NavigationEvent { pop }
 
-class NavigationEventCubit extends Cubit<BlocEvent?> {
-  NavigationEventCubit() : super(null);
+class WidgetEventCubit extends Cubit<BlocEvent?> {
+  WidgetEventCubit() : super(null);
 
   BlocEvent? get data => state;
 
