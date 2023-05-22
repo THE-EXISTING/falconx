@@ -85,10 +85,14 @@ abstract class BlocX<State> extends Bloc<Object, State> {
   }
 
   void emitPopScreen<T>([T? result]) {
+    if(widgetEventCubit.isClosed) return;
+
     widgetEventCubit.emitPopScreen(result);
   }
 
   void emitEvent<T>(T event, {Object? data}) {
+    if(widgetEventCubit.isClosed) return;
+
     widgetEventCubit.emit(BlocEvent<T>(event, data: data));
   }
 }
