@@ -3,12 +3,22 @@ import 'package:falconx/falconx.dart';
 typedef ValidateWidgetBuilder<S> = Widget Function(
     BuildContext context, bool valid, S state);
 
-abstract class ValidatorCubit<S> extends Cubit<S?> {
-  ValidatorCubit() : super(null);
+abstract class ValidatorBooleanCubit<S> extends Cubit<S?> {
+  ValidatorBooleanCubit() : super(null);
 
   bool validate(S? data);
 
-  void check(S? data){
+  void check(S? data) {
+    emit(data);
+  }
+}
+
+abstract class ValidatorCubit<INPUT, OUTPUT> extends Cubit<INPUT?> {
+  ValidatorCubit() : super(null);
+
+  OUTPUT validate(INPUT? data);
+
+  void check(INPUT? data) {
     emit(data);
   }
 }
@@ -69,7 +79,7 @@ class _ValidateBuilderState<B extends BlocBase<S>, S>
       builder: (context, state) =>
           widget.builder(context, _currentValidate, state),
       buildWhen: (previous, current) {
-        final validateCubit = widget.source as ValidatorCubit;
+        final validateCubit = widget.source as ValidatorBooleanCubit;
         final validateResult = validateCubit.validate(current);
         if (validateResult != _currentValidate) {
           _currentValidate = validateResult;
