@@ -14,6 +14,7 @@ class ContainerLayout extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.mainAxisExpanded = false,
+    this.transform,
     this.margin,
     this.padding,
     this.radius,
@@ -24,7 +25,7 @@ class ContainerLayout extends StatelessWidget {
     this.decoration,
     this.child,
     this.children,
-    this.onPress,
+    this.onPressed,
     this.onLongPress,
     this.builder,
   }) : super(key: key);
@@ -50,7 +51,8 @@ class ContainerLayout extends StatelessWidget {
   final Widget? child;
   final List<Widget>? children;
   final bool crossAxisIntrinsic;
-  final GestureTapCallback? onPress;
+  final Matrix4? transform;
+  final GestureTapCallback? onPressed;
   final GestureLongPressCallback? onLongPress;
   final Function(BuildContext context, Widget child)? builder;
 
@@ -102,7 +104,7 @@ class ContainerLayout extends StatelessWidget {
             context,
             radius: radius,
             borderRadius: borderRadius,
-            onPress: onPress,
+            onPress: onPressed,
             onLongPress: onLongPress,
             child: _buildBoxDecorator(
               backgroundColor: backgroundColor,
@@ -113,6 +115,7 @@ class ContainerLayout extends StatelessWidget {
               borderStroke: borderStroke,
               decoration: decoration,
               shadow: boxShadow,
+              transform: transform,
               child: _buildClipRect(
                 radius: radius,
                 borderRadius: borderRadius,
@@ -198,6 +201,7 @@ class ContainerLayout extends StatelessWidget {
     required Color? strokeColor,
     required List<BoxShadow>? shadow,
     required Decoration? decoration,
+    required Matrix4? transform,
     required Widget child,
   }) =>
       decoration != null ||
@@ -207,8 +211,10 @@ class ContainerLayout extends StatelessWidget {
                   borderStroke != null ||
                   strokeThickness != null ||
                   strokeColor != null ||
-                  shadow != null)
-          ? DecoratedBox(
+                  shadow != null ||
+                  transform != null)
+          ? Container(
+              transform: transform,
               decoration: decoration ??
                   BoxDecoration(
                     color: backgroundColor,
@@ -220,8 +226,7 @@ class ContainerLayout extends StatelessWidget {
                         ),
                     borderRadius: borderRadius ??
                         (radius != null ? BorderRadius.circular(radius) : null),
-                    boxShadow:
-                        radius == null && borderRadius == null ? shadow : null,
+                    boxShadow: shadow,
                   ),
               child: child,
             )

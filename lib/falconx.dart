@@ -30,6 +30,7 @@ export 'package:group_button/group_button.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
 export 'package:country_code_picker/country_code_picker.dart';
 export 'package:loading_animation_widget/loading_animation_widget.dart';
+export 'package:carousel_slider/carousel_slider.dart';
 
 export 'package:catcher/catcher.dart';
 export 'package:sentry_flutter/sentry_flutter.dart'
