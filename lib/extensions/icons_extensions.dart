@@ -1,24 +1,28 @@
 import 'package:falconx/falconx.dart';
 
 extension SvgIcons on String? {
-  SvgPicture toSvg({
+  Widget toSvg({
     Key? key,
     double? height,
     double? width,
     Color? color,
     String? label,
   }) =>
-      SvgPicture.asset(
-        key: key,
-        this!,
+      SizedBox(
         height: height,
         width: width,
-        colorFilter:
-            color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null,
-        semanticsLabel: label,
+        child: SvgPicture.asset(
+          key: key,
+          this!,
+          colorFilter:
+              color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null,
+          semanticsLabel: label,
+          fit: BoxFit.fill,
+          allowDrawingOutsideViewBox: true,
+        ),
       );
 
-  SvgPicture toSvgIcon({
+  Widget toSvgIcon({
     Key? key,
     double size = 24,
     Color? color,
