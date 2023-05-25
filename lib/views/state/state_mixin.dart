@@ -12,7 +12,7 @@ mixin StateXMixin<T> {
 
   Widget build(BuildContext context);
 
-  void postFrame();
+  void postFrame(BuildContext context);
 
   void deactivate();
 
