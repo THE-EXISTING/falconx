@@ -37,7 +37,6 @@ export 'package:pin_code_fields/pin_code_fields.dart';
 export 'package:responsive_framework/responsive_framework.dart';
 export 'package:group_button/group_button.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
-export 'package:country_code_picker/country_code_picker.dart';
 export 'package:loading_animation_widget/loading_animation_widget.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 
@@ -67,7 +66,6 @@ export 'package:path_provider/path_provider.dart';
 export 'package:uni_links/uni_links.dart';
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:sim_data/sim_data.dart';
-export 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 export 'package:qr_flutter/qr_flutter.dart';
 export 'package:timer_count_down/timer_count_down.dart';
 export 'package:timer_count_down/timer_controller.dart';
@@ -89,3 +87,5 @@ export 'routers/routers.dart';
 export 'usecases/usecases.dart';
 export 'views/views.dart';
 export 'widgets/widgets.dart';
+
+
