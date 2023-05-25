@@ -4,6 +4,15 @@ export 'package:falconnect/falconnect.dart';
 export 'package:falmodel/falmodel.dart';
 export 'package:faltool/faltool.dart';
 export 'package:falstore/falstore.dart';
+export 'dart:ui'
+    hide
+        Codec,
+        decodeImageFromList,
+        TextStyle,
+        Gradient,
+        StrutStyle,
+        Image,
+        ErrorCallback;
 
 export 'dart:async';
 export 'dart:math';
