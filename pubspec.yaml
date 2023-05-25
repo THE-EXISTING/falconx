@@ -37,7 +37,6 @@ dependencies:
   drop_shadow: ^0.1.0
   group_button: ^5.2.2
   dropdown_button2: ^2.1.2
-  country_code_picker: ^3.0.0
   sms_autofill: ^2.3.0
   qr_code_scanner: ^1.0.1
   qr_flutter: ^4.1.0
@@ -73,7 +72,6 @@ dependencies:
   http_parser: ^4.0.2
   path_provider: ^2.0.15
   uni_links: ^0.5.1
-  flutter_multi_formatter: ^2.11.0
   timer_count_down: ^2.2.2
   version: ^3.0.2
   screen_brightness: ^0.2.2
@@ -83,6 +81,7 @@ dependencies:
   universal_html: ^2.2.1
   android_intent_plus: ^4.0.0
   enum_to_string: ^2.0.1
+
 
 dev_dependencies:
   flutter_test:

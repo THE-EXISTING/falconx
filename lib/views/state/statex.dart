@@ -90,7 +90,7 @@ abstract class StateX<T extends StatefulWidgetX> extends State<T>
     }
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      postFrame();
+      postFrame(context);
     });
     super.initState();
   }
@@ -140,7 +140,7 @@ abstract class StateX<T extends StatefulWidgetX> extends State<T>
   }
 
   @override
-  void postFrame() {
+  void postFrame(BuildContext context) {
     _isPostedFrame = true;
   }
 
