@@ -62,7 +62,7 @@ class BlocConsumerStateX<B extends BlocBase<S>, S>
       builder: widget.builder,
       buildWhen: (previous, current) {
         if (widget.listenWhen?.call(previous, current) ?? true) {
-          if (current is BlocState && current.isError()) {
+          if (current is BlocState && current.isFail) {
             final Object? exception = current.error;
             if (exception != null) {
               handlerException(context, exception);

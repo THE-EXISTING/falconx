@@ -1,8 +1,14 @@
 import 'package:falconx/falconx.dart';
 
 extension BlocStateExtension on BlocState {
-  void emit<S>(BlocX<S> bloc) {
+  void emitState<S>(BlocX<S> bloc) {
     bloc.emitState(this as S);
+  }
+}
+
+extension PageEventExtension on Enum {
+  void emitEvent<S>(BlocX<S> bloc, {Object? data}) {
+    bloc.emitEvent(this, data: data);
   }
 }
 
@@ -24,19 +30,17 @@ abstract class BlocX<State> extends Bloc<Object, State> {
   @override
   Stream<State> get stream => controller.stream;
 
-  void fetch<T extends BlocState>({
+  void fetch<T>({
     required Object key,
-    required Stream<T> call,
-    required Function(T blocState) onFetch,
-    Function? onError,
-    bool newFetch = true,
+    required Stream<BlocState<T>> call,
+    required Function(BlocState<T> blocState) onFetch,
+    bool debounceFetch = false,
   }) =>
       _fetcher.fetch(
         key: key,
         call: call,
         onFetch: onFetch,
-        newFetch: newFetch,
-        onError: onError,
+        debounceFetch: debounceFetch,
       );
 
   @override
@@ -69,10 +73,9 @@ abstract class BlocX<State> extends Bloc<Object, State> {
     setStateWithoutEmit(state);
   }
 
-  void emitErrorState(Object? error, StackTrace? stacktrace) {
+  void emitFailState(Object? error, StackTrace? stacktrace) {
     if (controller.isClosed) return;
-    final state =
-        BlocState.exception(error: error, stackTrace: stacktrace) as State;
+    final state = BlocState.fail(error: error, stackTrace: stacktrace) as State;
     controller.add(state);
     setStateWithoutEmit(state);
   }
@@ -85,13 +88,13 @@ abstract class BlocX<State> extends Bloc<Object, State> {
   }
 
   void emitPopScreen<T>([T? result]) {
-    if(widgetEventCubit.isClosed) return;
+    if (widgetEventCubit.isClosed) return;
 
     widgetEventCubit.emitPopScreen(result);
   }
 
   void emitEvent<T>(T event, {Object? data}) {
-    if(widgetEventCubit.isClosed) return;
+    if (widgetEventCubit.isClosed) return;
 
     widgetEventCubit.emit(BlocEvent<T>(event, data: data));
   }

@@ -103,14 +103,14 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
           postBuild(context, state);
           return buildWidget;
         case BlocStatus.loading:
-          if (state.hasData()) {
+          if (state.hasData) {
             buildWidget = buildBodyLoading(context, state);
           } else {
             buildWidget = buildBodyLoadingWithNoData(context, state);
           }
           postBuild(context, state);
           return buildWidget;
-        case BlocStatus.error:
+        case BlocStatus.fail:
           buildWidget = buildBodyError(context, state);
           postBuild(context, state);
           return buildWidget;
@@ -183,7 +183,7 @@ abstract class ScreenScaffoldBlocStateX<T extends StatefulWidgetX,
 
   void showPageLoadingIndicatorFromResource(BlocState resource,
       {bool otherCondition = true}) {
-    if (resource.isLoading() && otherCondition) {
+    if (resource.isLoading && otherCondition) {
       showPageLoadingIndicator();
     } else {
       hidePageLoadingIndicator();

@@ -12,6 +12,9 @@ abstract class BehaviorBlocX<E, Event extends BlocEvent<E>, State>
   @override
   StreamController<State> controller = BehaviorSubject<State>();
 
+  @override
+  Stream<State> get stream => BehaviorSubject<State>().stream;
+
 
   Future<void> onListenEvent(BlocEvent<E> event);
 

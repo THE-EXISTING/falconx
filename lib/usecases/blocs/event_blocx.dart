@@ -35,10 +35,10 @@ abstract class EventBlocX<Event, State> extends Bloc<Event, State> {
 
   void addTypingEvent(Event event) => add(event);
 
-  void fetch<T extends BlocState>({
+  void fetch<T>({
     required Object key,
-    required Stream<T> call,
-    required Function(T resource) onResource,
+    required Stream<BlocState<T>> call,
+    required Function(BlocState<T> resource) onResource,
     Function? onLoading,
   }) =>
       _fetcher.fetch(key: key, call: call, onFetch: onResource);
