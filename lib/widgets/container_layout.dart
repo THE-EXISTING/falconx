@@ -4,16 +4,20 @@ class ContainerLayout extends StatelessWidget {
   const ContainerLayout({
     Key? key,
     this.direction = Axis.vertical,
-    this.backgroundColor,
     this.spacing = 0.0,
-    this.width,
-    this.height,
-    this.boxShadow,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.crossAxisIntrinsic = false,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.mainAxisExpanded = false,
+    this.width,
+    this.height,
+    this.minWidth,
+    this.maxWidth,
+    this.minHeight,
+    this.maxHeight,
+    this.backgroundColor,
+    this.boxShadow,
     this.transform,
     this.margin,
     this.padding,
@@ -25,36 +29,50 @@ class ContainerLayout extends StatelessWidget {
     this.decoration,
     this.child,
     this.children,
+    this.builder,
     this.onPressed,
     this.onLongPress,
-    this.builder,
   }) : super(key: key);
 
+  ///===== Layout ======///
   final Axis direction;
   final double spacing;
-  final double? width;
-  final double? height;
-  final Color? backgroundColor;
-  final List<BoxShadow>? boxShadow;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final bool mainAxisExpanded;
-  final EdgeInsetsGeometry? margin;
-  final EdgeInsetsGeometry? padding;
+  final bool crossAxisIntrinsic;
+
+  ///========== Size ==========///
+  // If you use width,height will override min and max width, height.
+  final double? width;
+  final double? height;
+  final double? minWidth;
+  final double? maxWidth;
+  final double? minHeight;
+  final double? maxHeight;
+
+  ///===== Decoration ======///
+  final Color? backgroundColor;
+  final List<BoxShadow>? boxShadow;
   final double? radius;
   final BorderRadius? borderRadius;
   final BoxBorder? borderStroke;
   final double? strokeThickness;
   final Color? strokeColor;
   final Decoration? decoration;
+  final Matrix4? transform;
+
+  ///===== Child Widget ======///
   final Widget? child;
   final List<Widget>? children;
-  final bool crossAxisIntrinsic;
-  final Matrix4? transform;
+  final Function(BuildContext context, Widget child)? builder;
+
+  ///===== Call Back ======///
   final GestureTapCallback? onPressed;
   final GestureLongPressCallback? onLongPress;
-  final Function(BuildContext context, Widget child)? builder;
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +111,13 @@ class ContainerLayout extends StatelessWidget {
       layout = child ?? Container();
     }
 
-    return _buildSizeBox(
+    return _buildSize(
       width: width,
       height: height,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      minHeight: minHeight,
+      maxHeight: maxHeight,
       child: _buildExpanded(
         expanded: mainAxisExpanded,
         child: _buildPadding(
@@ -135,9 +157,34 @@ class ContainerLayout extends StatelessWidget {
   }
 
   ///========================= PRIVATE METHOD =========================///
-  Widget _customBuilder(BuildContext context, Widget child) {
-    return builder?.call(context, child) ?? child;
-  }
+  Widget _buildSize({
+    required double? width,
+    required double? height,
+    required double? minWidth,
+    required double? maxWidth,
+    required double? minHeight,
+    required double? maxHeight,
+    required Widget child,
+  }) =>
+      (width != null ||
+              height != null ||
+              minWidth != null ||
+              maxWidth != null ||
+              minHeight != null ||
+              maxHeight != null)
+          ? ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: minWidth ?? width ?? 0.0,
+                maxWidth: maxWidth ?? width ?? double.infinity,
+                minHeight: minHeight ?? height ?? 0.0,
+                maxHeight: maxHeight ?? height ?? double.infinity,
+              ),
+              child: child, // Your widget here
+            )
+          : child;
+
+  Widget _customBuilder(BuildContext context, Widget child) =>
+      builder?.call(context, child) ?? child;
 
   Widget _buildInkWell(
     BuildContext context, {
@@ -155,29 +202,19 @@ class ContainerLayout extends StatelessWidget {
     final focusColor = baseColor.withOpacity(0.01);
     final splashColor = baseColor.withOpacity(0.01);
     final highlightColor = baseColor.withOpacity(0.04);
-    return InkWell(
-      radius: radius,
-      borderRadius: borderRadius,
-      focusColor: focusColor,
-      splashColor: splashColor,
-      highlightColor: highlightColor,
-      onTap: onPress,
-      onLongPress: onLongPress,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        radius: radius,
+        borderRadius: borderRadius,
+        focusColor: focusColor,
+        splashColor: splashColor,
+        highlightColor: highlightColor,
+        onTap: onPress,
+        onLongPress: onLongPress,
+      ),
     );
   }
-
-  Widget _buildSizeBox({
-    double? width,
-    double? height,
-    required Widget child,
-  }) =>
-      (width == null && height == null)
-          ? child
-          : SizedBox(
-              height: height,
-              width: width,
-              child: child,
-            );
 
   Widget _buildClipRect({
     required double? radius,
@@ -254,7 +291,8 @@ class ContainerLayout extends StatelessWidget {
   Widget _buildExpanded({required bool expanded, required Widget child}) =>
       (expanded == true) ? Expanded(child: child) : child;
 
-  Widget _buildPadding({required EdgeInsetsGeometry? padding, required child}) =>
+  Widget _buildPadding(
+          {required EdgeInsetsGeometry? padding, required child}) =>
       (padding != null)
           ? Padding(
               padding: padding,
