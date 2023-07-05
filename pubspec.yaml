@@ -42,7 +42,7 @@ dependencies:
 #  sms_autofill: ^2.3.0
 
   #======= Analytic ========#
-  sentry_flutter: ^7.8.0
+  sentry: ^7.8.0
 
   #======= Utils ========#
   intl: ^0.18.1
