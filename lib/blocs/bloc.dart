@@ -48,19 +48,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
     return super.close();
   }
 
-  void addInitEvent<T>(EVENT event, {T? data}) {
-    add(InitEvent(event, data: data));
-  }
-
-  void addAppEvent<T>(EVENT event, {T? data}) {
-    add(ObjectEvent(event, data: data));
-  }
-
-  void addClickEvent<T>(EVENT event, {T? data}) {
-    add(ClickEvent(event, data: data));
-  }
-
-  void addTypingEvent<T>(EVENT event, {required T data}) {
-    add(TypingEvent(event, data: data));
+  void addEvent<T>(EVENT event, {T? data}) {
+    add(BlocEvent(event, data: data));
   }
 }
