@@ -6,11 +6,13 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
 
   BLOC get bloc => context.read<BLOC>();
 
+  @protected
   @override
+  @Deprecated('Please use buildDefault instead.')
   Widget build(BuildContext context) {
     return BlocConsumer<BLOC, STATE>(
         bloc: bloc,
-        listener: onListenBloc,
+        listener: onListener,
         buildWhen: buildWhen,
         listenWhen: listenWhen,
         builder: (context, state) {
@@ -24,13 +26,21 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
         });
   }
 
+  void onListener(BuildContext context, STATE state) {
+    if (state is WidgetEvent) {
+      onListenEvent(context, state.name, state.data);
+    } else {
+      onListenBlocState(context, state);
+    }
+  }
+
   void clearFocus() => FocusScope.of(context).unfocus();
 
   Widget buildDefault(BuildContext context, STATE state);
 
   void onListenEvent(BuildContext context, Object event, Object? data) {}
 
-  void onListenBloc(BuildContext context, STATE state) {}
+  void onListenBlocState(BuildContext context, STATE state) {}
 
   Future<bool> onWillPop(BuildContext context, STATE state) {
     clearFocus();
@@ -39,7 +49,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   }
 
   bool listenWhen(STATE previous, STATE current) {
-    return current is WidgetEvent;
+    return true;
   }
 
   bool buildWhen(STATE previous, STATE current) {
