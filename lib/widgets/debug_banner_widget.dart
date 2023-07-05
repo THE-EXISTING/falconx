@@ -1,4 +1,4 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
 class DebugBannerView extends StatelessWidget {
   const DebugBannerView({Key? key, required this.child, this.color})

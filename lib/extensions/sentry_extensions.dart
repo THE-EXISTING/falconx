@@ -1,12 +1,12 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
 extension SentryExtension on Object? {
   Future<SentryId> sentryCaptureException(
     dynamic stackTrace, {
     Hint? hint,
     ScopeCallback? withScope,
-  }) async =>
-      await Sentry.captureException(
+  }) =>
+      Sentry.captureException(
         this,
         stackTrace: stackTrace,
         hint: hint,

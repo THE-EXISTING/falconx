@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 import 'package:flutter/foundation.dart';
 
 class Deeplink {

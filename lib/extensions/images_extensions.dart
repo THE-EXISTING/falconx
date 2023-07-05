@@ -1,4 +1,4 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
 extension AssetImages on String {
   AssetImage toImage({

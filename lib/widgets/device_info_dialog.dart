@@ -1,4 +1,5 @@
-import 'package:falconx/falconx.dart';
+import 'dart:io';
+import 'package:falconx/lib.dart';
 
 class DeviceInfoDialog extends StatelessWidget {
   const DeviceInfoDialog({Key? key}) : super(key: key);
@@ -40,7 +41,6 @@ class DeviceInfoDialog extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              _buildTile('Build mode: ', BuildConfig.mode.toString()),
               _buildTile(
                 'Physical device: ',
                 device?.isPhysicalDevice.toString(),
@@ -71,16 +71,10 @@ class DeviceInfoDialog extends StatelessWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    ElevatedButton(
-                      child: const Text('Clear app (Long press)'),
-                      onPressed: () {},
-                      onLongPress: () => _clearAppAndRestart(context),
-                    ),
                     _buildTile('App name: ', package?.appName),
                     _buildTile('Version: ',
                         '${package?.version} (${package?.buildNumber})'),
                     _buildTile('Package name: ', package?.packageName),
-                    _buildTile('Build mode: ', BuildConfig.mode.toString()),
                     Space.height24,
                     _buildTile('Android version: ', device?.version.release),
                     _buildTile(
@@ -117,16 +111,4 @@ class DeviceInfoDialog extends StatelessWidget {
     );
   }
 
-  void _clearAppAndRestart(BuildContext context) async {
-    //TODO: Research how to refactory application
-    final cacheDir = await getTemporaryDirectory();
-    if (cacheDir.existsSync()) {
-      cacheDir.deleteSync(recursive: true);
-    }
-    final appDir = await getApplicationSupportDirectory();
-    if (appDir.existsSync()) {
-      appDir.deleteSync(recursive: true);
-    }
-    DebugRestartWidget.restartApp(context);
-  }
 }

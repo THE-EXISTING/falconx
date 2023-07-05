@@ -1,4 +1,4 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
 class ShapeStyle with EquatableMixin {
   const ShapeStyle({

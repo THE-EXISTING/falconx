@@ -1,4 +1,4 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
 abstract class PaletteColor {
   PaletteColor() {

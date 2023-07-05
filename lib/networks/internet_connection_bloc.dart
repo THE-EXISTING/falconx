@@ -1,42 +1,39 @@
-import 'package:falconx/falconx.dart';
-enum InternetResult {
-  connected,
-  noInternet,
-}
+import 'package:falconx/lib.dart';
 
-class InternetConnectionBloc extends BlocX<InternetResult> {
+class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
   InternetConnectionBloc({Connectivity? connectivity})
-      : super(InternetResult.connected) {
-    _connectivity = connectivity ?? Connectivity();
-    subscription = _connectivity.onConnectivityChanged
-        .listen((ConnectivityResult connectivity) {
-      final result = _getResult(connectivity);
-      emitState(result);
-    });
+      : super(ConnectivityResult.other) {
+    _subscription = stream.listen(onConnectivityChanged);
+    _connectivityResult = ConnectivityResult.other;
   }
 
-  late final Connectivity _connectivity;
-  StreamSubscription<ConnectivityResult>? subscription;
+  late final _stateController =
+      StreamController<ConnectivityResult>.broadcast();
+  late ConnectivityResult _connectivityResult;
+  StreamSubscription<ConnectivityResult>? _subscription;
+
+  ConnectivityResult get connectivityResult => _connectivityResult;
+
+  bool get isConnectedInternet =>
+      _connectivityResult == ConnectivityResult.wifi ||
+      _connectivityResult == ConnectivityResult.ethernet ||
+      _connectivityResult == ConnectivityResult.mobile ||
+      _connectivityResult == ConnectivityResult.vpn;
+
+  bool get isNotConnectedInternet => !isConnectedInternet;
+
+  @override
+  Stream<ConnectivityResult> get stream => _stateController.stream;
 
   @override
   Future<void> close() async {
-    subscription?.cancel();
+    _subscription?.cancel();
     return super.close();
   }
 
-  Future<InternetResult> checkConnectivity() async {
-    final ConnectivityResult connectivity =
-        await _connectivity.checkConnectivity();
-    return _getResult(connectivity);
-  }
-
-  InternetResult _getResult(ConnectivityResult connectivity) {
-    if (connectivity == ConnectivityResult.wifi ||
-        connectivity == ConnectivityResult.ethernet ||
-        connectivity == ConnectivityResult.mobile) {
-      return InternetResult.connected;
-    } else {
-      return InternetResult.noInternet;
-    }
+  void onConnectivityChanged(ConnectivityResult result) {
+    _connectivityResult = result;
+    if (_stateController.isClosed) return;
+    emit(result);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
 class Four<A, B, C, D> with EquatableMixin {
   const Four({

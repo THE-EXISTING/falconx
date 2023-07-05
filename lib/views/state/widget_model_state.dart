@@ -1,6 +1,6 @@
-import 'package:falconx/falconx.dart';
+import 'package:falconx/lib.dart';
 
-class WidgetModelState<T extends UniqueModelX> with EquatableMixin {
+class WidgetModelState<T extends BaseUniqueModel> with EquatableMixin {
   WidgetModelState({
     String? id,
     required this.data,
