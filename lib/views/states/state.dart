@@ -52,16 +52,20 @@ enum LifecycleState { created, initState, restore, resume, build }
 
 abstract class FalconState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver, RestorationMixin {
-  bool _isPostedFrame = false;
+  FalconState({WidgetState? widgetState})
+      : widgetStateNotifier =
+            WidgetStateNotifier(state: widgetState ?? WidgetState.normal);
 
-  @override
-  String? get restorationId => widget.key.toString();
+  final WidgetStateNotifier widgetStateNotifier;
+
+  WidgetState get widgetState => widgetStateNotifier.value;
 
   String get tag => '${widget.runtimeType} State';
 
   Key? get key => widget.key;
 
-  bool get postedFrame => _isPostedFrame;
+  @override
+  String? get restorationId => widget.key.toString();
 
   Future<Version> get currentVersion async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -94,9 +98,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void postFrame(BuildContext context) {
-    _isPostedFrame = true;
-  }
+  void postFrame(BuildContext context) {}
 
   @override
   void dispose() {
@@ -220,5 +222,9 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
         SystemNavigator.pop();
       }
     }
+  }
+
+  void changeState(WidgetState state) {
+    widgetStateNotifier.value = state;
   }
 }

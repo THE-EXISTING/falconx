@@ -2,17 +2,11 @@ import 'package:falconx/lib.dart';
 
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
-  FalconBlocState({WidgetState? viewState})
-      : widgetStateNotifier =
-            WidgetStateNotifier(state: viewState ?? WidgetState.normal);
-
-  final WidgetStateNotifier widgetStateNotifier;
+  FalconBlocState({super.widgetState});
 
   FocusNode? get focusNode => FocusManager.instance.primaryFocus;
 
   BLOC get bloc => context.read<BLOC>();
-
-  WidgetState get widgetState => widgetStateNotifier.value;
 
   @protected
   @override
@@ -66,10 +60,6 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
 
   bool buildWhen(STATE previous, STATE current) {
     return current is! WidgetEvent;
-  }
-
-  void changeState(WidgetState state) {
-    widgetStateNotifier.value = state;
   }
 
   void hideKeyboard() {
