@@ -65,28 +65,7 @@ dependencies:
   image_network: ^2.5.4+1
   uni_links: ^0.5.1
   version: ^3.0.2
-#  package_info_plus: ^4.0.2
-#  catcher:
-#    git:
-#      url: https://github.com/THE-EXISTING/catcher.git
-#      ref: master
 
-#  url_launcher: ^6.1.11
-#  sim_data: ^0.0.2
-#  url_strategy: ^0.2.0
-#  universal_io: ^2.2.0
-#  share_plus: ^6.3.4
-#  tap_debouncer: ^2.0.2
-#  permission_handler: ^10.2.0
-#  http_parser: ^4.0.2
-#  path_provider: ^2.0.15
-#  timer_count_down: ^2.2.2
-#  screen_brightness: ^0.2.2
-#  wakelock: ^0.6.2
-#  flutter_libphonenumber: ^2.1.3
-#  open_file: ^3.3.1
-#  universal_html: ^2.2.1
-#  android_intent_plus: ^4.0.0
 
 
 
