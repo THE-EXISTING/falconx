@@ -18,7 +18,8 @@ export 'dart:async';
 export 'dart:math';
 export 'dart:convert';
 export 'package:flutter/services.dart';
-export 'package:flutter/material.dart' hide Notification, Badge, ImageDecoderCallback;
+export 'package:flutter/material.dart'
+    hide Notification, Badge, ImageDecoderCallback;
 export 'package:provider/provider.dart';
 export 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
@@ -26,6 +27,8 @@ export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:shimmer_animation/shimmer_animation.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 
+export 'package:sentry_flutter/sentry_flutter.dart'
+    hide HttpHeaderUtils, HttpSanitizer, UrlDetails;
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:device_info_plus/device_info_plus.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -39,7 +42,6 @@ export 'package:uni_links/uni_links.dart';
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:version/version.dart';
 
-
 export 'networks/internet_connection_bloc.dart';
 export 'config/build_config.dart';
 export 'extensions/extensions.dart';
@@ -50,5 +52,3 @@ export 'routers/routers.dart';
 export 'blocs/blocs.dart';
 export 'views/views.dart';
 export 'widgets/widgets.dart';
-
-
