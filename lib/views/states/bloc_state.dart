@@ -2,28 +2,40 @@ import 'package:falconx/lib.dart';
 
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
+  FalconBlocState({WidgetState? viewState})
+      : widgetStateNotifier =
+            WidgetStateNotifier(state: viewState ?? WidgetState.normal);
+
+  final WidgetStateNotifier widgetStateNotifier;
+
   FocusNode? get focusNode => FocusManager.instance.primaryFocus;
 
   BLOC get bloc => context.read<BLOC>();
+
+  WidgetState get widgetState => widgetStateNotifier.value;
 
   @protected
   @override
   @Deprecated('Please use buildDefault instead.')
   Widget build(BuildContext context) {
-    return BlocConsumer<BLOC, STATE>(
-        bloc: bloc,
-        listener: onListener,
-        buildWhen: buildWhen,
-        listenWhen: listenWhen,
-        builder: (context, state) {
-          return GestureDetector(
+    return ChangeNotifierProvider<WidgetStateNotifier>(
+      create: (context) => widgetStateNotifier,
+      child: Consumer<WidgetStateNotifier>(
+        builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
+          bloc: bloc,
+          listener: onListener,
+          buildWhen: buildWhen,
+          listenWhen: listenWhen,
+          builder: (context, state) => GestureDetector(
             onTap: clearFocus,
             child: WillPopScope(
               onWillPop: () => onWillPop(context, state),
               child: buildDefault(context, state),
             ),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 
   void onListener(BuildContext context, STATE state) {
@@ -54,6 +66,10 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
 
   bool buildWhen(STATE previous, STATE current) {
     return current is! WidgetEvent;
+  }
+
+  void changeState(WidgetState state) {
+    widgetStateNotifier.value = state;
   }
 
   void hideKeyboard() {

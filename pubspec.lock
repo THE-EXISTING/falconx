@@ -207,7 +207,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "8092cd2a98dc4b4f9601dcbb6bb659502aeb751a"
+      resolved-ref: "400440269d471e316bae7d3056e94badfaafdf90"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
@@ -366,10 +366,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "0b4b849ae9c0e564cd749b74e31e134bdbb009bea2458e093926864e11a8613f"
+      sha256: c4602f3047b383e6b652f3edb23bb35a2d33fec65c7b8cadaedc9e8ff5c48893
       url: "https://pub.dev"
     source: hosted
-    version: "15.0.0"
+    version: "15.0.1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
