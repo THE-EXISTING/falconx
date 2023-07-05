@@ -18,12 +18,14 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
     required Object key,
     required Stream<Either<Object, T>> call,
     required Function(WidgetDataState<T?> data) onFetch,
+    Function(Object failure)? onFail,
     bool debounceFetch = false,
   }) =>
       _fetcher.fetchStream(
         key: key,
         call: call,
         onFetch: onFetch,
+        onFail: onFail,
         debounceFetch: debounceFetch,
       );
 
@@ -31,7 +33,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
     required Object key,
     required Future<Either<Object, T>> call,
     required Function(WidgetDataState<T?> data) onFetch,
-    Function(Object fail)? onFail,
+    Function(Object failure)? onFail,
     bool debounceFetch = true,
   }) =>
       _fetcher.fetchFuture(
