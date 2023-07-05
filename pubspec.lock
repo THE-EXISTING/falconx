@@ -207,7 +207,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "400440269d471e316bae7d3056e94badfaafdf90"
+      resolved-ref: "14adb47cb46b7c31f58129cb638b40e590595062"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
@@ -589,7 +589,7 @@ packages:
     source: hosted
     version: "1.0.2"
   package_info_plus:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: package_info_plus
       sha256: ceb027f6bc6a60674a233b4a90a7658af1aebdea833da0b5b53c1e9821a78c7b

@@ -31,6 +31,7 @@ export 'package:device_info_plus/device_info_plus.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 export 'package:equatable/equatable.dart';
 export 'package:go_router/go_router.dart';
+export 'package:package_info_plus/package_info_plus.dart';
 
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:image_network/image_network.dart';
