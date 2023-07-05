@@ -2,8 +2,7 @@ import 'package:falconx/lib.dart';
 
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   FalconBloc(STATE initialState)
-      : _futureFetcher = FutureFetcherList(),
-        _fetcher = FetcherList(),
+      : _fetcher = FetcherList(),
         super(initialState) {
     on<BlocEvent<EVENT>>(
         (BlocEvent<EVENT> event, Emitter<STATE> emitter) async {
@@ -12,17 +11,16 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   }
 
   final FetcherList _fetcher;
-  final FutureFetcherList _futureFetcher;
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
   void fetch<T>({
     required Object key,
-    required Stream<BlocState<T>> call,
-    required Function(BlocState<T> blocState) onFetch,
+    required Stream<Either<Object, T>> call,
+    required Function(WidgetDataState<T?> data) onFetch,
     bool debounceFetch = false,
   }) =>
-      _fetcher.fetch(
+      _fetcher.fetchStream(
         key: key,
         call: call,
         onFetch: onFetch,
@@ -36,7 +34,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
     Function(Object fail)? onFail,
     bool debounceFetch = true,
   }) =>
-      _futureFetcher.fetch(
+      _fetcher.fetchFuture(
         key: key,
         call: call,
         onFetch: onFetch,
@@ -47,7 +45,6 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   @override
   Future<void> close() {
     _fetcher.close();
-    _futureFetcher.close();
     return super.close();
   }
 
