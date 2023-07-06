@@ -37,7 +37,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
       onListenEvent(context, state.event!.event, state.event!.data);
     }
 
-    onListenBlocState(context, state);
+    onListenState(context, state);
   }
 
   void clearFocus() => FocusScope.of(context).unfocus();
@@ -46,7 +46,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
 
   void onListenEvent(BuildContext context, Object event, Object? data) {}
 
-  void onListenBlocState(BuildContext context, STATE state) {}
+  void onListenState(BuildContext context, STATE state) {}
 
   Future<bool> onWillPop(BuildContext context, STATE state) {
     clearFocus();
