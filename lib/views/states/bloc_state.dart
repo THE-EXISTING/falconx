@@ -42,7 +42,6 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     onListenState(context, state);
   }
 
-  void clearFocus() => FocusScope.of(context).unfocus();
 
   Widget buildDefault(BuildContext context, STATE state);
 
@@ -66,7 +65,5 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     }
   }
 
-  void hideKeyboard() {
-    FocusScope.of(context).unfocus;
-  }
+
 }

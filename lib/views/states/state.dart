@@ -64,6 +64,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   Key? get key => widget.key;
 
+
   @override
   String? get restorationId => widget.key.toString();
 
@@ -156,6 +157,8 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   }
 
   void updateState() => setState(() {});
+
+  void clearFocus() => FocusScope.of(context).unfocus();
 
   @override
   void registerForRestoration(
