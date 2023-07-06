@@ -34,7 +34,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
 
   void onListener(BuildContext context, STATE state) {
     if (state is WidgetState && state.event != null) {
-      onListenEvent(context, state.event!, state.data);
+      onListenEvent(context, state.event!.event, state.event!.data);
     }
 
     onListenBlocState(context, state);

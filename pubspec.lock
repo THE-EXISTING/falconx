@@ -207,7 +207,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "68daab4efa2dc930513e6a5f8e1a5592988328bd"
+      resolved-ref: "600baaa9ee61656f2390e04da08ac1f2c0e05aed"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
