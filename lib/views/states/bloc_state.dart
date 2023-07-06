@@ -54,8 +54,15 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     return Future.value(true);
   }
 
-  bool buildWhen(STATE previous, STATE current) =>
-      (current is WidgetState) ? current.build : true;
+  bool buildWhen(STATE previous, STATE current) {
+    if (current is WidgetState && current.event == null) {
+      return current.build;
+    } else if (current is WidgetState && current.event != null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   void hideKeyboard() {
     FocusScope.of(context).unfocus;
