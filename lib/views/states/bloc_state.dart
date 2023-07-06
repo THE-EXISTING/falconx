@@ -32,6 +32,8 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     );
   }
 
+  @Deprecated('Use [onListenState] instead.')
+  @protected
   void onListener(BuildContext context, STATE state) {
     if (state is WidgetState && state.event != null) {
       onListenEvent(context, state.event!.event, state.event!.data);
