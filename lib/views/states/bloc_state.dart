@@ -2,7 +2,7 @@ import 'package:falconx/lib.dart';
 
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
-  FalconBlocState({super.widgetState});
+  FalconBlocState({super.status});
 
   FocusNode? get focusNode => FocusManager.instance.primaryFocus;
 
@@ -12,9 +12,9 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   @override
   @Deprecated('Please use buildDefault instead.')
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<WidgetStateNotifier>(
-      create: (context) => widgetStateNotifier,
-      child: Consumer<WidgetStateNotifier>(
+    return ChangeNotifierProvider<WidgetStatusNotifier>(
+      create: (context) => widgetStatusNotifier,
+      child: Consumer<WidgetStatusNotifier>(
         builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
           bloc: bloc,
           listener: onListener,

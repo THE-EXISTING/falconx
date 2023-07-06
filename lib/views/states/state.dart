@@ -52,13 +52,13 @@ enum LifecycleState { created, initState, restore, resume, build }
 
 abstract class FalconState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver, RestorationMixin {
-  FalconState({WidgetState? widgetState})
-      : widgetStateNotifier =
-            WidgetStateNotifier(state: widgetState ?? WidgetState.normal);
+  FalconState({WidgetStatus? status})
+      : widgetStatusNotifier =
+            WidgetStatusNotifier(status: status ?? WidgetStatus.normal);
 
-  final WidgetStateNotifier widgetStateNotifier;
+  final WidgetStatusNotifier widgetStatusNotifier;
 
-  WidgetState get widgetState => widgetStateNotifier.value;
+  WidgetStatus get widgetState => widgetStatusNotifier.value;
 
   String get tag => '${widget.runtimeType} State';
 
@@ -224,7 +224,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void changeState(WidgetState state) {
-    widgetStateNotifier.value = state;
+  void changeStatus(WidgetStatus status) {
+    widgetStatusNotifier.value = status;
   }
 }
