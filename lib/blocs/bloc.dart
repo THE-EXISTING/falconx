@@ -14,7 +14,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
-  void fetch<T>({
+  Future<void> fetch<T>({
     required Object key,
     required Stream<Either<Object, T>> call,
     required Function(WidgetState<T?> data) onFetch,
