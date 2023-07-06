@@ -198,7 +198,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: ffb08b01a3d7b0bf9db61f2f64afa0d75335e168
+      resolved-ref: f30ce2d03851e87558a4a5cd9494ee61d5b83803
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
     version: "1.0.0"
@@ -207,7 +207,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: a1e603d2ad74588794d7cdc0c6aed48a2f071f9c
+      resolved-ref: "68daab4efa2dc930513e6a5f8e1a5592988328bd"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
