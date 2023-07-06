@@ -18,8 +18,8 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
         builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
           bloc: bloc,
           listener: onListener,
+          listenWhen: (previous, current) => true,
           buildWhen: buildWhen,
-          listenWhen: listenWhen,
           builder: (context, state) => GestureDetector(
             onTap: clearFocus,
             child: WillPopScope(
@@ -33,11 +33,11 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   }
 
   void onListener(BuildContext context, STATE state) {
-    if (state is WidgetEvent) {
-      onListenEvent(context, state.name, state.data);
-    } else {
-      onListenBlocState(context, state);
+    if (state is WidgetState && state.event != null) {
+      onListenEvent(context, state.event!, state.data);
     }
+
+    onListenBlocState(context, state);
   }
 
   void clearFocus() => FocusScope.of(context).unfocus();
@@ -54,13 +54,8 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     return Future.value(true);
   }
 
-  bool listenWhen(STATE previous, STATE current) {
-    return true;
-  }
-
-  bool buildWhen(STATE previous, STATE current) {
-    return current is! WidgetEvent;
-  }
+  bool buildWhen(STATE previous, STATE current) =>
+      (current is WidgetState) ? current.build : true;
 
   void hideKeyboard() {
     FocusScope.of(context).unfocus;

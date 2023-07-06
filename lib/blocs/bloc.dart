@@ -17,7 +17,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   void fetch<T>({
     required Object key,
     required Stream<Either<Object, T>> call,
-    required Function(WidgetDataState<T?> data) onFetch,
+    required Function(WidgetState<T?> data) onFetch,
     Function(Object failure)? onFail,
     bool debounceFetch = false,
   }) =>
@@ -32,7 +32,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   Future<void> fetchFuture<T>({
     required Object key,
     required Future<Either<Object, T>> call,
-    required Function(WidgetDataState<T?> data) onFetch,
+    required Function(WidgetState<T?> data) onFetch,
     Function(Object failure)? onFail,
     bool debounceFetch = true,
   }) =>

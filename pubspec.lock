@@ -198,7 +198,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "217006c84a350faaf5dc1b7d59cb4cb0b1151a00"
+      resolved-ref: "53bb5bc8e05140fdfbc9a4ab4d2538788ecc1ef4"
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
     version: "1.0.0"
@@ -207,7 +207,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "5e3ff8ee7625c22cdfd0e1fdbb3b0624d6f6e426"
+      resolved-ref: a1e603d2ad74588794d7cdc0c6aed48a2f071f9c
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
@@ -456,10 +456,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "1531542666c2d052c44bbf6e2b48011bf3771da0404b94c60eabec1228a62906"
+      sha256: df5bc28ec7d2e2a82ece59fb33b3a0f3b3eaaae386bf32040f92339820d954b6
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.0"
+    version: "9.0.1"
   hive:
     dependency: transitive
     description:
