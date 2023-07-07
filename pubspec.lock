@@ -207,7 +207,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: af1c9948d1a41d08f610d78849b30f131e3c2f82
+      resolved-ref: "9778a31e75d56d199ed26ca467f35823ba9d755d"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
@@ -456,10 +456,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: df5bc28ec7d2e2a82ece59fb33b3a0f3b3eaaae386bf32040f92339820d954b6
+      sha256: de9c31ce0be8f695d0fb675229d67f8134d0aae6fb2ec4400ec9230be1c41a03
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.1"
+    version: "9.0.2"
   hive:
     dependency: transitive
     description:
@@ -933,10 +933,10 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter_android
-      sha256: "69787707339e7588aad256386475c18223cc0da87d9812343bc27c33c01eeab4"
+      sha256: "1c93e96f3069bacdc734fad6b7e1d3a480fd516a3ae5b8858becf7f07515a2f3"
       url: "https://pub.dev"
     source: hosted
-    version: "3.8.1"
+    version: "3.8.2"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
@@ -949,10 +949,10 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter_wkwebview
-      sha256: "7ae75a1a76b9463ae9278de7759ead68aa0eeb70f8d0175e3f9a6c43e911fe76"
+      sha256: a8d7e8b4be2a79e83b70235369971ec97d14df4cdbb40d305a8eeae67d8e6432
       url: "https://pub.dev"
     source: hosted
-    version: "3.6.1"
+    version: "3.6.2"
   webviewimage:
     dependency: transitive
     description:
