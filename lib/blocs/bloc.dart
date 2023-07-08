@@ -1,5 +1,36 @@
 import 'package:falconx/lib.dart';
 
+extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
+  Future<void> fetch<A>({
+    required Stream<WidgetState<A?>> call,
+    required Function(
+      Emitter<WidgetState<T>> emitter,
+      WidgetState<A?> data,
+    ) onFetch,
+    Function(
+      Emitter<WidgetState<T>> emitter,
+      Failure failure,
+    )? onFail,
+  }) =>
+      onEach(
+        call,
+        onData: (WidgetState<A?> data) {
+          onFetch(this, data);
+        },
+        onError: (error, stackTrace) {
+          if(error is Failure){
+            onFail?.call(this, error);
+          }else{
+            Log.e(error, stackTrace);
+            FlutterError.reportError(FlutterErrorDetails(
+              exception: error,
+              stack: stackTrace,
+            ));
+          }
+        },
+      );
+}
+
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   FalconBloc(STATE initialState)
       : _fetcher = FetcherList(),
@@ -14,22 +45,18 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
-  Future<void> fetch<T>({
+  Stream<WidgetState<T?>> fetch<T>({
     required Object key,
     required Stream<Either<Failure, T>> call,
-    required Function(WidgetState<T?> data) onFetch,
-    Function(Failure failure)? onFail,
     bool debounceFetch = false,
   }) =>
       _fetcher.fetchStream(
         key: key,
         call: call,
-        onFetch: onFetch,
-        onFail: onFail,
         debounceFetch: debounceFetch,
       );
 
-  Future<void> fetchFuture<T>({
+  Stream<WidgetState<T?>> fetchFuture<T>({
     required Object key,
     required Future<Either<Failure, T>> call,
     required Function(WidgetState<T?> data) onFetch,
@@ -39,8 +66,6 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
       _fetcher.fetchFuture(
         key: key,
         call: call,
-        onFetch: onFetch,
-        onFail: onFail,
         debounceFetch: debounceFetch,
       );
 
