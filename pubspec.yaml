@@ -18,6 +18,7 @@ dependencies:
       url: https://github.com/THE-EXISTING/faltool.git
       ref: develop
   falconnect:
+#    path: ../falconnect
     git:
       url: https://github.com/THE-EXISTING/falconnect.git
       ref: develop
@@ -35,10 +36,6 @@ dependencies:
   webview_flutter: ^4.2.2
   shimmer_animation: ^2.1.0+1
   flutter_svg: ^2.0.7
-#  progressive_image: ^2.0.1
-#  mask_text_input_formatter: ^2.4.0
-#  drop_shadow: ^0.1.0
-#  sms_autofill: ^2.3.0
 
   #======= Analytic ========#
   sentry: ^7.8.0
