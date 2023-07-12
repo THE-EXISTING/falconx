@@ -5,7 +5,6 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
     required ConnectivityResult initialResult,
     Connectivity? connectivity,
   })  : _connectivity = connectivity ?? Connectivity(),
-        _result = initialResult,
         super(initialResult) {
     _subscription = stream.listen(onConnectivityChanged);
   }
@@ -13,16 +12,15 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
   final Connectivity _connectivity;
   late final _stateController =
       StreamController<ConnectivityResult>.broadcast();
-  ConnectivityResult _result;
   StreamSubscription<ConnectivityResult>? _subscription;
 
-  ConnectivityResult get result => _result;
+  ConnectivityResult get result => state;
 
   bool get isConnectedInternet =>
-      _result == ConnectivityResult.wifi ||
-      _result == ConnectivityResult.ethernet ||
-      _result == ConnectivityResult.mobile ||
-      _result == ConnectivityResult.vpn;
+      state == ConnectivityResult.wifi ||
+      state == ConnectivityResult.ethernet ||
+      state == ConnectivityResult.mobile ||
+      state == ConnectivityResult.vpn;
 
   bool get isNotConnectedInternet => !isConnectedInternet;
 
@@ -36,7 +34,6 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
   }
 
   void onConnectivityChanged(ConnectivityResult result) {
-    _result = result;
     if (isConnectedInternet) {
       Log.i('Connectivity: $result');
     } else {
