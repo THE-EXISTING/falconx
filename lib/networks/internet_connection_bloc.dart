@@ -32,6 +32,7 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
   }
 
   void onConnectivityChanged(ConnectivityResult result) {
+    Log.i('Connectivity: $result');
     _connectivityResult = result;
     if (_stateController.isClosed) return;
     emit(result);
