@@ -2,14 +2,16 @@ import 'package:falconx/lib.dart';
 
 class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
   InternetConnectionBloc({Connectivity? connectivity})
-      : super(ConnectivityResult.other) {
+      : _connectivity = connectivity ?? Connectivity(),
+        _connectivityResult = ConnectivityResult.other,
+        super(ConnectivityResult.other) {
     _subscription = stream.listen(onConnectivityChanged);
-    _connectivityResult = ConnectivityResult.other;
   }
 
+  final Connectivity _connectivity;
   late final _stateController =
       StreamController<ConnectivityResult>.broadcast();
-  late ConnectivityResult _connectivityResult;
+  ConnectivityResult _connectivityResult;
   StreamSubscription<ConnectivityResult>? _subscription;
 
   ConnectivityResult get connectivityResult => _connectivityResult;
@@ -23,7 +25,7 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
   bool get isNotConnectedInternet => !isConnectedInternet;
 
   @override
-  Stream<ConnectivityResult> get stream => _stateController.stream;
+  Stream<ConnectivityResult> get stream => _connectivity.onConnectivityChanged;
 
   @override
   Future<void> close() async {
@@ -33,9 +35,9 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
 
   void onConnectivityChanged(ConnectivityResult result) {
     _connectivityResult = result;
-    if(isConnectedInternet){
+    if (isConnectedInternet) {
       Log.i('Connectivity: $result');
-    }else{
+    } else {
       Log.w('Connectivity: $result');
     }
     if (_stateController.isClosed) return;
