@@ -1,6 +1,6 @@
 library falconx;
 
-export 'package:falconnect/falconnect.dart';
+export 'package:falconnect/falconnect.dart' hide Field, Path;
 export 'package:falmodel/falmodel.dart';
 export 'package:faltool/faltool.dart';
 export 'package:falstore/falstore.dart';
