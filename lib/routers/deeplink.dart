@@ -46,7 +46,7 @@ class Deeplink {
           Log.w('Null URI');
         }
       }, onError: (err, stacktrace) {
-        Log.e(err, stacktrace);
+        Log.error(err, stacktrace);
       });
     }
   }
@@ -65,7 +65,7 @@ class Deeplink {
     } on PlatformException {
       // Platform messages may fail but we ignore the exception
     } on FormatException catch (err, stacktrace) {
-      Log.e(err, stacktrace);
+      Log.error(err, stacktrace);
     }
   }
 }

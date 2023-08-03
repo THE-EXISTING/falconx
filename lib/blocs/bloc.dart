@@ -21,7 +21,7 @@ extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
           if(error is Failure){
             onFail?.call(this, error);
           }else{
-            Log.e(error, stackTrace);
+            Log.error(error, stackTrace);
             FlutterError.reportError(FlutterErrorDetails(
               exception: error,
               stack: stackTrace,
