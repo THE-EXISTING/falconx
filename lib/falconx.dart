@@ -27,8 +27,6 @@ export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:shimmer_animation/shimmer_animation.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 
-export 'package:sentry/sentry.dart'
-    hide HttpHeaderUtils, HttpSanitizer, UrlDetails, PlatformChecker;
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:device_info_plus/device_info_plus.dart';
 export 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';

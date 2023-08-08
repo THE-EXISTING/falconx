@@ -216,7 +216,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: d8727c7ad6940bc46d2ed4804bf9fcd07972e0f4
+      resolved-ref: a8f9924b35ae99d60a8029c487eb735ab72a06e7
       url: "https://github.com/THE-EXISTING/falstore.git"
     source: git
     version: "1.0.0"
@@ -624,10 +624,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider
-      sha256: "3087813781ab814e4157b172f1a11c46be20179fcc9bea043e0fba36bc0acaa2"
+      sha256: "909b84830485dbcd0308edf6f7368bc8fd76afa26a270420f34cabea2a6467a0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.15"
+    version: "2.1.0"
   path_provider_android:
     dependency: transitive
     description:
@@ -724,14 +724,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  sentry:
-    dependency: "direct main"
-    description:
-      name: sentry
-      sha256: "39c23342fc96105da449914f7774139a17a0ca8a4e70d9ad5200171f7e47d6ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.9.0"
   shimmer_animation:
     dependency: "direct main"
     description:
@@ -981,10 +973,10 @@ packages:
     dependency: transitive
     description:
       name: xdg_directories
-      sha256: e0b1147eec179d3911f1f19b59206448f78195ca1d20514134e10641b7d7fbff
+      sha256: f0c26453a2d47aa4c2570c6a033246a3fc62da2fe23c7ffdd0a7495086dc0247
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   xml:
     dependency: transitive
     description:
