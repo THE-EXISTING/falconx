@@ -1,7 +1,7 @@
 import 'package:falconx/lib.dart';
 
 typedef ValidateWidgetBuilder<DATA> = Widget Function(
-    BuildContext context, bool valid, DATA data, Object? error);
+    BuildContext context, bool valid, DATA? data, Object? error);
 
 abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   ValidatorBooleanCubit() : super(const ValidateState(data: null));
@@ -23,7 +23,7 @@ abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   }
 }
 
-class ValidateBuilder<B extends BlocBase<S>, S extends ValidateState>
+class ValidateBuilder<B extends Cubit<ValidateState<DATA?>>, DATA>
     extends StatefulWidget {
   const ValidateBuilder({
     Key? key,
@@ -32,14 +32,14 @@ class ValidateBuilder<B extends BlocBase<S>, S extends ValidateState>
   }) : super(key: key);
 
   final B? source;
-  final ValidateWidgetBuilder<S> builder;
+  final ValidateWidgetBuilder<DATA> builder;
 
   @override
-  State<ValidateBuilder<B, S>> createState() => _ValidateBuilderState<B, S>();
+  State<ValidateBuilder<B, DATA>> createState() => _ValidateBuilderState<B, DATA>();
 }
 
-class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidateState>
-    extends State<ValidateBuilder<B, S>> {
+class _ValidateBuilderState<B extends Cubit<ValidateState<DATA?>>, DATA>
+    extends State<ValidateBuilder<B, DATA>> {
   late B _bloc;
   bool _currentValidate = false;
 
@@ -50,7 +50,7 @@ class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidateState>
   }
 
   @override
-  void didUpdateWidget(ValidateBuilder<B, S> oldWidget) {
+  void didUpdateWidget(ValidateBuilder<B, DATA> oldWidget) {
     super.didUpdateWidget(oldWidget);
     final oldBloc = oldWidget.source ?? context.read<B>();
     final currentBloc = widget.source ?? oldBloc;
@@ -75,7 +75,7 @@ class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidateState>
       // See https://github.com/felangel/bloc/issues/2127.
       context.select<B, bool>((bloc) => identical(_bloc, bloc));
     }
-    return BlocBuilder<B, S>(
+    return BlocBuilder<B, ValidateState<DATA?>>(
       bloc: _bloc,
       builder: (context, state) =>
           widget.builder(context, _currentValidate, state.data, state.error),
