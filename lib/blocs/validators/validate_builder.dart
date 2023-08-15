@@ -6,10 +6,10 @@ typedef ValidateWidgetBuilder<DATA> = Widget Function(
 abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   ValidatorBooleanCubit() : super(const ValidateState(data: null));
 
-  bool onValidate(ValidateState<DATA?> data);
+  bool onValidate(DATA? data);
 
   bool isValid() {
-    return onValidate(state);
+    return onValidate(state.data);
   }
 
   bool isInvalid() {
