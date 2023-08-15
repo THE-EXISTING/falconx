@@ -1,23 +1,25 @@
 import 'package:falconx/lib.dart';
 
 typedef ValidateWidgetBuilder<DATA> = Widget Function(
-    BuildContext context, bool valid, DATA? data, Object? error);
+    BuildContext context, bool valid, DATA? data, Failure? failure);
 
-abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
-  ValidatorBooleanCubit() : super(const ValidateState(data: null));
+abstract class ValidatorCubit<DATA> extends Cubit<ValidateState<DATA?>> {
+  ValidatorCubit() : super(const ValidateState(data: null));
 
-  bool onValidate(DATA? data);
+  Failure? onValidate(DATA? data);
 
-  bool get isValid => onValidate(state.data);
+  bool get isValid => onValidate(state.data) == null;
 
   bool get isInvalid => !isValid;
 
-  void validate(DATA? data, {bool build = false}) {
-    emit(ValidateState(data: data, build: build));
+  Failure? validate(DATA? data, {bool canBuild = false}) {
+    final failure = onValidate(data);
+    emit(ValidateState(data: data, failure: failure, canBuild: canBuild));
+    return failure;
   }
 
-  void emitError(DATA? data, {required Object? error}) {
-    emit(ValidateState(data: data, error: error, build: true));
+  void clear() {
+    emit(const ValidateState(data: null));
   }
 
   @Deprecated("Please use `validate` or `emitError`")
@@ -46,7 +48,7 @@ class ValidateBuilder<B extends Cubit<ValidateState<DATA?>>, DATA>
 class _ValidateBuilderState<B extends Cubit<ValidateState<DATA?>>, DATA>
     extends State<ValidateBuilder<B, DATA>> {
   late B _bloc;
-  bool _currentValidate = false;
+  bool _currentValid = false;
 
   @override
   void initState() {
@@ -82,19 +84,18 @@ class _ValidateBuilderState<B extends Cubit<ValidateState<DATA?>>, DATA>
     }
     return BlocBuilder<B, ValidateState<DATA?>>(
       bloc: _bloc,
-      builder: (context, state) =>
-          widget.builder(context, _currentValidate, state.data, state.error),
       buildWhen: (previous, current) {
-        final validateCubit = widget.source as ValidatorBooleanCubit;
-        final validateResult = validateCubit.onValidate(current.data);
-        if (validateResult != _currentValidate) {
-          _currentValidate = validateResult;
+        final valid = current.failure == null;
+        if (previous.failure != current.failure) {
+          _currentValid = valid;
           return true;
         } else {
-          _currentValidate = validateResult;
-          return current.build;
+          _currentValid = valid;
+          return current.canBuild;
         }
       },
+      builder: (context, state) =>
+          widget.builder(context, _currentValid, state.data, state.failure),
     );
   }
 }

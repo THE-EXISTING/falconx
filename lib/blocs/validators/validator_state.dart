@@ -2,29 +2,29 @@ import 'package:falconx/lib.dart';
 
 class ValidateState<DATA>{
   final DATA? data;
-  final Object? error;
-  final bool build;
+  final Failure? failure;
+  final bool canBuild;
 
   const ValidateState({
     this.data,
-    this.error,
-    this.build = false,
+    this.failure,
+    this.canBuild = false,
   });
 
   ValidateState<DATA> copyWith({
     DATA? data,
-    Object? error,
+    Failure? failure,
     bool? build,
   }) {
     return ValidateState(
       data: data ?? this.data,
-      error: error ?? this.error,
-      build: build ?? this.build,
+      failure: failure ?? this.failure,
+      canBuild: build ?? this.canBuild,
     );
   }
 
   @override
   String toString() {
-    return 'ValidatorState{data: $data, error: $error, build: $build}';
+    return 'ValidatorState{data: $data, failure: $failure, build: $canBuild}';
   }
 }
