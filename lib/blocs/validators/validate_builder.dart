@@ -1,29 +1,29 @@
 import 'package:falconx/lib.dart';
 
-typedef ValidateWidgetBuilder<S> = Widget Function(
-    BuildContext context, bool valid, S state);
+typedef ValidateWidgetBuilder<DATA> = Widget Function(
+    BuildContext context, bool valid, DATA data, Object? error);
 
-abstract class ValidatorBooleanCubit<S> extends Cubit<S?> {
+abstract class ValidatorBooleanCubit<S extends ValidatorState>
+    extends Cubit<S?> {
   ValidatorBooleanCubit() : super(null);
 
   bool validate(S? data);
 
-  void check(S? data) {
-    emit(data);
+  bool isValid() {
+    return validate(state);
+  }
+
+  bool isInvalid() {
+    return !isValid();
+  }
+
+  void check<T>(T? data, {bool build = false}) {
+    emit(ValidatorState(data: data, build: build) as S?);
   }
 }
 
-abstract class ValidatorCubit<INPUT, OUTPUT> extends Cubit<INPUT?> {
-  ValidatorCubit() : super(null);
-
-  OUTPUT validate(INPUT? data);
-
-  void check(INPUT? data) {
-    emit(data);
-  }
-}
-
-class ValidateBuilder<B extends BlocBase<S>, S> extends StatefulWidget {
+class ValidateBuilder<B extends BlocBase<S>, S extends ValidatorState>
+    extends StatefulWidget {
   const ValidateBuilder({
     Key? key,
     this.source,
@@ -37,7 +37,7 @@ class ValidateBuilder<B extends BlocBase<S>, S> extends StatefulWidget {
   State<ValidateBuilder<B, S>> createState() => _ValidateBuilderState<B, S>();
 }
 
-class _ValidateBuilderState<B extends BlocBase<S>, S>
+class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidatorState>
     extends State<ValidateBuilder<B, S>> {
   late B _bloc;
   bool _currentValidate = false;
@@ -77,18 +77,31 @@ class _ValidateBuilderState<B extends BlocBase<S>, S>
     return BlocBuilder<B, S>(
       bloc: _bloc,
       builder: (context, state) =>
-          widget.builder(context, _currentValidate, state),
+          widget.builder(context, _currentValidate, state.data, state.error),
       buildWhen: (previous, current) {
         final validateCubit = widget.source as ValidatorBooleanCubit;
-        final validateResult = validateCubit.validate(current);
+        final validateResult = validateCubit.validate(current.data);
         if (validateResult != _currentValidate) {
           _currentValidate = validateResult;
           return true;
         } else {
           _currentValidate = validateResult;
-          return false;
+          return current.build;
         }
       },
     );
+  }
+}
+
+extension ListValidatorBooleanCubitWithStateExtension<DATA>
+    on Iterable<ValidatorBooleanCubit<ValidatorState<DATA>>> {
+  bool allValid() {
+    return all((validator) {
+      return validator.isValid();
+    });
+  }
+
+  bool allInvalid() {
+    return all((validator) => validator.isInvalid());
   }
 }
