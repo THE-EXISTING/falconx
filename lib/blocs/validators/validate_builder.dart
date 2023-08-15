@@ -19,6 +19,16 @@ abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   void validate(DATA? data, {bool build = false}) {
     emit(ValidateState(data: data, build: build));
   }
+
+  void emitError(DATA? data, {required Object? error}) {
+    emit(ValidateState(data: data, error: error, build: true));
+  }
+
+  @Deprecated("Please use `validate` or `emitError`")
+  @override
+  void emit(ValidateState<DATA?> state) {
+    super.emit(state);
+  }
 }
 
 class ValidateBuilder<B extends BlocBase<S>, S extends ValidateState>
