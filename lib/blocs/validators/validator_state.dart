@@ -1,22 +1,22 @@
 import 'package:falconx/lib.dart';
 
-class ValidatorState<DATA>{
+class ValidateState<DATA>{
   final DATA? data;
   final Object? error;
   final bool build;
 
-  const ValidatorState({
+  const ValidateState({
     this.data,
     this.error,
     this.build = false,
   });
 
-  ValidatorState<DATA> copyWith({
+  ValidateState<DATA> copyWith({
     DATA? data,
     Object? error,
     bool? build,
   }) {
-    return ValidatorState(
+    return ValidateState(
       data: data ?? this.data,
       error: error ?? this.error,
       build: build ?? this.build,

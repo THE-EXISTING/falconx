@@ -3,7 +3,7 @@ import 'package:falconx/lib.dart';
 typedef ValidateWidgetBuilder<DATA> = Widget Function(
     BuildContext context, bool valid, DATA data, Object? error);
 
-abstract class ValidatorBooleanCubit<S extends ValidatorState>
+abstract class ValidatorBooleanCubit<S extends ValidateState>
     extends Cubit<S?> {
   ValidatorBooleanCubit() : super(null);
 
@@ -18,11 +18,11 @@ abstract class ValidatorBooleanCubit<S extends ValidatorState>
   }
 
   void check<T>(T? data, {bool build = false}) {
-    emit(ValidatorState(data: data, build: build) as S?);
+    emit(ValidateState(data: data, build: build) as S?);
   }
 }
 
-class ValidateBuilder<B extends BlocBase<S>, S extends ValidatorState>
+class ValidateBuilder<B extends BlocBase<S>, S extends ValidateState>
     extends StatefulWidget {
   const ValidateBuilder({
     Key? key,
@@ -37,7 +37,7 @@ class ValidateBuilder<B extends BlocBase<S>, S extends ValidatorState>
   State<ValidateBuilder<B, S>> createState() => _ValidateBuilderState<B, S>();
 }
 
-class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidatorState>
+class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidateState>
     extends State<ValidateBuilder<B, S>> {
   late B _bloc;
   bool _currentValidate = false;
@@ -94,7 +94,7 @@ class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidatorState>
 }
 
 extension ListValidatorBooleanCubitWithStateExtension<DATA>
-    on Iterable<ValidatorBooleanCubit<ValidatorState<DATA>>> {
+    on Iterable<ValidatorBooleanCubit<ValidateState<DATA>>> {
   bool allValid() {
     return all((validator) {
       return validator.isValid();
