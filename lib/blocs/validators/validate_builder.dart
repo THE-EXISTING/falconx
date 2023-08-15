@@ -6,7 +6,11 @@ typedef ValidateWidgetBuilder<DATA> = Widget Function(
 abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   ValidatorBooleanCubit() : super(const ValidateState(data: null));
 
-  bool onValidate(BuildContext context, DATA? data);
+  bool onValidate(DATA? data);
+
+  bool get isValid => onValidate(state.data);
+
+  bool get isInvalid => !isValid;
 
   void validate(DATA? data, {bool build = false}) {
     emit(ValidateState(data: data, build: build));
@@ -35,7 +39,8 @@ class ValidateBuilder<B extends Cubit<ValidateState<DATA?>>, DATA>
   final ValidateWidgetBuilder<DATA> builder;
 
   @override
-  State<ValidateBuilder<B, DATA>> createState() => _ValidateBuilderState<B, DATA>();
+  State<ValidateBuilder<B, DATA>> createState() =>
+      _ValidateBuilderState<B, DATA>();
 }
 
 class _ValidateBuilderState<B extends Cubit<ValidateState<DATA?>>, DATA>
@@ -81,7 +86,7 @@ class _ValidateBuilderState<B extends Cubit<ValidateState<DATA?>>, DATA>
           widget.builder(context, _currentValidate, state.data, state.error),
       buildWhen: (previous, current) {
         final validateCubit = widget.source as ValidatorBooleanCubit;
-        final validateResult = validateCubit.onValidate(context, current.data);
+        final validateResult = validateCubit.onValidate(current.data);
         if (validateResult != _currentValidate) {
           _currentValidate = validateResult;
           return true;
