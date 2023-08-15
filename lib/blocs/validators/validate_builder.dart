@@ -6,15 +6,7 @@ typedef ValidateWidgetBuilder<DATA> = Widget Function(
 abstract class ValidatorBooleanCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   ValidatorBooleanCubit() : super(const ValidateState(data: null));
 
-  bool onValidate(DATA? data);
-
-  bool isValid() {
-    return onValidate(state.data);
-  }
-
-  bool isInvalid() {
-    return !isValid();
-  }
+  bool onValidate(BuildContext context, DATA? data);
 
   void validate(DATA? data, {bool build = false}) {
     emit(ValidateState(data: data, build: build));
@@ -89,7 +81,7 @@ class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidateState>
           widget.builder(context, _currentValidate, state.data, state.error),
       buildWhen: (previous, current) {
         final validateCubit = widget.source as ValidatorBooleanCubit;
-        final validateResult = validateCubit.onValidate(current.data);
+        final validateResult = validateCubit.onValidate(context, current.data);
         if (validateResult != _currentValidate) {
           _currentValidate = validateResult;
           return true;
@@ -99,18 +91,5 @@ class _ValidateBuilderState<B extends BlocBase<S>, S extends ValidateState>
         }
       },
     );
-  }
-}
-
-extension ListValidatorBooleanCubitWithStateExtension<DATA>
-    on Iterable<ValidatorBooleanCubit<ValidateState<DATA>>> {
-  bool allValid() {
-    return all((validator) {
-      return validator.isValid();
-    });
-  }
-
-  bool allInvalid() {
-    return all((validator) => validator.isInvalid());
   }
 }
