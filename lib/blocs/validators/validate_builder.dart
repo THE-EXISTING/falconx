@@ -23,6 +23,8 @@ abstract class ValidatorCubit<DATA> extends Cubit<ValidateState<DATA?>> {
   }
 
   @Deprecated("Please use `validate` or `emitError`")
+  @protected
+  @visibleForTesting
   @override
   void emit(ValidateState<DATA?> state) {
     super.emit(state);
