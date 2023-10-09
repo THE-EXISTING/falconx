@@ -4,21 +4,21 @@ import 'package:flutter/scheduler.dart';
 /// A widget to calculate it's size after being built and attached to a widget tree
 /// [onChange] get changed [Size] of the Widget
 /// [child] Widget to get size of it at runtime
-class WidgetSize extends StatefulWidget {
+class WidgetMeasureSize extends StatefulWidget {
   final Widget child;
   final Function(Size) onChange;
 
-  const WidgetSize({
+  const WidgetMeasureSize({
     Key? key,
     required this.onChange,
     required this.child,
   }) : super(key: key);
 
   @override
-  State<WidgetSize> createState() => _WidgetSizeState();
+  State<WidgetMeasureSize> createState() => _WidgetMeasureSizeState();
 }
 
-class _WidgetSizeState extends State<WidgetSize> {
+class _WidgetMeasureSizeState extends State<WidgetMeasureSize> {
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
