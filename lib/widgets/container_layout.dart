@@ -256,11 +256,13 @@ class ContainerLayout extends StatelessWidget {
                   BoxDecoration(
                     color: backgroundColor,
                     border: borderStroke ??
-                        Border.all(
-                          strokeAlign: BorderSide.strokeAlignInside,
-                          color: strokeColor ?? Colors.transparent,
-                          width: strokeThickness ?? 0.0,
-                        ),
+                        ((strokeThickness ?? 0.0) > 0.0
+                            ? Border.all(
+                                strokeAlign: BorderSide.strokeAlignInside,
+                                color: strokeColor ?? Colors.transparent,
+                                width: strokeThickness ?? 0.0,
+                              )
+                            : null),
                     borderRadius: borderRadius ??
                         (radius != null ? BorderRadius.circular(radius) : null),
                     boxShadow: shadow,
