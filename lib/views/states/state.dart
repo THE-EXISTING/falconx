@@ -195,11 +195,13 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     String screenName, {
     Map<String, String>? pathParameters,
     Map<String, dynamic>? queryParameters,
+    Object? extra,
   }) {
     return context.pushNamed(
       screenName,
       pathParameters: pathParameters ?? const <String, String>{},
       queryParameters: queryParameters ?? const <String, dynamic>{},
+      extra: extra,
     );
   }
 
