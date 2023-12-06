@@ -350,7 +350,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "4430cff053a1203a4853cf91cba29ed58f7da5a8"
+      resolved-ref: "543d71a681b27336507731f5af2cf6cc2a8d1580"
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
     version: "1.0.0"
@@ -377,7 +377,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: e8947519a60c0d4b14fc1d6e16336c72b9e4969c
+      resolved-ref: "242419bf80353d2916562d415ea2b46a77b03704"
       url: "https://github.com/THE-EXISTING/faltool.git"
     source: git
     version: "1.0.0"

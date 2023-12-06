@@ -16,11 +16,16 @@ extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
         call,
         onData: (WidgetState<A?> data) {
           onFetch(this, data);
+
+          // Avoid onEach stuck
+          if (data.isSuccess) {
+            return;
+          }
         },
         onError: (error, stackTrace) {
-          if(error is Failure){
+          if (error is Failure) {
             onFail?.call(this, error);
-          }else{
+          } else {
             Log.error(error, stackTrace);
             FlutterError.reportError(FlutterErrorDetails(
               exception: error,
