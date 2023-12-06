@@ -42,7 +42,6 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     onListenState(context, state);
   }
 
-
   Widget buildDefault(BuildContext context, STATE state);
 
   void onListenEvent(BuildContext context, Object event, Object? data) {}
@@ -56,14 +55,13 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   }
 
   bool buildWhen(STATE previous, STATE current) {
-    if (current is WidgetState && current.event == null) {
-      return current.build;
-    } else if (current is WidgetState && current.event != null) {
+    if (current is WidgetState && current.event != null) {
       return false;
+    } else if (current is WidgetState && current.event == null) {
+      // No event in current state
+      return current.build;
     } else {
       return true;
     }
   }
-
-
 }
