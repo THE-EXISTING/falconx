@@ -39,14 +39,14 @@ extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
 }
 
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
-  FalconBloc(super.initialState) : _fetcher = FetcherList() {
+  FalconBloc(super.initialState) : _fetcher = EitherStreamFetcherList() {
     on<BlocEvent<EVENT>>(
         (BlocEvent<EVENT> event, Emitter<STATE> emitter) async {
       await onListenEvent(event, emitter);
     });
   }
 
-  final FetcherList _fetcher;
+  final EitherStreamFetcherList _fetcher;
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
