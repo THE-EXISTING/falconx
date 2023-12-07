@@ -5,18 +5,18 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: ae92f5d747aee634b87f89d9946000c2de774be1d6ac3e58268224348cd0101a
+      sha256: eb376e9acf6938204f90eb3b1f00b578640d3188b4c8a8ec054f9f479af8d051
       url: "https://pub.dev"
     source: hosted
-    version: "61.0.0"
+    version: "64.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: ea3d8652bda62982addfd92fdc2d0214e5f82e43325104990d4f4c4a2a313562
+      sha256: "69f54f967773f6c26c7dcb13e93d7ccee8b17a641689da39e878d5cf13b06893"
       url: "https://pub.dev"
     source: hosted
-    version: "5.13.0"
+    version: "6.2.0"
   ansicolor:
     dependency: transitive
     description:
@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
-  archive:
-    dependency: transitive
-    description:
-      name: archive
-      sha256: "7b875fd4a20b165a3084bd2d210439b22ebc653f21cea4842729c0c30c82596b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.4.9"
   args:
     dependency: transitive
     description:
@@ -245,10 +237,10 @@ packages:
     dependency: transitive
     description:
       name: cross_file
-      sha256: "2f9d2cbccb76127ba28528cb3ae2c2326a122446a83de5a056aaa3880d3882c5"
+      sha256: fedaadfa3a6996f75211d835aaeb8fede285dae94262485698afd832371b9a5e
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3+7"
+    version: "0.3.3+8"
   crypto:
     dependency: transitive
     description:
@@ -269,10 +261,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "1efa911ca7086affd35f463ca2fc1799584fb6aa89883cf0af8e3664d6a02d55"
+      sha256: "40ae61a5d43feea6d24bd22c0537a6629db858963b99b4bc1c3db80676f32368"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.4"
   dartx:
     dependency: transitive
     description:
@@ -350,7 +342,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "543d71a681b27336507731f5af2cf6cc2a8d1580"
+      resolved-ref: "853211dcfd1c3369ef7ad64187d8080d6702ca43"
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
     version: "1.0.0"
@@ -359,7 +351,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: a08d2186e4b766804bf8032014f47f760241f642
+      resolved-ref: "9788342582e707e24af40386c6b5f6f5e256e1c2"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
     version: "1.0.0"
@@ -377,7 +369,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "242419bf80353d2916562d415ea2b46a77b03704"
+      resolved-ref: a5f24dd7425bb0fc233896401d11cdcf4484a56b
       url: "https://github.com/THE-EXISTING/faltool.git"
     source: git
     version: "1.0.0"
@@ -426,14 +418,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  flutter_image_compress:
-    dependency: transitive
-    description:
-      name: flutter_image_compress
-      sha256: "37f1b26399098e5f97b74c1483f534855e7dff68ead6ddaccf747029fb03f29f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.3"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -644,30 +628,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  image:
-    dependency: transitive
-    description:
-      name: image
-      sha256: "028f61960d56f26414eb616b48b04eb37d700cbe477b7fb09bf1d7ce57fd9271"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.3"
-  image_compression:
-    dependency: transitive
-    description:
-      name: image_compression
-      sha256: c381639e3d4e6328d91939a2ab3c53f3231bf543d7ea061202c215eccfde6ba3
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  image_compression_flutter:
-    dependency: transitive
-    description:
-      name: image_compression_flutter
-      sha256: "7c14e5fc4f549509585c562cf6477a6405d9db885f391acc42d66906dc43bedb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
   image_network:
     dependency: "direct main"
     description:
@@ -916,14 +876,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+7"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.7.3"
   pool:
     dependency: transitive
     description:
@@ -960,26 +912,26 @@ packages:
     dependency: transitive
     description:
       name: realm
-      sha256: "8c4e09609fabef5ea60b7ef90b08a6867700c3b30c135b7d241ab1938bb76761"
+      sha256: "9381e73a045487876b39e291f7c96ac2c553fe1cbeb7ca1c1c960fd93353b6b6"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   realm_common:
     dependency: transitive
     description:
       name: realm_common
-      sha256: "9be97e4ceea9309fadeaae274d53aea9017a21b20c4b4c7be72e4a338c343f1b"
+      sha256: c1ca3cf5cf1d143684c313b7faa82699442e41d943bf9818a04b72987fd365d3
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   realm_generator:
     dependency: transitive
     description:
       name: realm_generator
-      sha256: e339b0f0aaee8ca1df29a2cc69fd9b7b3b6cc8dcfa1d95515ae2fc858bdd4362
+      sha256: c0886b4abb269f5241da289f7a74441f5d93113532270b986d6c3bc4b4f5958f
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   retrofit:
     dependency: transitive
     description:
@@ -1381,10 +1333,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "7c99c0e1e2fa190b48d25c81ca5e42036d5cac81430ef249027d97b0935c553f"
+      sha256: b0f37db61ba2f2e9b7a78a1caece0052564d1bc70668156cf3a29d676fe4e574
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.1"
   win32_registry:
     dependency: transitive
     description:
@@ -1405,10 +1357,10 @@ packages:
     dependency: transitive
     description:
       name: xml
-      sha256: af5e77e9b83f2f4adc5d3f0a4ece1c7f45a2467b695c2540381bac793e34e556
+      sha256: b015a8ad1c488f66851d762d3090a21c600e479dc75e68328c52774040cf9226
       url: "https://pub.dev"
     source: hosted
-    version: "6.4.2"
+    version: "6.5.0"
   yaml:
     dependency: transitive
     description:

@@ -4,14 +4,14 @@ enum SkeletonDirection { horizontal, vertical }
 
 class LoadingSkeleton extends StatelessWidget {
   LoadingSkeleton({
-    Key? key,
+    super.key,
     this.width,
     this.height,
     required this.color,
     required this.borderRadius,
     required this.boxShape,
     this.direction,
-  }) : super(key: key);
+  });
 
   final _random = Random();
   final double? width;

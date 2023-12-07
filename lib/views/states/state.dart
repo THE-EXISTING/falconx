@@ -48,8 +48,6 @@ Logger _log = Logger(
       printTime: false),
 );
 
-enum LifecycleState { created, initState, restore, resume, build }
-
 abstract class FalconState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver, RestorationMixin {
   FalconState({WidgetStatus? status})
@@ -58,12 +56,13 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   final WidgetStatusNotifier widgetStatusNotifier;
 
+  bool get debug => false;
+
   WidgetStatus get widgetState => widgetStatusNotifier.value;
 
   String get tag => '${widget.runtimeType} State';
 
   Key? get key => widget.key;
-
 
   @override
   String? get restorationId => widget.key.toString();
@@ -79,8 +78,8 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   @override
   void initState() {
-    if (!kReleaseMode) {
-      _log.v('$tag => Lifecycle State: INIT_STATE');
+    if (debug && !kReleaseMode) {
+      _log.t('$tag => Lifecycle State: INIT_STATE');
     }
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -92,8 +91,8 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   /// Call registerForRestoration(property, 'id'); for register restorable data.
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    if (!kReleaseMode) {
-      _log.v('$tag => Lifecycle State: RESTORE_STATE\n'
+    if (debug && !kReleaseMode) {
+      _log.t('$tag => Lifecycle State: RESTORE_STATE\n'
           'Old bucket: $oldBucket\n'
           'Initial restore: $initialRestore');
     }
@@ -115,35 +114,41 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   void detached() {}
 
+  void hidden() {}
+
   @protected
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        if (!kReleaseMode) {
-          _log.v('$tag => Lifecycle State: RESUMED');
+        if (debug && !kReleaseMode) {
+          _log.t('$tag => Lifecycle State: RESUMED');
         }
         resumed();
         break;
       case AppLifecycleState.inactive:
-        if (!kReleaseMode) {
-          _log.v('$tag => Lifecycle State: INACTIVE');
+        if (debug && !kReleaseMode) {
+          _log.t('$tag => Lifecycle State: INACTIVE');
         }
         inactive();
         break;
       case AppLifecycleState.paused:
-        if (!kReleaseMode) {
-          _log.v('$tag => Lifecycle State: PAUSED');
+        if (debug && !kReleaseMode) {
+          _log.t('$tag => Lifecycle State: PAUSED');
         }
         paused();
-        // deactivate();
         break;
       case AppLifecycleState.detached:
-        if (!kReleaseMode) {
-          _log.v('$tag => Lifecycle State: DETACHED');
+        if (debug && !kReleaseMode) {
+          _log.t('$tag => Lifecycle State: DETACHED');
         }
         detached();
-        // dispose();
+        break;
+      case AppLifecycleState.hidden:
+        if (debug && !kReleaseMode) {
+          _log.t('$tag => Lifecycle State: HIDDEN');
+        }
+        hidden();
         break;
     }
     super.didChangeAppLifecycleState(state);

@@ -2,7 +2,7 @@ import 'package:falconx/lib.dart';
 
 class BoolCubit extends Cubit<bool>{
 
-  BoolCubit(bool data) : super(data);
+  BoolCubit(super.data);
 
   bool get data => state;
 

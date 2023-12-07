@@ -1,30 +1,32 @@
 import 'package:falconx/lib.dart';
 
 extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
-  Future<void> fetch<A>({
+  void addEvent(
+    WidgetState<T> currentState,
+    Object event, [
+    Object? data,
+  ]) =>
+      call(currentState.addEvent(event, data));
+
+  Future<void> callStream<A>({
     required Stream<WidgetState<A?>> call,
     required Function(
       Emitter<WidgetState<T>> emitter,
       WidgetState<A?> data,
-    ) onFetch,
+    ) onData,
     Function(
       Emitter<WidgetState<T>> emitter,
       Failure failure,
-    )? onFail,
+    )? onFailure,
   }) =>
       onEach(
         call,
         onData: (WidgetState<A?> data) {
-          onFetch(this, data);
-
-          // Avoid onEach stuck
-          if (data.isSuccess) {
-            return;
-          }
+          onData(this, data);
         },
         onError: (error, stackTrace) {
           if (error is Failure) {
-            onFail?.call(this, error);
+            onFailure?.call(this, error);
           } else {
             Log.error(error, stackTrace);
             FlutterError.reportError(FlutterErrorDetails(
@@ -37,9 +39,7 @@ extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
 }
 
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
-  FalconBloc(STATE initialState)
-      : _fetcher = FetcherList(),
-        super(initialState) {
+  FalconBloc(super.initialState) : _fetcher = FetcherList() {
     on<BlocEvent<EVENT>>(
         (BlocEvent<EVENT> event, Emitter<STATE> emitter) async {
       await onListenEvent(event, emitter);
@@ -50,7 +50,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
-  Stream<WidgetState<T?>> fetch<T>({
+  Stream<WidgetState<T?>> fetchStream<T>({
     required Object key,
     required Stream<Either<Failure, T>> call,
     bool debounceFetch = false,

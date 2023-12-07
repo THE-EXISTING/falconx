@@ -2,7 +2,7 @@ import 'package:falconx/lib.dart';
 
 class IntCubit extends Cubit<int>{
 
-  IntCubit(int data) : super(data);
+  IntCubit(super.data);
 
   int get data => state;
 
