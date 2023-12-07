@@ -18,11 +18,17 @@ abstract class ValidatorCubit<DATA> extends Cubit<ValidateState<DATA?>> {
     return failure;
   }
 
+
   void clear() {
     emit(const ValidateState(data: null));
   }
 
-  @Deprecated("Please use `validate` or `emitError`")
+  void emitError(String? message) {
+    emit(ValidateState<DATA>(failure: Failure(message: message)));
+  }
+
+
+  @Deprecated("Please use [validate] or [emitError]")
   @protected
   @visibleForTesting
   @override
