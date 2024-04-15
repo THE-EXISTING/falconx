@@ -12,56 +12,55 @@ dependencies:
   falmodel:
     git:
       url: https://github.com/THE-EXISTING/falmodel.git
-      ref: release/V1.0.0
+      ref: develop
   faltool:
     git:
       url: https://github.com/THE-EXISTING/faltool.git
-      ref: release/V1.0.0
+      ref: develop
   falconnect:
 #    path: ../falconnect
     git:
       url: https://github.com/THE-EXISTING/falconnect.git
-      ref: release/V1.0.0
+      ref: develop
   falstore:
     git:
       url: https://github.com/THE-EXISTING/falstore.git
-      ref: release/V1.0.0
+      ref: develop
 
   #PLATFORM: All
-  provider: ^6.1.1
-  image_network: ^2.5.4+1
+  provider: ^6.1.2
+  image_network: ^2.5.6
   #PLATFORM: Android, iOS, Linux, MacOS
-  flutter_local_notifications: ^16.3.0
+  flutter_local_notifications: ^17.0.1
   #PLATFORM: Android, iOS, MacOS
   flutter_cache_manager: ^3.3.1
 
   #=======  UI ========#
   #PLATFORM: All
-  flutter_svg: ^2.0.9
+  flutter_svg: ^2.0.10+1
   shimmer_animation: ^2.1.0+1
   #PLATFORM: Android, iOS
-  webview_flutter: ^4.4.2
+  webview_flutter: ^4.7.0
 
   #======= Utils ========#
   #PLATFORM: All
-  intl: ^0.18.1
-  go_router: ^13.0.0
-  flutter_bloc: ^8.1.3
+  intl: ^0.19.0
+  go_router: ^13.2.4
+  flutter_bloc: ^8.1.5
   equatable: ^2.0.5
   #PLATFORM: Android, iOS, MacOS
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.3.1
   #PLATFORM: Android, iOS, Web
   uni_links: ^0.5.1
 
 
-dependency_overrides:
+#dependency_overrides:
   #==== Fixed resolving dependencies ====#
-  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^3.0.2
 
 
 flutter:

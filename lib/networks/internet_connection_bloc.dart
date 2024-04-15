@@ -1,8 +1,8 @@
 import 'package:falconx/lib.dart';
 
-class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
+class InternetConnectionBloc extends BlocBase<List<ConnectivityResult>> {
   InternetConnectionBloc({
-    required ConnectivityResult initialResult,
+    required List<ConnectivityResult> initialResult,
     Connectivity? connectivity,
   })  : _connectivity = connectivity ?? Connectivity(),
         super(initialResult) {
@@ -11,21 +11,21 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
 
   final Connectivity _connectivity;
   late final _stateController =
-      StreamController<ConnectivityResult>.broadcast();
-  StreamSubscription<ConnectivityResult>? _subscription;
+      StreamController<List<ConnectivityResult>>.broadcast();
+  StreamSubscription<List<ConnectivityResult>>? _subscription;
 
-  ConnectivityResult get result => state;
+  List<ConnectivityResult> get result => state;
 
   bool get isConnectedInternet =>
-      state == ConnectivityResult.wifi ||
-      state == ConnectivityResult.ethernet ||
-      state == ConnectivityResult.mobile ||
-      state == ConnectivityResult.vpn;
+      state.contains(ConnectivityResult.wifi) ||
+      state.contains(ConnectivityResult.ethernet) ||
+      state.contains(ConnectivityResult.mobile) ||
+      state.contains(ConnectivityResult.vpn);
 
   bool get isNotConnectedInternet => !isConnectedInternet;
 
   @override
-  Stream<ConnectivityResult> get stream => _connectivity.onConnectivityChanged;
+  Stream<List<ConnectivityResult>> get stream => _connectivity.onConnectivityChanged;
 
   @override
   Future<void> close() async {
@@ -33,7 +33,7 @@ class InternetConnectionBloc extends BlocBase<ConnectivityResult> {
     return super.close();
   }
 
-  void onConnectivityChanged(ConnectivityResult result) {
+  void onConnectivityChanged(List<ConnectivityResult> result) {
     if (isConnectedInternet) {
       Log.i('Connectivity: $result');
     } else {
