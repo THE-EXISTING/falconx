@@ -1,7 +1,7 @@
 import 'package:falconx/lib.dart';
 
 abstract class ReplayBloc<EVENT, STATE> extends FalconBloc<EVENT, STATE> {
-  ReplayBloc(STATE initialState) : super(initialState);
+  ReplayBloc(super.initialState);
 
   final _subject = ReplaySubject<STATE>();
 

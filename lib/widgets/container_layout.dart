@@ -2,7 +2,7 @@ import 'package:falconx/lib.dart';
 
 class ContainerLayout extends StatelessWidget {
   const ContainerLayout({
-    Key? key,
+    super.key,
     this.direction = Axis.vertical,
     this.spacing = 0.0,
     this.crossAxisAlignment = CrossAxisAlignment.start,
@@ -32,7 +32,7 @@ class ContainerLayout extends StatelessWidget {
     this.builder,
     this.onPressed,
     this.onLongPress,
-  }) : super(key: key);
+  });
 
   ///===== Layout ======///
   final Axis direction;
@@ -256,11 +256,13 @@ class ContainerLayout extends StatelessWidget {
                   BoxDecoration(
                     color: backgroundColor,
                     border: borderStroke ??
-                        Border.all(
-                          strokeAlign: BorderSide.strokeAlignInside,
-                          color: strokeColor ?? Colors.transparent,
-                          width: strokeThickness ?? 0.0,
-                        ),
+                        ((strokeThickness ?? 0.0) > 0.0
+                            ? Border.all(
+                                strokeAlign: BorderSide.strokeAlignInside,
+                                color: strokeColor ?? Colors.transparent,
+                                width: strokeThickness ?? 0.0,
+                              )
+                            : null),
                     borderRadius: borderRadius ??
                         (radius != null ? BorderRadius.circular(radius) : null),
                     boxShadow: shadow,

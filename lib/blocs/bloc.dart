@@ -1,69 +1,86 @@
 import 'package:falconx/lib.dart';
 
+extension EmitterExtensions<T> on Emitter<WidgetState<T>> {
+  void addEvent(
+    WidgetState<T> currentState,
+    Object event, [
+    Object? data,
+  ]) =>
+      call(currentState.addEvent(event, data));
+
+  Future<void> callStream<A>({
+    required Stream<WidgetState<A?>> call,
+    required Function(
+      Emitter<WidgetState<T>> emitter,
+      WidgetState<A?> data,
+    ) onData,
+    Function(
+      Emitter<WidgetState<T>> emitter,
+      Failure failure,
+    )? onFailure,
+  }) =>
+      onEach(
+        call,
+        onData: (WidgetState<A?> data) {
+          onData(this, data);
+        },
+        onError: (error, stackTrace) {
+          if (error is Failure) {
+            onFailure?.call(this, error);
+          } else {
+            Log.error(error, stackTrace);
+            FlutterError.reportError(FlutterErrorDetails(
+              exception: error,
+              stack: stackTrace,
+            ));
+          }
+        },
+      );
+}
+
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
-  FalconBloc(STATE initialState)
-      : _futureFetcher = FutureFetcherList(),
-        _fetcher = FetcherList(),
-        super(initialState) {
+  FalconBloc(super.initialState) : _fetcher = EitherStreamFetcherList() {
     on<BlocEvent<EVENT>>(
         (BlocEvent<EVENT> event, Emitter<STATE> emitter) async {
       await onListenEvent(event, emitter);
     });
   }
 
-  final FetcherList _fetcher;
-  final FutureFetcherList _futureFetcher;
+  final EitherStreamFetcherList _fetcher;
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
-  void fetch<T>({
+  Stream<WidgetState<T?>> fetchStream<T>({
     required Object key,
-    required Stream<BlocState<T>> call,
-    required Function(BlocState<T> blocState) onFetch,
+    required Stream<Either<Failure, T>> call,
     bool debounceFetch = false,
   }) =>
-      _fetcher.fetch(
+      _fetcher.fetchStream(
         key: key,
         call: call,
-        onFetch: onFetch,
         debounceFetch: debounceFetch,
       );
 
-  Future<void> fetchFuture<T>({
+  Stream<WidgetState<T?>> fetchFuture<T>({
     required Object key,
-    required Future<Either<Object, T>> call,
-    required Function(WidgetDataState<T?> data) onFetch,
-    Function(Object fail)? onFail,
+    required Future<Either<Failure, T>> call,
+    required Function(WidgetState<T?> data) onFetch,
+    Function(Failure failure)? onFail,
     bool debounceFetch = true,
   }) =>
-      _futureFetcher.fetch(
+      _fetcher.fetchFuture(
         key: key,
         call: call,
-        onFetch: onFetch,
-        onFail: onFail,
         debounceFetch: debounceFetch,
       );
 
   @override
   Future<void> close() {
     _fetcher.close();
-    _futureFetcher.close();
     return super.close();
   }
 
-  void addInitEvent<T>(EVENT event, {T? data}) {
-    add(InitEvent(event, data: data));
-  }
-
-  void addAppEvent<T>(EVENT event, {T? data}) {
-    add(ObjectEvent(event, data: data));
-  }
-
-  void addClickEvent<T>(EVENT event, {T? data}) {
-    add(ClickEvent(event, data: data));
-  }
-
-  void addTypingEvent<T>(EVENT event, {required T data}) {
-    add(TypingEvent(event, data: data));
+  void addEvent<T>(EVENT event, {T? data}) {
+    add(BlocEvent(event, data: data));
   }
 }

@@ -27,6 +27,10 @@ abstract class PaletteColor {
 
   Color get c900;
 
+  Color get c950;
+
+  Color get c975;
+
   late final TransparentPalette transparent;
 }
 
@@ -64,4 +68,6 @@ class TransparentPalette {
   Color get p90 => color.withOpacity(0.90);
 
   Color get p96 => color.withOpacity(0.96);
+
+  Color get p98 => color.withOpacity(0.98);
 }
