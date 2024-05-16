@@ -28,7 +28,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
         builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
           bloc: bloc,
           listener: (BuildContext context, STATE state) {
-            if (state is WidgetState && state.event != null) {
+            if (state is WidgetEventState && state.event != null) {
               listenEvent?.call(context, state.event!.name as EVENT, state.event!.data);
             }
 
@@ -36,9 +36,9 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           },
           listenWhen: (previous, current) => true,
           buildWhen: (previous, current) {
-            if (current is WidgetState && current.event != null) {
+            if (current is WidgetEventState && current.event != null) {
               return false;
-            } else if (current is WidgetState && current.event == null) {
+            } else if (current is WidgetEventState && current.event == null) {
               // No event in current state
               return current.build;
             } else {

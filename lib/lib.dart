@@ -31,7 +31,6 @@ export 'package:go_router/go_router.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:image_network/image_network.dart';
 export 'package:uni_links/uni_links.dart';
-export 'package:intl/intl.dart' hide TextDirection;
 
 export 'networks/internet_connection_bloc.dart';
 export 'config/build_config.dart';
