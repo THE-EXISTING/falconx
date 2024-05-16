@@ -8,23 +8,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  falmodel:
-    git:
-      url: https://github.com/THE-EXISTING/falmodel.git
-      ref: develop
   faltool:
     git:
       url: https://github.com/THE-EXISTING/faltool.git
-      ref: develop
+      ref: V1.0.1
+  falmodel:
+    git:
+      url: https://github.com/THE-EXISTING/falmodel.git
+      ref: 1.0.1
   falconnect:
 #    path: ../falconnect
     git:
       url: https://github.com/THE-EXISTING/falconnect.git
-      ref: develop
+      ref: 1.0.1
   falstore:
     git:
       url: https://github.com/THE-EXISTING/falstore.git
-      ref: develop
+      ref: 1.0.1
 
   #PLATFORM: All
   provider: ^6.1.2
