@@ -36,10 +36,10 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           },
           listenWhen: (previous, current) => true,
           buildWhen: (previous, current) {
+            // Not build the widget when state have the event
             if (current is WidgetEventState && current.event != null) {
               return false;
             } else if (current is WidgetEventState && current.event == null) {
-              // No event in current state
               return current.build;
             } else {
               return buildWhen?.call(previous, current) ?? true;
