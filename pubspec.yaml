@@ -1,6 +1,6 @@
 name: falconx
 description: A new Flutter package project.
-version: 1.0.0
+version: 1.0.2
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -11,33 +11,31 @@ dependencies:
   faltool:
     git:
       url: https://github.com/THE-EXISTING/faltool.git
-      ref: V1.0.1
+      ref: 1.0.2
+  falkit:
+    git:
+      url: https://github.com/THE-EXISTING/falkit.git
+      ref: 1.0.2
   falmodel:
     git:
       url: https://github.com/THE-EXISTING/falmodel.git
-      ref: 1.0.1
+      ref: 1.0.2
   falconnect:
 #    path: ../falconnect
     git:
       url: https://github.com/THE-EXISTING/falconnect.git
-      ref: 1.0.1
+      ref: 1.0.2
   falstore:
     git:
       url: https://github.com/THE-EXISTING/falstore.git
-      ref: 1.0.1
+      ref: 1.0.2
 
   #PLATFORM: All
   provider: ^6.1.2
-  image_network: ^2.5.6
   #PLATFORM: Android, iOS, Linux, MacOS
   flutter_local_notifications: ^17.1.2
-  #PLATFORM: Android, iOS, MacOS
-  flutter_cache_manager: ^3.3.2
 
   #=======  UI ========#
-  #PLATFORM: All
-  flutter_svg: ^2.0.10+1
-  shimmer_animation: ^2.1.0+1
   #PLATFORM: Android, iOS
   webview_flutter: ^4.7.0
 
@@ -45,20 +43,13 @@ dependencies:
   #PLATFORM: All
   go_router: ^14.1.1
   flutter_bloc: ^8.1.5
-  equatable: ^2.0.5
-  #PLATFORM: Android, iOS, MacOS
-  cached_network_image: ^3.3.1
   #PLATFORM: Android, iOS, Web
   uni_links: ^0.5.1
 
-
-#dependency_overrides:
-  #==== Fixed resolving dependencies ====#
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
-
 
 flutter:

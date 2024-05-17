@@ -1,7 +1,13 @@
 import 'package:falconx/lib.dart';
 
+extension EmitterEvent<STATE extends WidgetEventState<DATA>, DATA> on  Emitter<STATE> {
+}
+
 extension EmitterExtensions<T> on Emitter<WidgetEventState<T>> {
-  void addEvent(
+
+  void emit(WidgetEventState<T> state) => call(state);
+
+  void emitEvent(
     WidgetEventState<T> currentState,
     Object event, [
     Object? data,
