@@ -83,7 +83,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (context.mounted) {
+      if (mounted) {
         postFrame(context);
       }
     });
@@ -177,7 +177,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     String path, {
     Object? extra,
   }) {
-    if (context.mounted) {
+    if (mounted) {
       return context.go(path, extra: extra);
     }
   }
@@ -188,7 +188,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     Map<String, dynamic>? queryParameters,
     Object? extra,
   }) {
-    if (context.mounted) {
+    if (mounted) {
       return context.goNamed(
         screenName,
         pathParameters: pathParameters ?? const <String, String>{},
@@ -217,7 +217,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     Map<String, String>? pathParameters,
     Map<String, dynamic>? queryParameters,
   }) {
-    if (context.mounted) {
+    if (mounted) {
       return context.replaceNamed(
         screenName,
         pathParameters: pathParameters ?? const <String, String>{},
@@ -227,7 +227,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   }
 
   void popScreen() {
-    if (context.mounted) {
+    if (mounted) {
       if (context.canPop()) {
         return context.pop();
       } else {
