@@ -83,7 +83,9 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      postFrame(context);
+      if (context.mounted) {
+        postFrame(context);
+      }
     });
     super.initState();
   }
