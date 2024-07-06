@@ -213,11 +213,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.3"
-      resolved-ref: c9282762998c1138c6d17ba4029eed99c0ce4089
+      ref: "1.0.4"
+      resolved-ref: e241434cfffe6890a625a595b4c81d9ca7b43817
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
-    version: "1.0.3"
+    version: "1.0.4"
   falkit:
     dependency: "direct main"
     description:
@@ -231,11 +231,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.3"
-      resolved-ref: cabc436bf0850b465eed6bb24f40f15d358a5d42
+      ref: "1.0.4"
+      resolved-ref: "89ffec308e52e36e49815f05350fd898bcefc84f"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
-    version: "1.0.3"
+    version: "1.0.4"
   falstore:
     dependency: "direct main"
     description:
