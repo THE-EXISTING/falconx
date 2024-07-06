@@ -53,8 +53,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   FalconState({WidgetStatus? status})
       : statusNotifier =
             WidgetStatusNotifier(status: status ?? WidgetStatus.normal),
-        stateNotifier =
-            WidgetStateNotifier();
+        stateNotifier = WidgetStateNotifier();
 
   final WidgetStatusNotifier statusNotifier;
   final WidgetStateNotifier stateNotifier;
@@ -241,7 +240,15 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void changeStatus(WidgetStatus status) {
-    statusNotifier.value = status;
+  void setWidgetState(WidgetState? state) {
+    if (mounted) {
+      stateNotifier.value = state;
+    }
+  }
+
+  void stateWidgetStatus(WidgetStatus status) {
+    if (mounted) {
+      statusNotifier.value = status;
+    }
   }
 }
