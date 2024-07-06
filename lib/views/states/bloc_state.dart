@@ -23,7 +23,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     required Widget Function(BuildContext context, STATE state) builder,
   }) {
     return ChangeNotifierProvider<WidgetStatusNotifier>(
-      create: (context) => widgetStatusNotifier,
+      create: (context) => statusNotifier,
       child: Consumer<WidgetStatusNotifier>(
         builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
           bloc: bloc,
