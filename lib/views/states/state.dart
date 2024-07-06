@@ -51,14 +51,17 @@ Logger _log = Logger(
 abstract class FalconState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver, RestorationMixin {
   FalconState({WidgetStatus? status})
-      : widgetStatusNotifier =
-            WidgetStatusNotifier(status: status ?? WidgetStatus.normal);
+      : statusNotifier =
+            WidgetStatusNotifier(status: status ?? WidgetStatus.normal),
+        stateNotifier =
+            WidgetStateNotifier();
 
-  final WidgetStatusNotifier widgetStatusNotifier;
+  final WidgetStatusNotifier statusNotifier;
+  final WidgetStateNotifier stateNotifier;
 
   bool get debug => false;
 
-  WidgetStatus get widgetState => widgetStatusNotifier.value;
+  WidgetStatus get status => statusNotifier.value;
 
   String get tag => '${widget.runtimeType} State';
 
@@ -105,6 +108,8 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    statusNotifier.dispose();
+    stateNotifier.dispose();
     super.dispose();
   }
 
@@ -237,6 +242,6 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   }
 
   void changeStatus(WidgetStatus status) {
-    widgetStatusNotifier.value = status;
+    statusNotifier.value = status;
   }
 }
