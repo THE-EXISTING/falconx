@@ -5,6 +5,12 @@ typedef BlocWidgetListenerState<S> = void Function(
 typedef BlocWidgetListenerEvent<S> = void Function(
     BuildContext context, S event, Object? data);
 typedef PopListener<S> = void Function(BuildContext context, S state);
+@Deprecated(
+  'Use PopListener instead. '
+  'This feature was deprecated after v3.12.0-1.0.pre.',
+)
+typedef WillPopListener<S> = Future<bool> Function(
+    BuildContext context, S state);
 
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
@@ -19,6 +25,11 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BlocWidgetListenerState<STATE>? listenState,
     bool canPop = true,
     PopListener<STATE>? onPop,
+    @Deprecated(
+      'Use onPop instead. '
+      'This feature was deprecated after v3.12.0-1.0.pre.',
+    )
+    WillPopListener<STATE>? onWillPop,
     BlocListenerCondition<STATE>? buildWhen,
     required Widget Function(BuildContext context, STATE state) builder,
   }) {
@@ -48,19 +59,56 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           },
           builder: (context, state) => GestureDetector(
             onTap: clearFocus,
-            child: PopScope(
-              canPop: canPop,
-              onPopInvoked: (didPop) {
-                if (didPop) return;
-                clearFocus();
-                if (!context.canPop()) SystemNavigator.pop();
-                onPop?.call(context, state);
-              },
-              child: builder(context, state),
-            ),
+            child: onPop != null
+                ? _buildPopScope(
+                    state: state,
+                    canPop: canPop,
+                    onPop: onPop,
+                    child: builder(context, state),
+                  )
+                : _buildWillPopScope(
+                    state: state,
+                    onWillPop: onWillPop,
+                    child: builder(context, state),
+                  ),
           ),
         ),
       ),
     );
   }
+
+  Widget _buildPopScope<T>({
+    required T state,
+    required bool canPop,
+    required PopListener<T>? onPop,
+    required Widget child,
+  }) =>
+      onPop != null
+          ? PopScope(
+              canPop: canPop,
+              onPopInvoked: (didPop) {
+                if (didPop) return;
+                clearFocus();
+                if (!context.canPop()) SystemNavigator.pop();
+                onPop.call(context, state);
+              },
+              child: child,
+            )
+          : child;
+
+  Widget _buildWillPopScope<T>({
+    required T state,
+    required WillPopListener<T>? onWillPop,
+    required Widget child,
+  }) =>
+      onWillPop != null
+          ? WillPopScope(
+              onWillPop: () {
+                clearFocus();
+                if (!context.canPop()) SystemNavigator.pop();
+                return onWillPop.call(context, state);
+              },
+              child: child,
+            )
+          : child;
 }
