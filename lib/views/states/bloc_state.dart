@@ -4,8 +4,7 @@ typedef BlocWidgetListenerState<S> = void Function(
     BuildContext context, S state);
 typedef BlocWidgetListenerEvent<S> = void Function(
     BuildContext context, S event, Object? data);
-typedef WillPopListener<S> = Future<bool> Function(
-    BuildContext context, S state);
+typedef PopListener<S> = void Function(BuildContext context, S state);
 
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
@@ -18,7 +17,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   Widget buildWithBloc<EVENT>({
     BlocWidgetListenerEvent<EVENT>? listenEvent,
     BlocWidgetListenerState<STATE>? listenState,
-    WillPopListener<STATE>? onWillPop,
+    PopListener<STATE>? onPop,
     BlocListenerCondition<STATE>? buildWhen,
     required Widget Function(BuildContext context, STATE state) builder,
   }) {
@@ -29,7 +28,8 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           bloc: bloc,
           listener: (BuildContext context, STATE state) {
             if (state is WidgetEventState && state.event != null) {
-              listenEvent?.call(context, state.event!.name as EVENT, state.event!.data);
+              listenEvent?.call(
+                  context, state.event!.name as EVENT, state.event!.data);
             }
 
             listenState?.call(context, state);
@@ -47,11 +47,12 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           },
           builder: (context, state) => GestureDetector(
             onTap: clearFocus,
-            child: WillPopScope(
-              onWillPop: () {
+            child: PopScope(
+              onPopInvoked: (didPop) {
+                if (didPop) return;
                 clearFocus();
                 if (!context.canPop()) SystemNavigator.pop();
-                return onWillPop?.call(context, state) ?? Future.value(true);
+                onPop?.call(context, state);
               },
               child: builder(context, state),
             ),

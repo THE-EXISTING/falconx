@@ -246,7 +246,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void stateWidgetStatus(WidgetStatus status) {
+  void setWidgetStatus(WidgetStatus status) {
     if (mounted) {
       statusNotifier.value = status;
     }
