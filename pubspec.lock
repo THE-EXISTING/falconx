@@ -222,11 +222,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.8"
-      resolved-ref: b32a12d23dbb5d73ecc0221142d337cf5688df49
+      ref: "1.0.9"
+      resolved-ref: e774af2b3dc8371a2fd175c0b85d296b316d2ecd
       url: "https://github.com/THE-EXISTING/falkit.git"
     source: git
-    version: "1.0.8"
+    version: "1.0.9"
   falmodel:
     dependency: "direct main"
     description:
