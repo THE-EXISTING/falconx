@@ -14,7 +14,7 @@ typedef WillPopListener<S> = Future<bool> Function(
 
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
-  FalconBlocState({super.status});
+  FalconBlocState({super.state});
 
   FocusNode? get focusNode => FocusManager.instance.primaryFocus;
 
@@ -33,9 +33,9 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BlocListenerCondition<STATE>? buildWhen,
     required Widget Function(BuildContext context, STATE state) builder,
   }) {
-    return ChangeNotifierProvider<WidgetStatusNotifier>(
-      create: (context) => statusNotifier,
-      child: Consumer<WidgetStatusNotifier>(
+    return ChangeNotifierProvider<FullWidgetStateNotifier>(
+      create: (context) => stateNotifier,
+      child: Consumer<FullWidgetStateNotifier>(
         builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
           bloc: bloc,
           listener: (BuildContext context, STATE state) {

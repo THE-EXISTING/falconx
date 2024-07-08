@@ -1,29 +1,29 @@
 import 'package:falconx/lib.dart';
 
-class WidgetStateBuilder extends StatefulWidget {
-  const WidgetStateBuilder({
+class FullWidgetStateBuilder extends StatefulWidget {
+  const FullWidgetStateBuilder({
     super.key,
     required this.create,
     required this.builder,
     this.lazy,
   });
 
-  final WidgetStateNotifier create;
-  final Widget Function(BuildContext context, WidgetState? state, Widget? child)
+  final FullWidgetStateNotifier create;
+  final Widget Function(BuildContext context, FullWidgetState state, Widget? child)
       builder;
   final bool? lazy;
 
   @override
-  State<WidgetStateBuilder> createState() => _WidgetStateBuilderState();
+  State<FullWidgetStateBuilder> createState() => _FullWidgetStateBuilderState();
 }
 
-class _WidgetStateBuilderState extends State<WidgetStateBuilder> {
+class _FullWidgetStateBuilderState extends State<FullWidgetStateBuilder> {
   @override
   Widget build(BuildContext context) =>
-      ChangeNotifierProvider<WidgetStateNotifier>(
+      ChangeNotifierProvider<FullWidgetStateNotifier>(
         create: (context) => widget.create,
         lazy: widget.lazy,
-        child: Consumer<WidgetStateNotifier>(
+        child: Consumer<FullWidgetStateNotifier>(
           builder: (context, widgetState, child) =>
               widget.builder(context, widgetState.value, child),
         ),
