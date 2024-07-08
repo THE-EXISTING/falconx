@@ -17,6 +17,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   Widget buildWithBloc<EVENT>({
     BlocWidgetListenerEvent<EVENT>? listenEvent,
     BlocWidgetListenerState<STATE>? listenState,
+    bool canPop = true,
     PopListener<STATE>? onPop,
     BlocListenerCondition<STATE>? buildWhen,
     required Widget Function(BuildContext context, STATE state) builder,
@@ -48,6 +49,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           builder: (context, state) => GestureDetector(
             onTap: clearFocus,
             child: PopScope(
+              canPop: canPop,
               onPopInvoked: (didPop) {
                 if (didPop) return;
                 clearFocus();
