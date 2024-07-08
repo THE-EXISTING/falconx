@@ -59,28 +59,24 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
           },
           builder: (context, state) => GestureDetector(
             onTap: clearFocus,
-            child: onPop != null
-                ? _buildPopScope(
-                    state: state,
-                    canPop: canPop,
-                    onPop: onPop,
-                    child: builder(context, state),
-                  )
-                : _buildWillPopScope(
-                    state: state,
-                    onWillPop: onWillPop,
-                    child: builder(context, state),
-                  ),
+            child: _buildCompatPopScope(
+              state: state,
+              canPop: canPop,
+              onPop: onPop,
+              onWillPop: onWillPop,
+              child: builder(context, state),
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildPopScope<T>({
+  Widget _buildCompatPopScope<T>({
     required T state,
     required bool canPop,
     required PopListener<T>? onPop,
+    required WillPopListener<T>? onWillPop,
     required Widget child,
   }) =>
       onPop != null
@@ -94,21 +90,12 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
               },
               child: child,
             )
-          : child;
-
-  Widget _buildWillPopScope<T>({
-    required T state,
-    required WillPopListener<T>? onWillPop,
-    required Widget child,
-  }) =>
-      onWillPop != null
-          ? WillPopScope(
+          : WillPopScope(
               onWillPop: () {
                 clearFocus();
                 if (!context.canPop()) SystemNavigator.pop();
-                return onWillPop.call(context, state);
+                return onWillPop?.call(context, state) ?? Future.value(true);
               },
               child: child,
-            )
-          : child;
+            );
 }
