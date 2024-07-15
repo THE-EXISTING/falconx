@@ -103,8 +103,8 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     stateNotifier.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

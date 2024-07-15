@@ -1,6 +1,6 @@
 name: falconx
 description: A new Flutter package project.
-version: 1.2.4
+version: 1.2.5
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -27,12 +27,12 @@ dependencies:
   falstore:
     git:
       url: https://github.com/THE-EXISTING/falstore.git
-      ref: 1.0.3
+      ref: 1.1.0
 
   #PLATFORM: All
   provider: ^6.1.2
   #PLATFORM: Android, iOS, Linux, MacOS
-  flutter_local_notifications: ^17.2.1+1
+  flutter_local_notifications: ^17.2.1+2
 
   #=======  UI ========#
   #PLATFORM: Android, iOS
@@ -40,7 +40,7 @@ dependencies:
 
   #======= Utils ========#
   #PLATFORM: All
-  go_router: ^14.2.0
+  go_router: ^14.2.1
   flutter_bloc: ^8.1.6
   #PLATFORM: Android, iOS, Web
   uni_links: ^0.5.1
