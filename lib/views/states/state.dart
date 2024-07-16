@@ -50,10 +50,10 @@ Logger _log = Logger(
 
 abstract class FalconState<T extends StatefulWidget> extends State<T>
     with WidgetsBindingObserver, RestorationMixin {
-  FalconState({FullWidgetState? state})
-      : stateNotifier = FullWidgetStateNotifier(state);
+  FalconState({FullWidgetState? state}) : _initState = state;
 
-  final FullWidgetStateNotifier stateNotifier;
+  final FullWidgetState? _initState;
+  late final FullWidgetStateNotifier stateNotifier;
 
   bool get debug => false;
 
@@ -80,6 +80,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     if (debug && !kReleaseMode) {
       _log.t('$tag => Lifecycle State: INIT_STATE');
     }
+    stateNotifier = FullWidgetStateNotifier(_initState);
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
