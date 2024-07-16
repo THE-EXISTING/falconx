@@ -77,6 +77,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   @override
   void initState() {
+    super.initState(); // Should call first
     if (debug && !kReleaseMode) {
       _log.t('$tag => Lifecycle State: INIT_STATE');
     }
@@ -87,7 +88,6 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
         postFrame(context);
       }
     });
-    super.initState();
   }
 
   /// Call registerForRestoration(property, 'id'); for register restorable data.
@@ -100,14 +100,14 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void postFrame(BuildContext context) {}
-
   @override
   void dispose() {
-    stateNotifier.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
+    stateNotifier.dispose();
+    super.dispose(); // Should call last
   }
+
+  void postFrame(BuildContext context) {}
 
   void resumed() {}
 
