@@ -199,21 +199,21 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  Future<T?> push<T>(String location, {Object? extra}) {
+  Future<R?> push<R extends Object?>(String location, {Object? extra}) {
     if (mounted) {
-      return context.push<T>(location, extra: extra);
+      return context.push<R>(location, extra: extra);
     }
     return Future.value(null);
   }
 
-  Future<T?> pushNamed<T>(
+  Future<R?> pushNamed<R extends Object?>(
     String name, {
     Map<String, String>? pathParameters,
     Map<String, dynamic>? queryParameters,
     Object? extra,
   }) {
     if (mounted) {
-      return context.pushNamed<T>(
+      return context.pushNamed<R>(
         name,
         pathParameters: pathParameters ?? const <String, String>{},
         queryParameters: queryParameters ?? const <String, dynamic>{},
@@ -259,10 +259,10 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void pop([T? result]) {
+  void pop<R extends Object?>([R? result]) {
     if (mounted) {
       if (context.canPop()) {
-        context.pop(result);
+        context.pop<R>(result);
       } else {
         SystemNavigator.pop();
       }
