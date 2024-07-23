@@ -213,47 +213,47 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.2.0"
-      resolved-ref: "46925f0b22fb192d9bc164bb0d530892cacb8464"
+      ref: "1.2.1"
+      resolved-ref: "68a2fbce3f2d9d73a4a2bea7c3e32af19c6ce46d"
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
-    version: "1.2.0"
+    version: "1.2.1"
   falkit:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.15"
-      resolved-ref: "53f0733917cdedce619b05ac26df77b4ac66ed5a"
+      ref: "1.0.16"
+      resolved-ref: "3e1f62e233afe266e5c5197ce41f9a054644ff08"
       url: "https://github.com/THE-EXISTING/falkit.git"
     source: git
-    version: "1.0.15"
+    version: "1.0.16"
   falmodel:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.1.3"
-      resolved-ref: cb782785b9139fa1262ad30e09b8936745fedcdc
+      ref: "1.2.0"
+      resolved-ref: d1a16d81d12ef176b08afd220d99c9a9899afbd6
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
-    version: "1.1.3"
+    version: "1.2.0"
   falstore:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.1.2"
-      resolved-ref: be1c62b9727068bf428d840153eaa8919c2431e8
+      ref: "1.1.3"
+      resolved-ref: "29f1ff4b6d549e9c7ed023a5c9d6f03cea040a36"
       url: "https://github.com/THE-EXISTING/falstore.git"
     source: git
-    version: "1.1.2"
+    version: "1.1.3"
   faltool:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.5"
-      resolved-ref: f0332bd15c68ff33f5855b37322010ac738e32cc
+      ref: "1.0.6"
+      resolved-ref: b2c9447f90fea9e3d873aca02de7c53d1cce75db
       url: "https://github.com/THE-EXISTING/faltool.git"
     source: git
-    version: "1.0.5"
+    version: "1.0.6"
   ffi:
     dependency: transitive
     description:
@@ -886,10 +886,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_windows
-      sha256: ecf9725510600aa2bb6d7ddabe16357691b6d2805f66216a97d1b881e21beff7
+      sha256: "49c10f879746271804767cb45551ec5592cdab00ee105c06dddde1a98f73b185"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   url_strategy:
     dependency: transitive
     description:
