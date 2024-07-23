@@ -179,7 +179,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     Object? extra,
   }) {
     if (mounted) {
-      return context.go(path, extra: extra);
+      context.go(path, extra: extra);
     }
   }
 
@@ -190,7 +190,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     Object? extra,
   }) {
     if (mounted) {
-      return context.goNamed(
+      context.goNamed(
         name,
         pathParameters: pathParameters ?? const <String, String>{},
         queryParameters: queryParameters ?? const <String, dynamic>{},
@@ -225,7 +225,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   void replace(String location, {Object? extra}) {
     if (mounted) {
-      return context.replace(location, extra: extra);
+      context.replace(location, extra: extra);
     }
   }
 
@@ -235,7 +235,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     Map<String, dynamic>? queryParameters,
   }) {
     if (mounted) {
-      return context.replaceNamed(
+      context.replaceNamed(
         name,
         pathParameters: pathParameters ?? const <String, String>{},
         queryParameters: queryParameters ?? const <String, dynamic>{},
@@ -259,10 +259,10 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void pop() {
+  void pop([T? result]) {
     if (mounted) {
       if (context.canPop()) {
-        return context.pop();
+        context.pop(result);
       } else {
         SystemNavigator.pop();
       }
