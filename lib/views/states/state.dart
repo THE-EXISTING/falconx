@@ -174,7 +174,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     super.registerForRestoration(property, restorationId);
   }
 
-  void goToPath(
+  void go(
     String path, {
     Object? extra,
   }) {
@@ -183,15 +183,15 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  void goToScreenNamed(
-    String screenName, {
+  void goNamed(
+    String name, {
     Map<String, String>? pathParameters,
     Map<String, dynamic>? queryParameters,
     Object? extra,
   }) {
     if (mounted) {
       return context.goNamed(
-        screenName,
+        name,
         pathParameters: pathParameters ?? const <String, String>{},
         queryParameters: queryParameters ?? const <String, dynamic>{},
         extra: extra,
@@ -199,35 +199,67 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
   }
 
-  Future<Object?> pushScreenNamed(
-    String screenName, {
+  Future<T?> push<T>(String location, {Object? extra}) {
+    if (mounted) {
+      return context.push<T>(location, extra: extra);
+    }
+    return Future.value(null);
+  }
+
+  Future<T?> pushNamed<T>(
+    String name, {
     Map<String, String>? pathParameters,
     Map<String, dynamic>? queryParameters,
     Object? extra,
   }) {
-    return context.pushNamed(
-      screenName,
-      pathParameters: pathParameters ?? const <String, String>{},
-      queryParameters: queryParameters ?? const <String, dynamic>{},
-      extra: extra,
-    );
+    if (mounted) {
+      return context.pushNamed<T>(
+        name,
+        pathParameters: pathParameters ?? const <String, String>{},
+        queryParameters: queryParameters ?? const <String, dynamic>{},
+        extra: extra,
+      );
+    }
+    return Future.value(null);
   }
 
-  void replaceScreen(
-    String screenName, {
+  void replace(String location, {Object? extra}) {
+    if (mounted) {
+      return context.replace(location, extra: extra);
+    }
+  }
+
+  void replaceNamed(
+    String name, {
     Map<String, String>? pathParameters,
     Map<String, dynamic>? queryParameters,
   }) {
     if (mounted) {
       return context.replaceNamed(
-        screenName,
+        name,
         pathParameters: pathParameters ?? const <String, String>{},
         queryParameters: queryParameters ?? const <String, dynamic>{},
       );
     }
   }
 
-  void popScreen() {
+  void pushReplacementNamed(
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+    Object? extra,
+  }) {
+    if (mounted) {
+      context.pushReplacementNamed(
+        name,
+        extra: extra,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+      );
+    }
+  }
+
+  void pop() {
     if (mounted) {
       if (context.canPop()) {
         return context.pop();
