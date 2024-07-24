@@ -1,6 +1,6 @@
 name: falconx
 description: A new Flutter package project.
-version: 1.3.3
+version: 1.3.4
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -23,7 +23,7 @@ dependencies:
   falconnect:
     git:
       url: https://github.com/THE-EXISTING/falconnect.git
-      ref: 1.2.1
+      ref: 1.2.2
   falstore:
     git:
       url: https://github.com/THE-EXISTING/falstore.git

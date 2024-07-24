@@ -40,12 +40,13 @@ import 'package:flutter/foundation.dart';
 ///
 Logger _log = Logger(
   printer: PrettyPrinter(
-      methodCount: 1,
-      errorMethodCount: 8,
-      lineLength: 120,
-      colors: true,
-      printEmojis: true,
-      printTime: false),
+    methodCount: 1,
+    errorMethodCount: 8,
+    lineLength: 120,
+    colors: true,
+    printEmojis: true,
+    dateTimeFormat: DateTimeFormat.none,
+  ),
 );
 
 abstract class FalconState<T extends StatefulWidget> extends State<T>
@@ -79,7 +80,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   void initState() {
     super.initState(); // Should call first
     if (debug && !kReleaseMode) {
-      _log.t('$tag => Lifecycle State: INIT_STATE');
+      _log.t('$tag => Lifecycle State: initState');
     }
     stateNotifier = FullWidgetStateNotifier(_initState);
     WidgetsBinding.instance.addObserver(this);
@@ -94,7 +95,7 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     if (debug && !kReleaseMode) {
-      _log.t('$tag => Lifecycle State: RESTORE_STATE\n'
+      _log.t('$tag => Lifecycle State: restoreState\n'
           'Old bucket: $oldBucket\n'
           'Initial restore: $initialRestore');
     }
@@ -102,6 +103,9 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   @override
   void dispose() {
+    if (debug && !kReleaseMode) {
+      _log.t('$tag => Lifecycle State: dispose');
+    }
     WidgetsBinding.instance.removeObserver(this);
     stateNotifier.dispose();
     super.dispose(); // Should call last
@@ -122,39 +126,39 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   @protected
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
         if (debug && !kReleaseMode) {
-          _log.t('$tag => Lifecycle State: RESUMED');
+          _log.t('$tag => Lifecycle State: resumed');
         }
         resumed();
         break;
       case AppLifecycleState.inactive:
         if (debug && !kReleaseMode) {
-          _log.t('$tag => Lifecycle State: INACTIVE');
+          _log.t('$tag => Lifecycle State: inactive');
         }
         inactive();
         break;
+      case AppLifecycleState.hidden:
+        if (debug && !kReleaseMode) {
+          _log.t('$tag => Lifecycle State: hidden');
+        }
+        hidden();
+        break;
       case AppLifecycleState.paused:
         if (debug && !kReleaseMode) {
-          _log.t('$tag => Lifecycle State: PAUSED');
+          _log.t('$tag => Lifecycle State: paused');
         }
         paused();
         break;
       case AppLifecycleState.detached:
         if (debug && !kReleaseMode) {
-          _log.t('$tag => Lifecycle State: DETACHED');
+          _log.t('$tag => Lifecycle State: detached');
         }
         detached();
         break;
-      case AppLifecycleState.hidden:
-        if (debug && !kReleaseMode) {
-          _log.t('$tag => Lifecycle State: HIDDEN');
-        }
-        hidden();
-        break;
     }
-    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -172,6 +176,9 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
   void registerForRestoration(
       RestorableProperty<Object?> property, String restorationId) {
     super.registerForRestoration(property, restorationId);
+    if (debug && !kReleaseMode) {
+      _log.t('$tag => Lifecycle State: registerForRestoration');
+    }
   }
 
   void go(

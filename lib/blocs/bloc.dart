@@ -18,7 +18,7 @@ extension EmitterExtensions<T> on Emitter<WidgetEventState<T>> {
     required Stream<WidgetEventState<A?>> call,
     required Function(
       Emitter<WidgetEventState<T>> emitter,
-      WidgetEventState<A?> data,
+      WidgetEventState<A?> state,
     ) onData,
     Function(
       Emitter<WidgetEventState<T>> emitter,
@@ -27,8 +27,8 @@ extension EmitterExtensions<T> on Emitter<WidgetEventState<T>> {
   }) =>
       onEach(
         call,
-        onData: (WidgetEventState<A?> data) {
-          onData(this, data);
+        onData: (WidgetEventState<A?> state) {
+          onData(this, state);
         },
         onError: (error, stackTrace) {
           if (error is Failure) {
