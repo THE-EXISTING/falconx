@@ -4,7 +4,8 @@ typedef BlocWidgetListenerState<S> = void Function(
     BuildContext context, S state);
 typedef BlocWidgetListenerEvent<S> = void Function(
     BuildContext context, S event, Object? data);
-typedef PopListener<S> = void Function(BuildContext context, S state);
+typedef CanPopListener<S> = bool Function(S state);
+typedef PopListener<S> = void Function(S state);
 @Deprecated(
   'Use PopListener instead. '
   'This feature was deprecated after v3.12.0-1.0.pre.',
@@ -23,7 +24,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
   Widget buildWithBloc<EVENT>({
     BlocWidgetListenerEvent<EVENT>? listenEvent,
     BlocWidgetListenerState<STATE>? listenState,
-    bool canPop = true,
+    CanPopListener<STATE>? canPop,
     PopListener<STATE>? onPop,
     @Deprecated(
       'Use onPop instead. '
@@ -72,21 +73,21 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     );
   }
 
-  Widget _buildCompatPopScope<T>({
-    required T state,
-    required bool canPop,
-    required PopListener<T>? onPop,
-    required WillPopListener<T>? onWillPop,
+  Widget _buildCompatPopScope({
+    required STATE state,
+    required CanPopListener<STATE>? canPop,
+    required PopListener<STATE>? onPop,
+    required WillPopListener<STATE>? onWillPop,
     required Widget child,
   }) =>
-      onPop != null
+      onPop != null || canPop != null
           ? PopScope(
-              canPop: canPop,
+              canPop: canPop?.call(state) ?? true,
               onPopInvoked: (didPop) {
                 if (didPop) return;
                 clearFocus();
+                onPop?.call(state);
                 if (!context.canPop()) SystemNavigator.pop();
-                onPop.call(context, state);
               },
               child: child,
             )
