@@ -7,8 +7,6 @@ class WidgetEventCubit extends Cubit<BlocEvent?> {
 
   BlocEvent? get data => state;
 
-  void emitPopScreen<T>([T? result]) {
-    emit(BlocEvent(NavigationEvent.pop, data: result));
-  }
-
+  void emitPopScreen<T>([T? result]) =>
+      emit(BlocEvent(NavigationEvent.pop, data: result));
 }
