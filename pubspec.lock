@@ -213,47 +213,47 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.2.2"
-      resolved-ref: cf71698efc2d44e50b25701d904c9acd5967bb31
+      ref: "1.2.3"
+      resolved-ref: ccb6346d007e837156ecf4995340a29ab6d5cd8c
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
-    version: "1.2.2"
+    version: "1.2.3"
   falkit:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.16"
-      resolved-ref: "3e1f62e233afe266e5c5197ce41f9a054644ff08"
+      ref: "1.1.0"
+      resolved-ref: "06bc894ea6a6ca446e26c53dfc4d145d3ccc6a35"
       url: "https://github.com/THE-EXISTING/falkit.git"
     source: git
-    version: "1.0.16"
+    version: "1.1.0"
   falmodel:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.2.0"
-      resolved-ref: d1a16d81d12ef176b08afd220d99c9a9899afbd6
+      ref: "1.2.1"
+      resolved-ref: "2eb9a843bb1bc879cf9be7e76adc04a075958fcc"
       url: "https://github.com/THE-EXISTING/falmodel.git"
     source: git
-    version: "1.2.0"
+    version: "1.2.1"
   falstore:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.1.3"
-      resolved-ref: "29f1ff4b6d549e9c7ed023a5c9d6f03cea040a36"
+      ref: "1.1.4"
+      resolved-ref: "40329ef28ee739cbf5f391612f516ddda6b25973"
       url: "https://github.com/THE-EXISTING/falstore.git"
     source: git
-    version: "1.1.3"
+    version: "1.1.4"
   faltool:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.6"
-      resolved-ref: b2c9447f90fea9e3d873aca02de7c53d1cce75db
+      ref: "1.0.7"
+      resolved-ref: "73f294c49a54cb888b038fa9879f5e4cdfb8f559"
       url: "https://github.com/THE-EXISTING/faltool.git"
     source: git
-    version: "1.0.6"
+    version: "1.0.7"
   ffi:
     dependency: transitive
     description:
