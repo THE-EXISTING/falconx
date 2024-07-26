@@ -1,10 +1,9 @@
 import 'package:falconx/lib.dart';
 
-extension EmitterEvent<STATE extends WidgetEventState<DATA>, DATA> on  Emitter<STATE> {
-}
+extension EmitterEvent<STATE extends WidgetEventState<DATA>, DATA>
+    on Emitter<STATE> {}
 
 extension EmitterExtensions<T> on Emitter<WidgetEventState<T>> {
-
   void emit(WidgetEventState<T> state) => call(state);
 
   void emitEvent(
@@ -56,10 +55,10 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
-  Stream<WidgetEventState<T?>> fetchStream<T>({
+  Stream<WidgetEventState<T?>> fetchEitherStream<T>({
     required Object key,
     required Stream<Either<Failure, T>> call,
-    bool debounceFetch = false,
+    bool debounceFetch = true,
   }) =>
       _fetcher.fetchStream(
         key: key,
@@ -67,11 +66,9 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
         debounceFetch: debounceFetch,
       );
 
-  Stream<WidgetEventState<T?>> fetchFuture<T>({
+  Stream<WidgetEventState<T?>> fetchEitherFuture<T>({
     required Object key,
     required Future<Either<Failure, T>> call,
-    required Function(WidgetEventState<T?> data) onFetch,
-    Function(Failure failure)? onFail,
     bool debounceFetch = true,
   }) =>
       _fetcher.fetchFuture(
