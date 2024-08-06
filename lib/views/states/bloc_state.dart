@@ -33,51 +33,102 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     WillPopListener<STATE>? onWillPop,
     BlocListenerCondition<STATE>? buildWhen,
     required Widget Function(BuildContext context, STATE state) builder,
-  }) {
-    return ChangeNotifierProvider<FullWidgetStateNotifier>(
-      create: (context) => stateNotifier,
-      child: Consumer<FullWidgetStateNotifier>(
-        builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
-          bloc: bloc,
-          listener: (BuildContext context, STATE state) {
-            if (state is WidgetEventState && state.event != null) {
-              listenEvent?.call(
-                  context, state.event!.name as EVENT, state.event!.data);
-            }
+  }) =>
+      ChangeNotifierProvider<FullWidgetStateNotifier>(
+        create: (context) => stateNotifier,
+        child: Consumer<FullWidgetStateNotifier>(
+          builder: (context, viewState, child) => BlocConsumer<BLOC, STATE>(
+            bloc: bloc,
+            listener: (BuildContext context, STATE state) {
+              if (state is WidgetEventState && state.event != null) {
+                listenEvent?.call(
+                    context, state.event!.name as EVENT, state.event!.data);
+              }
 
-            listenState?.call(context, state);
-          },
-          listenWhen: (previous, current) => true,
-          buildWhen: (previous, current) {
-            // Not build the widget when state have the event
-            if (current is WidgetEventState && current.event != null) {
-              return false;
-            } else if (current is WidgetEventState && current.event == null) {
-              return current.build;
-            } else {
-              return buildWhen?.call(previous, current) ?? true;
-            }
-          },
-          builder: (context, state) => GestureDetector(
-            onTap: clearFocus,
-            child: _buildCompatPopScope(
-              state: state,
-              canPop: canPop,
-              onPop: onPop,
-              onWillPop: onWillPop,
-              child: builder(context, state),
+              listenState?.call(context, state);
+            },
+            listenWhen: (previous, current) => true,
+            buildWhen: (previous, current) {
+              // Not build the widget when state have the event
+              if (current is WidgetEventState && current.event != null) {
+                return false;
+              } else if (current is WidgetEventState && current.event == null) {
+                return current.build;
+              } else {
+                return buildWhen?.call(previous, current) ?? true;
+              }
+            },
+            builder: (context, state) => GestureDetector(
+              onTap: clearFocus,
+              child: _buildCompatPopScope<STATE>(
+                state: state,
+                canPop: canPop,
+                onPop: onPop,
+                onWillPop: onWillPop,
+                child: builder(context, state),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
-  Widget _buildCompatPopScope({
-    required STATE state,
-    required CanPopListener<STATE>? canPop,
-    required PopListener<STATE>? onPop,
-    required WillPopListener<STATE>? onWillPop,
+  Widget buildWithAnotherBloc<EVENT, S, B extends StateStreamable<S>>({
+    required B bloc,
+    BlocWidgetListenerEvent<EVENT>? listenEvent,
+    BlocWidgetListenerState<S>? listenState,
+    CanPopListener<S>? canPop,
+    PopListener<S>? onPop,
+    @Deprecated(
+      'Use onPop instead. '
+      'This feature was deprecated after v3.12.0-1.0.pre.',
+    )
+    WillPopListener<S>? onWillPop,
+    BlocListenerCondition<S>? buildWhen,
+    required Widget Function(BuildContext context, S state) builder,
+  }) =>
+      ChangeNotifierProvider<FullWidgetStateNotifier>(
+        create: (context) => stateNotifier,
+        child: Consumer<FullWidgetStateNotifier>(
+          builder: (context, viewState, child) => BlocConsumer<B, S>(
+            bloc: bloc,
+            listener: (BuildContext context, S state) {
+              if (state is WidgetEventState && state.event != null) {
+                listenEvent?.call(
+                    context, state.event!.name as EVENT, state.event!.data);
+              }
+
+              listenState?.call(context, state);
+            },
+            listenWhen: (previous, current) => true,
+            buildWhen: (previous, current) {
+              // Not build the widget when state have the event
+              if (current is WidgetEventState && current.event != null) {
+                return false;
+              } else if (current is WidgetEventState && current.event == null) {
+                return current.build;
+              } else {
+                return buildWhen?.call(previous, current) ?? true;
+              }
+            },
+            builder: (context, state) => GestureDetector(
+              onTap: clearFocus,
+              child: _buildCompatPopScope<S>(
+                state: state,
+                canPop: canPop,
+                onPop: onPop,
+                onWillPop: onWillPop,
+                child: builder(context, state),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget _buildCompatPopScope<S>({
+    required S state,
+    required CanPopListener<S>? canPop,
+    required PopListener<S>? onPop,
+    required WillPopListener<S>? onWillPop,
     required Widget child,
   }) =>
       onPop != null || canPop != null
