@@ -12,9 +12,9 @@ class FullWidgetStateNotifier extends ValueNotifier<FullWidgetState> {
   @override
   void dispose() {
     if (!_isDisposed) {
-      _isDisposed = true;
       super.dispose();
     }
+    _isDisposed = true;
   }
 
   @override
