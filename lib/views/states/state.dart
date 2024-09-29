@@ -213,6 +213,15 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     return Future.value(null);
   }
 
+  Future<PopResult<D>?> pushWithPopResult<D extends Object?>(
+    String location, {
+    Object? extra,
+  }) =>
+      push(
+        location,
+        extra: extra,
+      );
+
   Future<R?> pushNamed<R extends Object?>(
     String name, {
     Map<String, String>? pathParameters,
@@ -229,6 +238,19 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
     }
     return Future.value(null);
   }
+
+  Future<PopResult<D>?> pushNamedWithPopResult<D extends Object?>(
+    String name, {
+    Map<String, String>? pathParameters,
+    Map<String, dynamic>? queryParameters,
+    Object? extra,
+  }) =>
+      pushNamed(
+        name,
+        pathParameters: pathParameters,
+        queryParameters: queryParameters,
+        extra: extra,
+      );
 
   void replace(String location, {Object? extra}) {
     if (mounted) {
@@ -275,6 +297,8 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
       }
     }
   }
+
+  void popWithResult<D extends Object?>(PopResult<D> result) => pop(result);
 
   void setWidgetState(FullWidgetState state) {
     if (mounted) {

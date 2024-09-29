@@ -4,5 +4,6 @@ export 'bloc_state.dart';
 export 'state.dart';
 export 'widget_model_state.dart';
 export 'widget_state_notifier.dart';
+export 'pop_result.dart';
 
  
