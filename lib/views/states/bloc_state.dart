@@ -132,12 +132,14 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
               },
               child: child,
             )
-          : WillPopScope(
-              onWillPop: () {
-                clearFocus();
-                if (!context.canPop()) SystemNavigator.pop();
-                return onWillPop?.call(context, state) ?? Future.value(true);
-              },
-              child: child,
-            );
+          : onWillPop != null
+              ? WillPopScope(
+                  onWillPop: () {
+                    clearFocus();
+                    if (!context.canPop()) SystemNavigator.pop();
+                    return onWillPop.call(context, state);
+                  },
+                  child: child,
+                )
+              : child;
 }
