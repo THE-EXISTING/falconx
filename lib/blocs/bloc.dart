@@ -1,32 +1,32 @@
 import 'package:falconx/lib.dart';
 
-extension EmitterEvent<STATE extends WidgetEventState<DATA>, DATA>
+extension EmitterEvent<STATE extends WidgetStateEvent<DATA>, DATA>
     on Emitter<STATE> {}
 
-extension EmitterExtensions<T> on Emitter<WidgetEventState<T>> {
-  void emit(WidgetEventState<T> state) => call(state);
+extension EmitterExtensions<T> on Emitter<WidgetStateEvent<T>> {
+  void emit(WidgetStateEvent<T> state) => call(state);
 
   void emitEvent(
-    WidgetEventState<T> currentState,
+    WidgetStateEvent<T> currentState,
     Object event, [
     Object? data,
   ]) =>
       call(currentState.addEvent(event, data));
 
   Future<void> callStream<A>({
-    required Stream<WidgetEventState<A?>> call,
+    required Stream<WidgetStateEvent<A?>> call,
     required Function(
-      Emitter<WidgetEventState<T>> emitter,
-      WidgetEventState<A?> state,
+      Emitter<WidgetStateEvent<T>> emitter,
+      WidgetStateEvent<A?> state,
     ) onData,
     Function(
-      Emitter<WidgetEventState<T>> emitter,
+      Emitter<WidgetStateEvent<T>> emitter,
       Failure failure,
     )? onFailure,
   }) =>
       onEach(
         call,
-        onData: (WidgetEventState<A?> state) {
+        onData: (WidgetStateEvent<A?> state) {
           onData(this, state);
         },
         onError: (error, stackTrace) {
@@ -55,7 +55,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
 
   FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
-  Stream<WidgetEventState<T?>> fetchEitherStream<T>({
+  Stream<WidgetStateEvent<T?>> fetchEitherStream<T>({
     required Object key,
     required Stream<Either<Failure, T>> call,
     bool debounceFetch = true,
@@ -66,7 +66,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
         debounceFetch: debounceFetch,
       );
 
-  Stream<WidgetEventState<T?>> fetchEitherFuture<T>({
+  Stream<WidgetStateEvent<T?>> fetchEitherFuture<T>({
     required Object key,
     required Future<Either<Failure, T>> call,
     bool debounceFetch = true,
