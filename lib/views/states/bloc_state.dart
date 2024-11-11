@@ -37,7 +37,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
       BlocConsumer<BLOC, STATE>(
         bloc: bloc,
         listener: (BuildContext context, STATE state) {
-          if (state is WidgetEventState && state.event != null) {
+          if (state is WidgetStateEvent && state.event != null) {
             listenEvent?.call(
                 context, state.event!.name as EVENT, state.event!.data);
           }
@@ -47,9 +47,9 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
         listenWhen: (previous, current) => true,
         buildWhen: (previous, current) {
           // Not build the widget when state have the event
-          if (current is WidgetEventState && current.event != null) {
+          if (current is WidgetStateEvent && current.event != null) {
             return false;
-          } else if (current is WidgetEventState && current.event == null) {
+          } else if (current is WidgetStateEvent && current.event == null) {
             return current.build;
           } else {
             return buildWhen?.call(previous, current) ?? true;
@@ -84,7 +84,7 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
       BlocConsumer<B, S>(
         bloc: bloc,
         listener: (BuildContext context, S state) {
-          if (state is WidgetEventState && state.event != null) {
+          if (state is WidgetStateEvent && state.event != null) {
             listenEvent?.call(
                 context, state.event!.name as EVENT, state.event!.data);
           }
@@ -94,9 +94,9 @@ abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
         listenWhen: (previous, current) => true,
         buildWhen: (previous, current) {
           // Not build the widget when state have the event
-          if (current is WidgetEventState && current.event != null) {
+          if (current is WidgetStateEvent && current.event != null) {
             return false;
-          } else if (current is WidgetEventState && current.event == null) {
+          } else if (current is WidgetStateEvent && current.event == null) {
             return current.build;
           } else {
             return buildWhen?.call(previous, current) ?? true;
