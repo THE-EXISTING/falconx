@@ -6,6 +6,7 @@ enum PopResultStatus {
   fail,
   warning,
   success,
+  cancel,
 }
 
 class PopResult<D extends Object?> extends Equatable {
@@ -21,6 +22,10 @@ class PopResult<D extends Object?> extends Equatable {
     this.data,
   ]) : status = PopResultStatus.warning;
 
+  const PopResult.cancel([
+    this.data,
+  ]) : status = PopResultStatus.cancel;
+
   const PopResult.info([
     this.data,
   ]) : status = PopResultStatus.info;
@@ -35,6 +40,8 @@ class PopResult<D extends Object?> extends Equatable {
   bool get isWarning => status == PopResultStatus.warning;
 
   bool get isInfo => status == PopResultStatus.info;
+
+  bool get isCancel => status == PopResultStatus.cancel;
 
   @override
   bool? get stringify => true;
