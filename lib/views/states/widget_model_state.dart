@@ -10,7 +10,7 @@ class WidgetModelState<T extends BaseUniqueModel> with EquatableMixin {
 
   final String id;
   final int? index;
-  bool? selected;
+  final bool? selected;
   final T data;
 
   @override
@@ -18,8 +18,6 @@ class WidgetModelState<T extends BaseUniqueModel> with EquatableMixin {
 
   @override
   bool? get stringify => true;
-
-  set setSelected(bool isSelected) => selected = isSelected;
 
   WidgetModelState<T> copyWith({
     String? id,
