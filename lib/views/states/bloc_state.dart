@@ -13,6 +13,18 @@ typedef PopListener<S> = void Function(S state);
 typedef WillPopListener<S> = Future<bool> Function(
     BuildContext context, S state);
 
+abstract class FalconWidgetEventBlocState<WIDGET extends StatefulWidget, DATA,
+        BLOC extends BlocBase<WidgetStateEvent<DATA?>>>
+    extends FalconBlocState<WIDGET, WidgetStateEvent<DATA?>, BLOC> {
+  FalconWidgetEventBlocState({super.state});
+}
+
+abstract class FalconWidgetEventSafeBlocState<WIDGET extends StatefulWidget,
+        DATA, BLOC extends BlocBase<WidgetStateEvent<DATA>>>
+    extends FalconBlocState<WIDGET, WidgetStateEvent<DATA>, BLOC> {
+  FalconWidgetEventSafeBlocState({super.state});
+}
+
 abstract class FalconBlocState<WIDGET extends StatefulWidget, STATE,
     BLOC extends BlocBase<STATE>> extends FalconState<WIDGET> {
   FalconBlocState({super.state});
