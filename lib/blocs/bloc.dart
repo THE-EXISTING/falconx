@@ -6,6 +6,22 @@ extension EmitterEvent<STATE extends WidgetStateEvent<DATA>, DATA>
 extension EmitterExtensions<T> on Emitter<WidgetStateEvent<T>> {
   void emit(WidgetStateEvent<T> state) => call(state);
 
+  void emitInitial(T data) =>
+      call(WidgetStateEvent(FullWidgetState.initial, data: data));
+
+  void emitLoading(T data) =>
+      call(WidgetStateEvent(FullWidgetState.loading, data: data));
+
+  void emitFail(T data) =>
+      call(WidgetStateEvent(FullWidgetState.fail, data: data));
+
+  void emitWarning(T data) =>
+      call(WidgetStateEvent(FullWidgetState.warning, data: data));
+
+  void emitSuccess(T data) =>
+      call(WidgetStateEvent(FullWidgetState.success, data: data));
+
+  @Deprecated('Please use emitter.emit(state.addEvent(...)')
   void emitEvent(
     WidgetStateEvent<T> currentState,
     Object event, [
@@ -41,6 +57,22 @@ extension EmitterExtensions<T> on Emitter<WidgetStateEvent<T>> {
           }
         },
       );
+}
+
+abstract class FalconWidgetStateEventSafeBloc<EVENT, DATA>
+    extends FalconBloc<EVENT, WidgetStateEvent<DATA>> {
+  FalconWidgetStateEventSafeBloc(DATA data)
+      : super(WidgetStateEvent(FullWidgetState.initial, data: data));
+
+  DATA get data => state.data;
+}
+
+abstract class FalconWidgetStateEventBloc<EVENT, DATA>
+    extends FalconBloc<EVENT, WidgetStateEvent<DATA?>> {
+  FalconWidgetStateEventBloc([DATA? data])
+      : super(WidgetStateEvent(FullWidgetState.initial, data: data));
+
+  DATA? get data => state.data;
 }
 
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
