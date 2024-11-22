@@ -300,12 +300,6 @@ abstract class FalconState<T extends StatefulWidget> extends State<T>
 
   void popWithResult<D extends Object?>(PopResult<D> result) => pop(result);
 
-  void setWidgetState(FullWidgetState state) {
-    if (mounted) {
-      stateNotifier.value = state;
-    }
-  }
-
   void setFullWidgetState(FullWidgetState state) {
     if (mounted) {
       stateNotifier.value = state;

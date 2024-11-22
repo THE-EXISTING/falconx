@@ -1,6 +1,6 @@
 name: falconx
 description: A new Flutter package project.
-version: 1.5.1
+version: 1.5.2
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -19,11 +19,11 @@ dependencies:
   falmodel:
     git:
       url: https://github.com/THE-EXISTING/falmodel.git
-      ref: 1.3.0
+      ref: 1.3.1
   falconnect:
     git:
       url: https://github.com/THE-EXISTING/falconnect.git
-      ref: 1.3.0
+      ref: 1.3.1
   falstore:
     git:
       url: https://github.com/THE-EXISTING/falstore.git
@@ -37,7 +37,7 @@ dependencies:
 
   #======= Utils ========#
   #PLATFORM: All
-  go_router: ^14.6.0
+  go_router: ^14.6.1
   flutter_bloc: ^8.1.6
   #PLATFORM: Android, iOS, Web
   uni_links: ^0.5.1
