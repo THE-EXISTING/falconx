@@ -126,14 +126,14 @@ ensure the event handler has not completed.
     _assertEmitter();
     if (_emitter == null) return Future.value();
 
-    return _emitter.onEach(
+    return _emitter!.onEach(
       call,
       onData: (WidgetStateEvent<A> state) {
-        onData(_emitter, state);
+        onData(_emitter!, state);
       },
       onError: (error, stackTrace) {
         if (error is Failure) {
-          onFailure?.call(_emitter, error);
+          onFailure?.call(_emitter!, error);
         } else {
           FlutterError.reportError(FlutterErrorDetails(
             exception: error,
@@ -212,14 +212,14 @@ ensure the event handler has not completed.
     _assertEmitter();
     if (_emitter == null) return Future.value();
 
-    return _emitter.onEach(
+    return _emitter!.onEach(
       call,
       onData: (WidgetStateEvent<A?> state) {
-        onData(_emitter, state);
+        onData(_emitter!, state);
       },
       onError: (error, stackTrace) {
         if (error is Failure) {
-          onFailure?.call(_emitter, error);
+          onFailure?.call(_emitter!, error);
         } else {
           FlutterError.reportError(FlutterErrorDetails(
             exception: error,
@@ -241,7 +241,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
     });
   }
 
-  late final Emitter<STATE>? _emitter;
+  Emitter<STATE>? _emitter;
   final EitherStreamFetcherList _fetcher;
 
   Future<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
