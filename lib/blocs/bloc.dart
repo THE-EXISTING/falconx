@@ -66,7 +66,7 @@ abstract class FalconWidgetStateEventSafeBloc<EVENT, DATA>
 
   DATA get data => state.data;
 
-  void _emit(WidgetStateEvent<DATA> state) {
+  void _assertEmitter() {
     assert(
       _emitter != null,
       '''
@@ -76,17 +76,21 @@ Please make sure to await all asynchronous operations with event handlers
 and use emit.isDone after asynchronous operations before calling emit() to
 ensure the event handler has not completed.
 
-  **BAD**
+  **❌BAD**
   on<Event>((event, emit) {
-    future.whenComplete(() => emit(...));
+    future.whenComplete(() => emitSuccess(...));
   });
 
-  **GOOD**
+  **✅GOOD**
   on<Event>((event, emit) async {
-    await future.whenComplete(() => emit(...));
+    await future.whenComplete(() => emitSuccess(...));
   });
 ''',
     );
+  }
+
+  void _emit(WidgetStateEvent<DATA> state) {
+    _assertEmitter();
     _emitter?.call(state);
   }
 
@@ -107,6 +111,38 @@ ensure the event handler has not completed.
 
   void emitSuccess([DATA? data]) => _emit(
       WidgetStateEvent(FullWidgetState.success, data: data ?? state.data));
+
+  Future<void> callStream<A>({
+    required Stream<WidgetStateEvent<A>> call,
+    required Function(
+      Emitter<WidgetStateEvent<DATA>> emitter,
+      WidgetStateEvent<A> state,
+    ) onData,
+    Function(
+      Emitter<WidgetStateEvent<DATA>> emitter,
+      Failure failure,
+    )? onFailure,
+  }) {
+    _assertEmitter();
+    if (_emitter == null) return Future.value();
+
+    return _emitter.onEach(
+      call,
+      onData: (WidgetStateEvent<A> state) {
+        onData(_emitter, state);
+      },
+      onError: (error, stackTrace) {
+        if (error is Failure) {
+          onFailure?.call(_emitter, error);
+        } else {
+          FlutterError.reportError(FlutterErrorDetails(
+            exception: error,
+            stack: stackTrace,
+          ));
+        }
+      },
+    );
+  }
 }
 
 abstract class FalconWidgetStateEventBloc<EVENT, DATA>
@@ -116,7 +152,7 @@ abstract class FalconWidgetStateEventBloc<EVENT, DATA>
 
   DATA? get data => state.data;
 
-  void _emit(WidgetStateEvent<DATA?> state) {
+  void _assertEmitter() {
     assert(
       _emitter != null,
       '''
@@ -126,17 +162,21 @@ Please make sure to await all asynchronous operations with event handlers
 and use emit.isDone after asynchronous operations before calling emit() to
 ensure the event handler has not completed.
 
-  **BAD**
+  **❌BAD**
   on<Event>((event, emit) {
-    future.whenComplete(() => emit(...));
+    future.whenComplete(() => emitSuccess(...));
   });
 
-  **GOOD**
+  **✅GOOD**
   on<Event>((event, emit) async {
-    await future.whenComplete(() => emit(...));
+    await future.whenComplete(() => emitSuccess(...));
   });
 ''',
     );
+  }
+
+  void _emit(WidgetStateEvent<DATA?> state) {
+    _assertEmitter();
     _emitter?.call(state);
   }
 
@@ -157,6 +197,38 @@ ensure the event handler has not completed.
 
   void emitSuccess([DATA? data]) => _emit(
       WidgetStateEvent(FullWidgetState.success, data: data ?? state.data));
+
+  Future<void> callStream<A>({
+    required Stream<WidgetStateEvent<A?>> call,
+    required Function(
+      Emitter<WidgetStateEvent<DATA?>> emitter,
+      WidgetStateEvent<A?> state,
+    ) onData,
+    Function(
+      Emitter<WidgetStateEvent<DATA?>> emitter,
+      Failure failure,
+    )? onFailure,
+  }) {
+    _assertEmitter();
+    if (_emitter == null) return Future.value();
+
+    return _emitter.onEach(
+      call,
+      onData: (WidgetStateEvent<A?> state) {
+        onData(_emitter, state);
+      },
+      onError: (error, stackTrace) {
+        if (error is Failure) {
+          onFailure?.call(_emitter, error);
+        } else {
+          FlutterError.reportError(FlutterErrorDetails(
+            exception: error,
+            stack: stackTrace,
+          ));
+        }
+      },
+    );
+  }
 }
 
 abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
@@ -172,7 +244,7 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
   late final Emitter<STATE>? _emitter;
   final EitherStreamFetcherList _fetcher;
 
-  FutureOr<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
+  Future<void> onListenEvent(BlocEvent<EVENT> event, Emitter<STATE> emitter);
 
   Stream<WidgetStateEvent<T?>> fetchEitherStream<T>({
     required Object key,
@@ -183,6 +255,22 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
         key: key,
         call: call,
         debounceFetch: debounceFetch,
+      );
+
+  Stream<WidgetStateEvent<T>> fetchEitherStreamSafe<T>({
+    required Object key,
+    required Stream<Either<Failure, T>> call,
+    required T defaultData,
+    bool debounceFetch = true,
+  }) =>
+      fetchEitherStream(
+        key: key,
+        call: call,
+        debounceFetch: debounceFetch,
+      ).map(
+        (WidgetStateEvent<T?> event) => event.mapData(
+          (T? a) => a ?? defaultData,
+        ),
       );
 
   Stream<WidgetStateEvent<T?>> fetchEitherFuture<T>({
@@ -196,9 +284,25 @@ abstract class FalconBloc<EVENT, STATE> extends Bloc<BlocEvent<EVENT>, STATE> {
         debounceFetch: debounceFetch,
       );
 
+  Stream<WidgetStateEvent<T>> fetchEitherFutureSafe<T>({
+    required Object key,
+    required Future<Either<Failure, T>> call,
+    required T defaultData,
+    bool debounceFetch = true,
+  }) =>
+      fetchEitherFuture(
+        key: key,
+        call: call,
+        debounceFetch: debounceFetch,
+      ).map(
+        (WidgetStateEvent<T?> event) => event.mapData(
+          (T? a) => a ?? defaultData,
+        ),
+      );
+
   @override
-  Future<void> close() {
-    _fetcher.close();
+  Future<void> close() async {
+    await _fetcher.closeAsync();
     return super.close();
   }
 

@@ -213,11 +213,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.3.2"
-      resolved-ref: dc188f3243d128375b5298d6fc33d2d4e614b799
+      ref: "1.3.4"
+      resolved-ref: fa8962b59494d610896e09de8445c83e01ac1046
       url: "https://github.com/THE-EXISTING/falconnect.git"
     source: git
-    version: "1.3.2"
+    version: "1.3.4"
   falkit:
     dependency: "direct main"
     description:
